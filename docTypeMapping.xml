@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<mapping>
+
+  <description>
+    This transformation map is describing the mapping between
+    document types applied in ORBIT and the exchange format.
+
+    For Orbit, the combinations currently (20050914) exist:
+
+    125 in
+   9501 la      journal article
+     66 lalc    conference in journal
+    747 lbra    article book
+    334 lbra    book chapter
+     46 lbra    book chapter/article
+    380 lbralc  abstract
+   3891 lbralc  article book
+      1 lbralc  book
+   2431 lbralc  conference in book
+    394 lbralc  conference paper
+   1640 lbr     book
+      1 lc
+    303 lc      abstract
+    276 lc      lecture
+    267 lc      poster
+    174 lc      slide show
+     39 lc      unpublished papers
+     35 ld      bachelor thesis
+      5 ld      doctoral thesis
+    660 ld      master thesis
+    369 ld      ph.d.-thesis
+     28 lp      patent application
+     54 lp      patent publication
+     66 lr      lecture notes
+   2955 lr      report
+   8219 pe
+   3324 pr
+   2322 prphd
+
+   This is what it should be:
+
+   in
+   la     -  journal article
+   lalc   -  conference in journal
+   lbra   -  book chapter
+   lbralc -  conference in book
+   lbr    -  book
+   lc     -  abstract
+   lc     -  lecture               
+   lc     -  poster                
+   lc     -  slide show            
+   lc     -  unpublished papers    
+   ld     -  bachelor thesis       
+   ld     -  doctoral thesis       
+   ld     -  master thesis         
+   ld     -  ph.d.-thesis          
+   lp     -  patent application    
+   lp     -  patent publication    
+   lr     -  report   
+   pe
+   pr
+   prphd
+
+   Incidentally, there are about 25000 literature records of which 85%
+   is covered by {la,lbralc,lbr,lr}
+
+  </description>
+ 
+  <!-- in = ddf/@type  AND type = /ddf/document/@type -->
+  <!-- Note for Roel: document/@type with a capital is a database error! -->
+
+  <rule>
+    <in>la</in>
+    <type>journal article</type>
+    <out>dja</out>
+    <name>in_journal</name>
+  </rule>
+
+  <rule>
+    <!-- orbit -->
+    <in>lbralc</in>
+    <type>conference in book</type>
+    <out>dba</out>
+    <name>in_book</name>
+  </rule>
+
+  <rule>
+    <in>lbr</in>
+    <type>book</type>
+    <out>db</out>
+    <name>book</name>
+  </rule>
+
+  <rule>
+    <in>lr</in>
+    <type>report</type>
+    <out>dr</out>
+    <name>report</name>
+  </rule>
+
+</mapping>
+

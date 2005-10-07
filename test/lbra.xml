@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ddf id="182413" status="O3" type="lbra" user_group="dtu_dtv" user_id="sitecore" version="2.0">
+  <admin>
+    <cataloguer>
+      <form>ddf_record_lbra</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O3</status>
+      <timestamp>2005-10-04</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lbra</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O1</status>
+      <timestamp>1128083051</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lbra</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O1</status>
+      <timestamp>1128417180</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lbra</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O21</status>
+      <timestamp>1128417186</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lbra</form>
+      <group>dtu_dtv</group>
+      <id>darcdtv</id>
+      <status>O21</status>
+      <timestamp>1128417389</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lbra</form>
+      <group>dtu_dtv</group>
+      <id>darcdtv</id>
+      <status>O3</status>
+      <timestamp>1128417395</timestamp>
+    </cataloguer>
+    <heading>Sitecore - main title of chapter in book. This record can be used to check our xml-format, Sitecore - sub title of chapter in book</heading>
+    <sortkey>2005</sortkey>
+    <system>
+      <created>20050930142411</created>
+      <id>182413</id>
+      <supplier type="dtu_dtv">
+        <code>dtu_dtv</code>
+        <name lang="eng">dtu_dtv</name>
+        <name lang="dan"/>
+      </supplier>
+      <updated>20051004111635</updated>
+    </system>
+    <type lang="eng">Chapter in book (DTU record)</type>
+    <type lang="dan">Bidrag til bog (DTU post)</type>
+  </admin>
+  <document object="main" status="published" type="book chapter">
+    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - abstract</abstract>
+    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - abstract 2</abstract>
+    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification</class>
+    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification 2</class>
+    <document object="aux" pages="1-6" role="part of" type="book">
+      <document object="aux" role="in series" type="series">
+        <title>
+          <main>Sitecore - title of series</main>
+          <part>4</part>
+        </title>
+      </document>
+      <identifier type="ISBN">12-34-545343-1</identifier>
+      <imprint>
+        <edition>Sitecore - edition</edition>
+        <pages>78</pages>
+        <place>Sitecore - place</place>
+        <publisher>Sitecore - publisher</publisher>
+        <year>2005</year>
+      </imprint>
+      <person authority_role="dtu_document_person_role" authority_role_dan="Redaktør" authority_role_eng="Editor" id="155953" object="aux" role="editor">
+        <identifier type="cwisno">1351</identifier>
+        <name>
+          <first>Birthe</first>
+          <full>Krog, Birthe</full>
+          <last>Krog</last>
+        </name>
+      </person>
+      <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" id="28837" object="aux" role="author">
+        <identifier type="cwisno">9481</identifier>
+        <name>
+          <first>Roel de</first>
+          <full>Cock, Roel de</full>
+          <last>Cock</last>
+        </name>
+      </person>
+      <title>
+        <main>Sitecore - main title of book</main>
+        <part>12</part>
+        <sub>Sitecore - sub title of book</sub>
+      </title>
+    </document>
+    <document object="aux" pages="4 -78" role="part of" type="book">
+      <document object="aux" role="in series" type="series">
+        <title>
+          <main>Sitecore - title of series 2</main>
+          <part>4</part>
+        </title>
+      </document>
+      <identifier type="ISBN">34-54-65437-3</identifier>
+      <imprint>
+        <edition>Sitecore - edition 2</edition>
+        <pages>54</pages>
+        <place>Sitecore - place 2</place>
+        <publisher>Sitecore - publisher 2</publisher>
+        <year>2005</year>
+      </imprint>
+      <person authority_role="dtu_document_person_role" authority_role_dan="Redaktør" authority_role_eng="Editor" id="63810" object="aux" role="editor">
+        <identifier type="cwisno">9101</identifier>
+        <name>
+          <first>Liv</first>
+          <full>Fugl, Liv</full>
+          <last>Fugl</last>
+        </name>
+      </person>
+      <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" id="155953" object="aux" role="author">
+        <identifier type="cwisno">1351</identifier>
+        <name>
+          <first>Birthe</first>
+          <full>Krog, Birthe</full>
+          <last>Krog</last>
+        </name>
+      </person>
+      <title>
+        <main>Sitecore - main title of book 2</main>
+        <part>Sitecore - volume 2</part>
+        <sub>Sitecore - sub title of book 2</sub>
+      </title>
+    </document>
+    <indicator>
+      <geo authority="ddf_document_indicator_geo" authority_dan="National" authority_eng="National">national</geo>
+      <level authority="dtu_document_indicator_level" authority_dan="Formidlende" authority_eng="Popular">popular</level>
+      <review authority="ddf_document_indicator_review" authority_dan="Ikke reviewed" authority_eng="Not reviewed">not reviewed</review>
+    </indicator>
+    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keywords</keyword>
+    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keywords 2</keyword>
+    <language authority="dtu_languages" authority_dan="Engelsk" authority_eng="English">eng</language>
+    <language authority="dtu_languages" authority_dan="Fransk" authority_eng="French">fre</language>
+    <local>
+      <field authority="dtu_institut_local" authority_dan="DTV" authority_eng="DTV" tag="Institute owner" tagsea="instituteowner" type="4">DTV</field>
+    </local>
+    <local>
+      <field authority="dtu_institut_local" authority_dan="FYS" authority_eng="FYS" tag="Institute owner" tagsea="instituteowner" type="4">FYS</field>
+    </local>
+    <local>
+      <field authority="sub_organisation_local.dtu" authority_dan="CPE" authority_eng="CPE" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">cpe</field>
+    </local>
+    <local>
+      <field authority="sub_organisation_local.dtu" authority_dan="CAMP-DTU" authority_eng="CAMP-DTU" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">camp</field>
+    </local>
+    <local>
+      <field num="3" tag="Internal note" tagsea="internalnote" type="1">Sitecore - internal note</field>
+    </local>
+    <local>
+      <field authority="dtu_annual_report_year" authority_dan="2005" authority_eng="2005" num="4" tag="Annual report year" tagsea="annualreportyear" type="4">2005</field>
+    </local>
+    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - note</note>
+    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - note 2</note>
+    <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" id="155953" object="aux" role="author">
+      <contact>
+        <email>bk@dtv.dk</email>
+      </contact>
+      <identifier type="cwisno">1351</identifier>
+      <name>
+        <first>Birthe</first>
+        <full>Krog, Birthe</full>
+        <last>Krog</last>
+      </name>
+      <organisation id="155953" object="aux" role="employee">
+        <name>
+          <full>Technical University of Denmark, Technical Knowledge Center of Denmark, </full>
+          <main>Technical University of Denmark</main>
+          <sub>Technical Knowledge Center of Denmark</sub>
+          <sub2 authority="ddf_organisation_sub2.dtu" authority_dan="Center for Viden Teknologi" authority_eng="Center for Viden Teknologi">Center for Viden Teknologi</sub2>
+          <sub2code/>
+        </name>
+      </organisation>
+    </person>
+    <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" object="aux" role="author">
+      <contact>
+        <email>fictive@email.kom</email>
+      </contact>
+      <identifier type="cwisno"/>
+      <name>
+        <first>Janne</first>
+        <full>Mikkelsen, Janne</full>
+        <last>Mikkelsen</last>
+      </name>
+      <organisation object="aux" role="affiliation">
+        <name>
+          <full>Fictive firm, Development Department, </full>
+          <main>Fictive firm</main>
+          <sub>Development Department</sub>
+        </name>
+      </organisation>
+    </person>
+    <title>
+      <main>Sitecore - main title of chapter in book. This record can be used to check our xml-format</main>
+      <sub>Sitecore - sub title of chapter in book</sub>
+    </title>
+    <type lang="eng">book chapter</type>
+    <type lang="dan"/>
+    <www>
+      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
+      <url>http://Sitecore - url</url>
+    </www>
+    <www>
+      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
+      <url>http://Sitecore - url 2</url>
+    </www>
+  </document>
+  <derived>
+    <type>
+      <eng>book</eng>
+      <dan>bog</dan>
+    </type>
+  </derived>
+  <indexing>
+    <annualreportyear>2005</annualreportyear>
+    <instituteowner>DTV</instituteowner>
+    <instituteowner>FYS</instituteowner>
+    <cwisno>1351</cwisno>
+    <cwisno>9481</cwisno>
+    <cwisno>9101</cwisno>
+    <cwisno>1351</cwisno>
+    <cwisno>1351</cwisno>
+    <firstauthor>Krog, Birthe</firstauthor>
+    <sorttitle>Sitecore - main title of chapter in book. This record can be used to check our xml-format Sitecore - sub title of chapter in book</sorttitle>
+    <ownerclass>dtu</ownerclass>
+  </indexing>
+</ddf>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- table=cat_doc -->
+<!-- key=id -->
+
+<ddf id="153984" type="lp" version="2.0">
+    <admin>
+        <cataloguer>
+            <form>
+                ddf_record_lp
+            </form>
+            <group>
+                dtu_dtv
+            </group>
+            <id>
+                bk
+            </id>
+            <status>
+                O1
+            </status>
+            <timestamp>
+                1105614945
+            </timestamp>
+        </cataloguer>
+        <cataloguer>
+            <form>
+                ddf_record_lp
+            </form>
+            <group>
+                dtu_dtv
+            </group>
+            <id>
+                bk
+            </id>
+            <status>
+                O1
+            </status>
+            <timestamp>
+                1105614945
+            </timestamp>
+        </cataloguer>
+        <heading>
+            test main title patent, test sub title patent
+        </heading>
+        <system>
+            <created>
+                20050113121545
+            </created>
+            <id>
+                153984
+            </id>
+            <updated>
+                20050113121545
+            </updated>
+        </system>
+    </admin>
+    <document object="main" type="patent application">
+        <abstract authority_lang="language" lang="eng">
+            test abstract
+        </abstract>
+        <class authority_type="ddf_class_type" type="local">
+            test classification
+        </class>
+        <keyword authority_type="ddf_keyword_type" type="local">
+            test keyword
+        </keyword>
+        <local>
+            <field authority="dtu_institut_local" tag="Institute owner" type="4">
+                DTV
+            </field>
+        </local>
+        <local1>
+            <field authority="sub_organisation_local.dtu" tag="Sub organisation" type="4">
+                camp
+            </field>
+        </local1>
+        <local3>
+            <field tag="Internal note" type="1">
+                test internal note
+            </field>
+        </local3>
+        <local4>
+            <field authority="dtu_annual_report_year" tag="Annual report year" type="4">
+                2001
+            </field>
+        </local4>
+        <note authority_lang="language" lang="eng">
+            CVT/BK
+        </note>
+        <patent>
+            <country>
+                test country
+            </country>
+            <date>
+                2001-01-01
+            </date>
+            <number>
+                test number
+            </number>
+        </patent>
+        <person id="33365" object="aux" role="inventor">
+            <contact>
+                <email>
+                    bk@dtv.dk
+                </email>
+            </contact>
+            <identifier type="cwisno">
+                1351
+            </identifier>
+            <name>
+                <first>
+                    Birthe
+                </first>
+                <last>
+                    Krog
+                </last>
+            </name>
+            <organisation id="33365" object="aux" role="employee">
+                <name>
+                    <main>
+                        Danmarks Tekniske Universitet
+                    </main>
+                    <sub>
+                        Danmarks Tekniske Videncenter
+                    </sub>
+                    <sub2 authority="ddf_organisation_sub2.dtu">
+                        Center of Knowledge Technology, CVT
+                    </sub2>
+                </name>
+            </organisation>
+        </person>
+        <title authority_lang="language" lang="eng">
+            <main>
+                test main title patent
+            </main>
+            <sub>
+                test sub title patent
+            </sub>
+        </title>
+        <www>
+            <text authority="dtu_www_text">
+                full text
+            </text>
+            <url>
+                test www
+            </url>
+        </www>
+    </document>
+</ddf>
+

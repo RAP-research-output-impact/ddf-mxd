@@ -1,0 +1,13 @@
+The test/ directory contains sample records of all Orbit literature types in
+the format in which Zebra indexes them, which is also the format end-users
+get to see if the 'download' records. The orb2mxd script expects this type
+of XML.
+
+One important difference with the cataloguing format is, that the download
+format has local fields in the form local/field/@num=1, local/field/@num=2 
+etc., rather than local/field, local2/field etc.
+
+The test/cat/ subdir has records in cataloguing format, for fun and 
+comparison.
+
+

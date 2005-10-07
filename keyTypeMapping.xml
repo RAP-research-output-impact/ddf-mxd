@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<mapping>
+
+  <description>
+    This transformation map is describing the mapping between
+    keyword/classification types applied in ORBIT and the MXD format.
+  </description>
+ 
+  <rule>
+    <in>free</in>
+    <out>fre</out>
+  </rule>
+
+  <rule>
+    <in>local</in>
+    <out>loc</out>
+  </rule>
+
+  <rule>
+    <in></in>
+    <out>fre</out>
+  </rule>
+
+</mapping>

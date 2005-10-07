@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ddf id="182426" status="O3" type="pr" user_group="dtu_dtv" user_id="sitecore" version="2.0">
+  <admin>
+    <cataloguer>
+      <form>ddf_record_pr</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O3</status>
+      <timestamp>2005-10-04</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_pr</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O1</status>
+      <timestamp>1128084943</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_pr</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O1</status>
+      <timestamp>1128413850</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_pr</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O21</status>
+      <timestamp>1128413856</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_pr</form>
+      <group>dtu_dtv</group>
+      <id>darcdtv</id>
+      <status>O21</status>
+      <timestamp>1128417886</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_pr</form>
+      <group>dtu_dtv</group>
+      <id>darcdtv</id>
+      <status>O3</status>
+      <timestamp>1128417891</timestamp>
+    </cataloguer>
+    <heading>Sitecor - hoved titel på projektet. Denne post kan anvendes til at checke vores xml-format, Sitecore- undertitel, Sitecore- akronym</heading>
+    <sortkey>2007 0601</sortkey>
+    <system>
+      <created>20050930145543</created>
+      <id>182426</id>
+      <supplier type="dtu_dtv">
+        <code>dtu_dtv</code>
+        <name lang="eng">dtu_dtv</name>
+        <name lang="dan"/>
+      </supplier>
+      <updated>20051004112451</updated>
+    </system>
+    <type lang="eng">Project (DTU record)</type>
+    <type lang="dan">Projektbeskrivelse (DTU post)</type>
+  </admin>
+  <project object="main">
+    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - description</abstract>
+    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - description 2</abstract>
+    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification</class>
+    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification 2</class>
+    <dates>
+      <end authority_type="ddf_project_dates_end_type" authority_type_dan="Forventet" authority_type_eng="Expected" type="expected">20070601</end>
+      <start>20011201</start>
+    </dates>
+    <finance>
+      <body authority="dtu_finance_budget" authority_dan="Ph.d Central finansieret" authority_eng="Ph.d Central finansieret">111</body>
+      <budget>50.000</budget>
+      <contract>34</contract>
+    </finance>
+    <finance>
+      <body>0</body>
+      <budget>59.000</budget>
+      <contract>26</contract>
+    </finance>
+    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keyword</keyword>
+    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keyword 2</keyword>
+    <local>
+      <field authority="dtu_institut_local" authority_dan="DTV" authority_eng="DTV" tag="Institute owner" tagsea="instituteowner" type="4">DTV</field>
+    </local>
+    <local>
+      <field authority="dtu_institut_local" authority_dan="BIC" authority_eng="BIC" tag="Institute owner" tagsea="instituteowner" type="4">BIC</field>
+    </local>
+    <local>
+      <field authority="sub_organisation_local.dtu" authority_dan="CPE" authority_eng="CPE" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">cpe</field>
+    </local>
+    <local>
+      <field authority="sub_organisation_local.dtu" authority_dan="CAMP-DTU" authority_eng="CAMP-DTU" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">camp</field>
+    </local>
+    <local>
+      <field num="3" tag="Internal note" tagsea="internalnote" type="1">Sitecore - internal note</field>
+    </local>
+    <name authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">
+      <acronym>Sitecore - acronym</acronym>
+      <full>Sitecore - main title of project. This record can be used to check our xml-format, Sitecore - sub title of project, Sitecore - acronym</full>
+      <main>Sitecore - main title of project. This record can be used to check our xml-format</main>
+      <sub>Sitecore - sub title of project</sub>
+    </name>
+    <name authority_lang="language" authority_lang_dan="Dansk" authority_lang_eng="Danish" lang="dan">
+      <acronym>Sitecore- akronym</acronym>
+      <full>Sitecor - hoved titel på projektet. Denne post kan anvendes til at checke vores xml-format, Sitecore- undertitel, Sitecore- akronym</full>
+      <main>Sitecor - hoved titel på projektet. Denne post kan anvendes til at checke vores xml-format</main>
+      <sub>Sitecore- undertitel</sub>
+    </name>
+    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - note</note>
+    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - note 2</note>
+    <organisation authority_role="dtu_project_organisation_role" authority_role_dan="Projektdeltager" authority_role_eng="Project member" authority_type="dtu_organisation_type" authority_type_dan="Universiteter og højere læreanstalter" authority_type_eng="Universities and higher education" id="7458" object="aux" role="project member" type="cu">
+      <contact>
+        <email>dtv@dtv.dk</email>
+        <email>fictive@email.kom</email>
+        <fax>+ 45 4588 3040</fax>
+        <fax>+ 45 7689 9876</fax>
+        <mobile>+ 45 3456 7888</mobile>
+        <mobile>+ 45 7678 7876</mobile>
+        <post>
+          <building>101</building>
+          <city>Kgs. Lyngby</city>
+          <country>Denmark</country>
+          <room>134</room>
+          <street>Anker Engelunds Vej 1</street>
+          <zipcode>2800</zipcode>
+        </post>
+        <tel>+ 45 4525 7200</tel>
+        <url>http://www.dtv.dk/om.aspx</url>
+        <url>http://fictive/url</url>
+      </contact>
+      <country>country</country>
+      <name>
+        <full>Technical University of Denmark, Technical Knowledge Center of Denmark, </full>
+        <main>Technical University of Denmark</main>
+        <sub>Technical Knowledge Center of Denmark</sub>
+        <sub2 authority="ddf_organisation_sub2.dtu" authority_dan="Center for Viden Teknologi" authority_eng="Center for Viden Teknologi">Center for Viden Teknologi</sub2>
+        <sub2code/>
+      </name>
+      <person authority_role="dtu_project_person_role" authority_role_dan="Projektmedarbejder" authority_role_eng="Project staff" id="7458" object="aux" postition_title="director" role="project staff">
+        <identifier type="cwisno">2605</identifier>
+        <name>
+          <first>Annette Winkel</first>
+          <full>Schwarz, Annette Winkel</full>
+          <last>Schwarz</last>
+        </name>
+      </person>
+      <person authority_role="dtu_project_person_role" authority_role_dan="Kontaktperson" authority_role_eng="Contact person" id="155953" object="aux" role="contact person">
+        <identifier type="cwisno">1351</identifier>
+        <name>
+          <first>Birthe</first>
+          <full>Krog, Birthe</full>
+          <last>Krog</last>
+        </name>
+      </person>
+    </organisation>
+    <organisation authority_role="dtu_project_organisation_role" authority_role_dan="Projektleder" authority_role_eng="Project leader" authority_type="dtu_organisation_type" authority_type_dan="Non-profit institutioner" authority_type_eng="Non-profit institutions" object="aux" role="project leader" type="np">
+      <contact>
+        <email>fictive@email.kom</email>
+        <email>fictive2@email.kom</email>
+        <fax>+45 5739 5730</fax>
+        <fax>+45 2846 3947</fax>
+        <mobile>4075 6574</mobile>
+        <mobile>6574 9393</mobile>
+        <post>
+          <building>2</building>
+          <city>Fictive city</city>
+          <country>Fictive country</country>
+          <room>123</room>
+          <street>Fictive street</street>
+          <zipcode>2234</zipcode>
+        </post>
+        <tel>+45 8746 5746</tel>
+        <url>http://fictive/url/non-profit</url>
+        <url>http://fictive2/url/non-profit</url>
+      </contact>
+      <country>Fictive country</country>
+      <name>
+        <full>The non-profit fictive institution, Development Department, </full>
+        <main>The non-profit fictive institution</main>
+        <sub>Development Department</sub>
+      </name>
+      <person authority_role="dtu_project_person_role" authority_role_dan="Projektleder" authority_role_eng="Project leader" object="aux" postition_title="Director" role="project leader">
+        <identifier type="cwisno"/>
+        <name>
+          <first>Peter</first>
+          <full>Fictivesen, Peter</full>
+          <last>Fictivesen</last>
+        </name>
+      </person>
+      <person authority_role="dtu_project_person_role" authority_role_dan="Projektmedarbejder" authority_role_eng="Project staff" id="63810" object="aux" postition_title="Administative leader" role="project staff">
+        <identifier type="cwisno"/>
+        <name>
+          <first>Liv</first>
+          <full>Fugl, Liv</full>
+          <last>Fugl</last>
+        </name>
+      </person>
+    </organisation>
+    <status authority="ddf_project_status" authority_dan="Løbende" authority_eng="Current" lang="eng">Current</status>
+    <status lang="dan">Løbende</status>
+    <www>
+      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
+      <url>http://Sitecore - url</url>
+    </www>
+    <www>
+      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
+      <url>http://Sitecore - url 2</url>
+    </www>
+  </project>
+  <derived>
+    <type>
+      <eng>project</eng>
+      <dan>projekt</dan>
+    </type>
+  </derived>
+  <indexing>
+    <instituteowner>DTV</instituteowner>
+    <instituteowner>BIC</instituteowner>
+    <cwisno>2605</cwisno>
+    <cwisno>1351</cwisno>
+    <pyear>2001</pyear>
+    <pyear>2002</pyear>
+    <pyear>2003</pyear>
+    <pyear>2004</pyear>
+    <pyear>2005</pyear>
+    <pyear>2006</pyear>
+    <pyear>2007</pyear>
+    <prstart>2001</prstart>
+    <prend>2007</prend>
+    <sorttitle>Sitecore - main title of project. This record can be used to check our xml-format Sitecore - sub title of project</sorttitle>
+    <ownerclass>dtu</ownerclass>
+  </indexing>
+</ddf>

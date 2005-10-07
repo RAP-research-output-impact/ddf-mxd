@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- table=cat_doc -->
+<!-- key=id -->
+
+<ddf id="153976" type="lr" version="2.0">
+    <admin>
+        <cataloguer>
+            <form>
+                ddf_record_lr
+            </form>
+            <group>
+                dtu_dtv
+            </group>
+            <id>
+                bk
+            </id>
+            <status>
+                O1
+            </status>
+            <timestamp>
+                1105612472
+            </timestamp>
+        </cataloguer>
+        <cataloguer>
+            <form>
+                ddf_record_lr
+            </form>
+            <group>
+                dtu_dtv
+            </group>
+            <id>
+                bk
+            </id>
+            <status>
+                O1
+            </status>
+            <timestamp>
+                1105612472
+            </timestamp>
+        </cataloguer>
+        <heading>
+            test report main title, test report sub title
+        </heading>
+        <system>
+            <created>
+                20050113113432
+            </created>
+            <id>
+                153976
+            </id>
+            <updated>
+                20050113113432
+            </updated>
+        </system>
+    </admin>
+    <document object="main" type="report">
+        <abstract authority_lang="language" lang="eng">
+            test abstract
+        </abstract>
+        <class authority_type="ddf_class_type" type="local">
+            test classification
+        </class>
+        <document object="aux" role="in series" type="series">
+            <title>
+                <main>
+                    test series title
+                </main>
+                <part>
+                    series number
+                </part>
+            </title>
+        </document>
+        <identifier type="ISBN">
+            12345678
+        </identifier>
+        <imprint>
+            <edition>
+                test edition
+            </edition>
+            <pages>
+                1-2
+            </pages>
+            <place>
+                test place
+            </place>
+            <publisher>
+                test publisher
+            </publisher>
+            <year>
+                2001
+            </year>
+        </imprint>
+        <indicator>
+            <geo authority="ddf_document_indicator_geo">
+                national
+            </geo>
+            <level authority="dtu_document_indicator_level">
+                popular
+            </level>
+            <review authority="ddf_document_indicator_review">
+                not reviewed
+            </review>
+        </indicator>
+        <keyword authority_type="ddf_keyword_type" type="local">
+            test keyword
+        </keyword>
+        <language authority="dtu_languages">
+            eng
+        </language>
+        <local>
+            <field authority="dtu_institut_local" tag="Institute owner" type="4">
+                DTV
+            </field>
+        </local>
+        <local1>
+            <field authority="sub_organisation_local.dtu" tag="Sub organisation" type="4">
+                camp
+            </field>
+        </local1>
+        <local3>
+            <field tag="Internal note" type="1">
+                test internal note
+            </field>
+        </local3>
+        <local4>
+            <field authority="dtu_annual_report_year" tag="Annual report year" type="4">
+                2001
+            </field>
+        </local4>
+        <note authority_lang="language" lang="eng">
+            CVT/BK
+        </note>
+        <person authority_role="dtu_document_person_role" id="33365" object="aux" role="author">
+            <contact>
+                <email>
+                    bk@dtv.dk
+                </email>
+            </contact>
+            <identifier type="cwisno">
+                1351
+            </identifier>
+            <name>
+                <first>
+                    Birthe
+                </first>
+                <last>
+                    Krog
+                </last>
+            </name>
+            <organisation id="33365" object="aux" role="employee">
+                <name>
+                    <main>
+                        Danmarks Tekniske Universitet
+                    </main>
+                    <sub>
+                        Danmarks Tekniske Videncenter
+                    </sub>
+                    <sub2 authority="ddf_organisation_sub2.dtu">
+                        Center of Knowledge Technology, CVT
+                    </sub2>
+                </name>
+            </organisation>
+        </person>
+        <title>
+            <main>
+                test report main title
+            </main>
+            <sub>
+                test report sub title
+            </sub>
+        </title>
+        <www>
+            <text authority="dtu_www_text">
+                full text
+            </text>
+            <url>
+                test www
+            </url>
+        </www>
+    </document>
+</ddf>
+

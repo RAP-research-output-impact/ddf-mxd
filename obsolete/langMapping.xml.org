@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<mapping>
+
+  <description>
+    This transformation map is describing the mapping between language
+    in applied in ORBIT (ddf/document/language) and the exchange
+    format.
+  </description>
+ 
+  <rule>
+    <in>English</in>
+    <out>eng-EN</out>
+  </rule>
+  <rule>
+    <in>French</in>
+    <out>fra/fre-FR</out>
+  </rule>
+  <rule>
+    <in>Slovene</in> 
+    <out>slv-SL</out>
+  </rule>
+  <rule>
+    <in>dan</in> 
+    <out>dan-DA</out>
+  </rule>
+  <rule>
+    <in>danish</in> 
+    <out>dan-DA</out>
+  </rule>
+  <rule>
+    <in>eng</in> 
+    <out>eng-EN</out>
+  </rule>
+  <rule>
+    <in>english</in> 
+    <out>eng-EN</out>
+  </rule>
+  <rule>
+    <in>ger</in> 
+    <out>deu/ger-DE</out>
+  </rule>
+  <rule>
+    <in>ita</in> 
+    <out>ita-IT</out>
+  </rule>
+  <rule>
+    <in>jpn</in> 
+    <out>jpn-JA</out>
+  </rule>
+  <rule>
+    <in>rus</in> 
+    <out>rus-RU</out>
+  </rule>
+  <rule>
+    <in>spa</in> 
+    <out>esl/spa-ES</out>
+  </rule>
+  <rule>
+    <in>swe</in> 
+    <out>sve/swe-SV</out>
+  </rule>
+  <rule>
+    <in>no</in> 
+    <out>nor-NO</out>
+  </rule>
+
+</mapping>
+

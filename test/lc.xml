@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ddf id="182423" status="O3" type="lc" user_group="dtu_dtv" user_id="sitecore" version="2.0">
+  <admin>
+    <cataloguer>
+      <form>ddf_record_lc</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O3</status>
+      <timestamp>2005-10-04</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lc</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O1</status>
+      <timestamp>1128084552</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lc</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O1</status>
+      <timestamp>1128416617</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lc</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O21</status>
+      <timestamp>1128416623</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lc</form>
+      <group>dtu_dtv</group>
+      <id>darcdtv</id>
+      <status>O21</status>
+      <timestamp>1128417610</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lc</form>
+      <group>dtu_dtv</group>
+      <id>darcdtv</id>
+      <status>O3</status>
+      <timestamp>1128417616</timestamp>
+    </cataloguer>
+    <heading>Sitecore - main title of contribution. This record can be used to check our xml-format, Sitecore - sub title of contribution</heading>
+    <sortkey>2005</sortkey>
+    <system>
+      <created>20050930144912</created>
+      <id>182423</id>
+      <supplier type="dtu_dtv">
+        <code>dtu_dtv</code>
+        <name lang="eng">dtu_dtv</name>
+        <name lang="dan"/>
+      </supplier>
+      <updated>20051004112016</updated>
+    </system>
+    <type lang="eng">Conference contribution (posters, abstracts) (DTU record)</type>
+    <type lang="dan">Konferencebidrag (posters, abstracts) (DTU post)</type>
+  </admin>
+  <document authority_status="ddf_document_status.dtu" authority_status_dan="Udgivet" authority_status_eng="Published" authority_type="dtu_document_type_lc" authority_type_dan="Poster præsentation" authority_type_eng="Poster presentation" object="main" status="published" type="poster">
+    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - abstract</abstract>
+    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - abstract 2</abstract>
+    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification</class>
+    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification 2</class>
+    <document object="aux" pages="2-78" role="part of" type="book">
+      <document object="aux" role="in series" type="series">
+        <title>
+          <main>Sitecore - title of series</main>
+          <part>4</part>
+        </title>
+      </document>
+      <identifier type="ISBN">3765-9876-88</identifier>
+      <imprint>
+        <edition>Sitecore - edition</edition>
+        <pages>167</pages>
+        <place>Sitecore - place</place>
+        <publisher>Sitecore - publisher</publisher>
+        <year>2005</year>
+      </imprint>
+      <person authority_role="dtu_document_person_role" authority_role_dan="Redaktør" authority_role_eng="Editor" id="155953" object="aux" role="editor">
+        <identifier type="cwisno">1351</identifier>
+        <name>
+          <first>Birthe</first>
+          <full>Krog, Birthe</full>
+          <last>Krog</last>
+        </name>
+      </person>
+      <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" object="aux" role="author">
+        <identifier type="cwisno"/>
+        <name>
+          <first>Jens</first>
+          <full>Mikkelsen, Jens</full>
+          <last>Mikkelsen</last>
+        </name>
+      </person>
+      <title>
+        <main>Sitecore - main title of book / proceeding</main>
+        <part>Sitecore - volume</part>
+        <sub>Sitecore - sub title of book / proceeding</sub>
+      </title>
+    </document>
+    <document object="aux" pages="3 - 789" role="part of" type="book">
+      <document object="aux" role="in series" type="series">
+        <title>
+          <main>Sitecore - title of series 2</main>
+          <part>3</part>
+        </title>
+      </document>
+      <identifier type="ISBN">34-54-45432-4</identifier>
+      <imprint>
+        <edition>Sitecore - edition 2</edition>
+        <pages>34</pages>
+        <place>Sitecore - place 2</place>
+        <publisher>Sitecore publisher 2</publisher>
+        <year>2005</year>
+      </imprint>
+      <person authority_role="dtu_document_person_role" authority_role_dan="Redaktør" authority_role_eng="Editor" id="30000" object="aux" role="editor">
+        <identifier type="cwisno">2685</identifier>
+        <name>
+          <first>Alfred</first>
+          <full>Heller, Alfred</full>
+          <last>Heller</last>
+        </name>
+      </person>
+      <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" id="28837" object="aux" role="author">
+        <identifier type="cwisno">9481</identifier>
+        <name>
+          <first>Roel de</first>
+          <full>Cock, Roel de</full>
+          <last>Cock</last>
+        </name>
+      </person>
+      <title>
+        <main>Sitecore - main title of book / proceeding 2</main>
+        <part>Sitecore - volume 2</part>
+        <sub>Sitecore - sub title of book / proceeding 2</sub>
+      </title>
+    </document>
+    <event authority_type="ddf_event_type.dtu" authority_type_dan="Konference" authority_type_eng="Conference" object="aux" role="presented at" type="conference">
+      <dates>
+        <year>2005</year>
+      </dates>
+      <name>
+        <acronym>Sitecore - acronym</acronym>
+        <full>Sitecore - main title of conference, Sitecore - sub title of conference, Sitecore - acronym</full>
+        <main>Sitecore - main title of conference</main>
+        <number>3</number>
+        <sub>Sitecore - sub title of conference</sub>
+      </name>
+      <place>Sitecore - place of conference</place>
+    </event>
+    <indicator>
+      <geo authority="ddf_document_indicator_geo" authority_dan="National" authority_eng="National">national</geo>
+      <level authority="dtu_document_indicator_level" authority_dan="Videnskabelig" authority_eng="Scientific">scientific</level>
+      <review authority="ddf_document_indicator_review" authority_dan="Ikke reviewed" authority_eng="Not reviewed">not reviewed</review>
+    </indicator>
+    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keywords</keyword>
+    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keywords 2</keyword>
+    <language authority="dtu_languages" authority_dan="Engelsk" authority_eng="English">eng</language>
+    <local>
+      <field authority="dtu_institut_local" authority_dan="DTV" authority_eng="DTV" tag="Institute owner" tagsea="instituteowner" type="4">DTV</field>
+    </local>
+    <local>
+      <field authority="dtu_institut_local" authority_dan="KT" authority_eng="KT" tag="Institute owner" tagsea="instituteowner" type="4">KT</field>
+    </local>
+    <local>
+      <field authority="sub_organisation_local.dtu" authority_dan="CPE" authority_eng="CPE" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">cpe</field>
+    </local>
+    <local>
+      <field authority="sub_organisation_local.dtu" authority_dan="CAMP-DTU" authority_eng="CAMP-DTU" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">camp</field>
+    </local>
+    <local>
+      <field num="3" tag="Internal note" tagsea="internalnote" type="1">Sitecore - internal note</field>
+    </local>
+    <local>
+      <field authority="dtu_annual_report_year" authority_dan="2005" authority_eng="2005" num="4" tag="Annual report year" tagsea="annualreportyear" type="4">2005</field>
+    </local>
+    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - note</note>
+    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - note 2</note>
+    <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" id="155953" object="aux" role="author">
+      <contact>
+        <email>bk@dtv.dk</email>
+      </contact>
+      <identifier type="cwisno">1351</identifier>
+      <name>
+        <first>Birthe</first>
+        <full>Krog, Birthe</full>
+        <last>Krog</last>
+      </name>
+      <organisation id="155953" object="aux" role="employee">
+        <name>
+          <full>Technical University of Denmark, Technical Knowledge Center of Denmark, </full>
+          <main>Technical University of Denmark</main>
+          <sub>Technical Knowledge Center of Denmark</sub>
+          <sub2 authority="ddf_organisation_sub2.dtu" authority_dan="Center for Viden Teknologi" authority_eng="Center for Viden Teknologi">Center for Viden Teknologi</sub2>
+          <sub2code/>
+        </name>
+      </organisation>
+    </person>
+    <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" id="34317" object="aux" role="author">
+      <contact>
+        <email>fictive.email.com</email>
+      </contact>
+      <identifier type="cwisno"/>
+      <name>
+        <first>Peter</first>
+        <full>Fors, Peter</full>
+        <last>Fors</last>
+      </name>
+      <organisation id="34317" object="aux" role="employee">
+        <name>
+          <full>Fictive firm, Development Department, </full>
+          <main>Fictive firm</main>
+          <sub>Development Department</sub>
+        </name>
+      </organisation>
+    </person>
+    <title>
+      <main>Sitecore - main title of contribution. This record can be used to check our xml-format</main>
+      <sub>Sitecore - sub title of contribution</sub>
+    </title>
+    <type lang="eng">poster</type>
+    <type lang="dan"/>
+    <www>
+      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
+      <url>http://Sitecore - url</url>
+    </www>
+    <www>
+      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
+      <url>http://Sitecore - url 2</url>
+    </www>
+  </document>
+  <derived>
+    <type>
+      <eng>conference poster</eng>
+      <dan>konference poster</dan>
+    </type>
+  </derived>
+  <indexing>
+    <annualreportyear>2005</annualreportyear>
+    <instituteowner>DTV</instituteowner>
+    <instituteowner>KT</instituteowner>
+    <cwisno>1351</cwisno>
+    <cwisno>2685</cwisno>
+    <cwisno>9481</cwisno>
+    <cwisno>1351</cwisno>
+    <firstauthor>Krog, Birthe</firstauthor>
+    <sorttitle>Sitecore - main title of contribution. This record can be used to check our xml-format Sitecore - sub title of contribution</sorttitle>
+    <ownerclass>dtu</ownerclass>
+  </indexing>
+</ddf>

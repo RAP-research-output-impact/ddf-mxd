@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ddf id="182412" status="O3" type="la" user_group="dtu_dtv" user_id="sitecore" version="2.0">
+  <admin>
+    <cataloguer>
+      <form>ddf_record_la</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O3</status>
+      <timestamp>2005-10-04</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_la</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O1</status>
+      <timestamp>1128082659</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_la</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O1</status>
+      <timestamp>1128413068</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_la</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O21</status>
+      <timestamp>1128413076</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_la</form>
+      <group>dtu_dtv</group>
+      <id>darcdtv</id>
+      <status>O21</status>
+      <timestamp>1128418141</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_la</form>
+      <group>dtu_dtv</group>
+      <id>darcdtv</id>
+      <status>O3</status>
+      <timestamp>1128418147</timestamp>
+    </cataloguer>
+    <heading>Sitecore - main title. This record can be used to check our xml-format, Sitecore - sub title</heading>
+    <sortkey>2005</sortkey>
+    <system>
+      <created>20050930141739</created>
+      <id>182412</id>
+      <supplier type="dtu_dtv">
+        <code>dtu_dtv</code>
+        <name lang="eng">dtu_dtv</name>
+        <name lang="dan"/>
+      </supplier>
+      <updated>20051004112907</updated>
+    </system>
+    <type lang="eng">Article in journal (DTU record)</type>
+    <type lang="dan">Artikel i tidsskrift (DTU post)</type>
+  </admin>
+  <document authority_status="ddf_document_status.dtu" authority_status_dan="Udgivet" authority_status_eng="Published" object="main" status="published" type="journal article">
+    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - abstract</abstract>
+    <abstract authority_lang="language" authority_lang_dan="Dansk" authority_lang_eng="Danish" lang="dan">Sitecore - abstrakt 2</abstract>
+    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification</class>
+    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification 2</class>
+    <document issue="2" object="aux" pages="2-5" role="in journal" type="journal" vol="1" year="2005">
+      <identifier type="ISSN">1234-5678</identifier>
+      <imprint>
+        <publisher>Sitecore - publisher</publisher>
+      </imprint>
+      <journal>Sitecore - main title in journal</journal>
+      <local authority="dtu_document_isi" authority_dan="Nej" authority_eng="No">no</local>
+      <title>
+        <main>Sitecore - main title in journal</main>
+        <sub>Sitecore - sub title in journal</sub>
+      </title>
+    </document>
+    <indicator>
+      <geo authority="ddf_document_indicator_geo" authority_dan="National" authority_eng="National">national</geo>
+      <level authority="dtu_document_indicator_level" authority_dan="Formidlende" authority_eng="Popular">popular</level>
+      <review authority="ddf_document_indicator_review" authority_dan="Ikke reviewed" authority_eng="Not reviewed">not reviewed</review>
+    </indicator>
+    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keywords</keyword>
+    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keywords 2</keyword>
+    <language authority="dtu_languages" authority_dan="Engelsk" authority_eng="English">eng</language>
+    <local>
+      <field authority="dtu_institut_local" authority_dan="DTV" authority_eng="DTV" tag="Institute owner" tagsea="instituteowner" type="4">DTV</field>
+    </local>
+    <local>
+      <field authority="dtu_institut_local" authority_dan="CTT" authority_eng="CTT" tag="Institute owner" tagsea="instituteowner" type="4">CTT</field>
+    </local>
+    <local>
+      <field authority="sub_organisation_local.dtu" authority_dan="CPE" authority_eng="CPE" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">cpe</field>
+    </local>
+    <local>
+      <field authority="sub_organisation_local.dtu" authority_dan="CAMP-DTU" authority_eng="CAMP-DTU" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">camp</field>
+    </local>
+    <local>
+      <field num="3" tag="Internal note" tagsea="internalnote" type="1">Sitecore - internal note</field>
+    </local>
+    <local>
+      <field authority="dtu_annual_report_year" authority_dan="2005" authority_eng="2005" num="4" tag="Annual report year" tagsea="annualreportyear" type="4">2005</field>
+    </local>
+    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - note</note>
+    <note authority_lang="language" authority_lang_dan="Dansk" authority_lang_eng="Danish" lang="dan">Sitecore - note 2</note>
+    <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" id="155953" object="aux" role="author">
+      <contact>
+        <email>bk@dtv.dk</email>
+      </contact>
+      <identifier type="cwisno">1351</identifier>
+      <name>
+        <first>Birthe</first>
+        <full>Krog, Birthe</full>
+        <last>Krog</last>
+      </name>
+      <organisation id="155953" object="aux" role="employee">
+        <name>
+          <full>Technical University of Denmark, Technical Knowledge Center of Denmark, </full>
+          <main>Technical University of Denmark</main>
+          <sub>Technical Knowledge Center of Denmark</sub>
+          <sub2 authority="ddf_organisation_sub2.dtu" authority_dan="Center for Viden Teknologi" authority_eng="Center for Viden Teknologi">Center for Viden Teknologi</sub2>
+          <sub2code/>
+        </name>
+      </organisation>
+    </person>
+    <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" id="30000" object="aux" role="author">
+      <contact>
+        <email>ajh@dtv.dk</email>
+      </contact>
+      <identifier type="cwisno">2685</identifier>
+      <name>
+        <first>Alfred</first>
+        <full>Heller, Alfred</full>
+        <last>Heller</last>
+      </name>
+      <organisation id="30000" object="aux" role="employee">
+        <name>
+          <full>Technical University of Denmark, Technical Knowledge Center of Denmark, </full>
+          <main>Technical University of Denmark</main>
+          <sub>Technical Knowledge Center of Denmark</sub>
+          <sub2 authority="ddf_organisation_sub2.dtu" authority_dan="Center for Viden Teknologi" authority_eng="Center for Viden Teknologi">Center for Viden Teknologi</sub2>
+          <sub2code/>
+        </name>
+      </organisation>
+    </person>
+    <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" object="aux" role="author">
+      <contact>
+        <email>fiktiv@mail.kom</email>
+      </contact>
+      <identifier type="cwisno"/>
+      <name>
+        <first>Jens</first>
+        <full>Hansen, Jens</full>
+        <last>Hansen</last>
+      </name>
+      <organisation object="aux" role="affiliation">
+        <name>
+          <full>Danmarks fiktive byggefirma, Bygningsafdelingen, </full>
+          <main>Danmarks fiktive byggefirma</main>
+          <sub>Bygningsafdelingen</sub>
+        </name>
+      </organisation>
+    </person>
+    <title>
+      <main>Sitecore - main title. This record can be used to check our xml-format</main>
+      <sub>Sitecore - sub title</sub>
+    </title>
+    <type lang="eng">Journal article</type>
+    <type lang="dan">Tidsskriftartikel</type>
+    <www>
+      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
+      <url>http://Sitecore - url</url>
+    </www>
+    <www>
+      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
+      <url>http://Sitecore - url 2</url>
+    </www>
+  </document>
+  <derived>
+    <type>
+      <eng>journal article</eng>
+      <dan>tidsskriftartikel</dan>
+    </type>
+  </derived>
+  <indexing>
+    <annualreportyear>2005</annualreportyear>
+    <instituteowner>DTV</instituteowner>
+    <instituteowner>CTT</instituteowner>
+    <cwisno>1351</cwisno>
+    <cwisno>2685</cwisno>
+    <dtu_document_isi>no</dtu_document_isi>
+    <firstauthor>Krog, Birthe</firstauthor>
+    <sorttitle>Sitecore - main title. This record can be used to check our xml-format Sitecore - sub title</sorttitle>
+    <ownerclass>dtu</ownerclass>
+  </indexing>
+</ddf>

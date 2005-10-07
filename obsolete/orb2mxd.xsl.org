@@ -1,0 +1,439 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+		version="1.0">
+
+  <xsl:include href="mxdPerson.xsl"/>
+  <xsl:include href="mxdOrganisation.xsl"/>
+  <xsl:include href="mxdDocument.xsl"/>
+
+  <!-- Description:
+       *   
+       *      
+       *  This stylesheet transforms the ORBIT research database XML 
+       *  to the Danish national Exchange Format for Documents MXD
+       * 
+       *  Usage: sabcmd xsl2xsl.xsl records.xml result.xml
+       *         where xsl2xsl.xsl is the current stylesheet
+       *               records.xml is the resulting xml in exchange format
+       *
+  -->
+
+  <!-- Mapping files for specific element -->
+  <xsl:variable name="docTypeMapping" select="document('docTypeMapping.xml')/*"/>
+  <xsl:variable name="recStatusMapping" select="document('recStatusMapping.xml')/*"/>
+  <xsl:variable name="indicatorMapping" select="document('indicatorMapping.xml')/*"/>
+  <xsl:variable name="langMapping" select="document('langMapping.xml')/*"/>
+
+
+  <xsl:output method="xml" indent="yes" encoding="utf-8"/>
+
+  <xsl:template match="/*">
+    <xsl:element name="records">
+      <xsl:apply-templates/>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="//ddf"> <!-- ##### ROOT ELEMENT ##### -->
+    
+    <!-- ##### RECORD ELMENT ##### -->
+    <xsl:element name="ddf-doc">
+      <xsl:attribute name="rec_id">dtu<xsl:value-of select="@id"/></xsl:attribute>
+      <xsl:variable name="actualType"><xsl:value-of select="@type"/></xsl:variable>
+      <xsl:attribute name="doc_type"><xsl:value-of select="$docTypeMapping/rule[in = $actualType]/out"/></xsl:attribute>
+      <xsl:call-template name="handle-admin">
+	<xsl:with-param name="element" select="admin"/>
+      </xsl:call-template>
+      <xsl:call-template name="handle-language">
+	<xsl:with-param name="element" select="document/language"/>
+      </xsl:call-template>
+      <!-- ##### PUBLICATION BLOCK (main) ##### -->
+      <xsl:element name="publication">
+	<xsl:variable name="actualDocumentType"><xsl:value-of select="document/@type"/></xsl:variable>
+	<xsl:element name="{$docTypeMapping/rule[in = $actualType and type = $actualDocumentType]/name}">
+	  <xsl:variable name="actualPublicationFlowStatus"> <!-- E.g. unpublished, published -->
+	    <xsl:value-of select="document/@status"/>
+	  </xsl:variable>
+	  <xsl:attribute name="pub_status"><xsl:value-of select="$docTypeMapping/rule[in = $actualPublicationFlowStatus]/out"/></xsl:attribute>
+	  
+	  <xsl:call-template name="handle-bibliographics">
+	    <xsl:with-param name="element" select="document"/>
+	  </xsl:call-template>
+ 	  <xsl:call-template name="handle-bibliographics">
+	    <xsl:with-param name="element" select="document/document"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="handle-indicator">
+	    <xsl:with-param name="element" select="document/indicator"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="handle-title">
+	    <xsl:with-param name="element" select="document/title"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="handle-ixxn">
+	    <xsl:with-param name="element" select="document/identifier"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="handle-imprint">
+	    <xsl:with-param name="element" select="document/imprint"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="handle-patent">
+	    <xsl:with-param name="element" select="document/patent"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="handle-www">
+	    <xsl:with-param name="element" select="document/www"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="handle-unstruc">
+	    <xsl:with-param name="element" select="document/unstruc"/>
+	  </xsl:call-template>
+	</xsl:element>
+      </xsl:element>
+
+
+      <!-- HANDLING SUBDOCUMENTS -->
+      <xsl:variable name="unique-ids">
+	<xsl:for-each select="//organisation/@id[not(.=preceding::*/organisation/@id)]">
+	  <orgId><xsl:value-of select="."/></orgId>
+	</xsl:for-each>
+      </xsl:variable>
+
+      <xsl:for-each select="document/person">
+	<xsl:call-template name="handle-person">
+	  <xsl:with-param name="element" select="."/>
+	</xsl:call-template>
+      </xsl:for-each>
+      <xsl:for-each select="document/person/organisation[not(.=preceding::*/@id)]">
+	<xsl:call-template name="handle-organisation">
+	  <xsl:with-param name="element" select="."/>
+	</xsl:call-template>
+      </xsl:for-each>
+
+      <xsl:call-template name="handle-document">
+	<xsl:with-param name="element" select="document/document"/>
+      </xsl:call-template>
+      
+      <!-- ##### DESCRIPTION BLOCK -->
+      <xsl:element name="description">
+	<xsl:call-template name="handle-abstract">
+	  <xsl:with-param name="element" select="document/abstract"/>
+	</xsl:call-template>
+	<xsl:call-template name="handle-note">
+	  <xsl:with-param name="element" select="document/note"/>
+	</xsl:call-template>
+	<xsl:call-template name="handle-hardcopy">
+	  <xsl:with-param name="element" select="document/hardcopy"/>
+	</xsl:call-template>
+	<xsl:element name="subject">
+	  <xsl:call-template name="handle-class">
+	    <xsl:with-param name="element" select="document/class"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="handle-keyword">
+	    <xsl:with-param name="element" select="document/keyword"/>
+	  </xsl:call-template>
+	</xsl:element>
+      </xsl:element>
+    </xsl:element>
+  </xsl:template>
+
+
+  <xsl:template name="handle-title">
+    <xsl:param name="element"/>
+    <xsl:element name="title">
+      <xsl:attribute name="xml:lang"><xsl:value-of select="$element/@lang"/></xsl:attribute>
+      <xsl:element name="original">
+	<xsl:choose>
+	  <xsl:when test="string-length($element/unstruc)">
+	    <xsl:element name="main">
+	      <xsl:value-of select="$element/unstruc"/>
+	    </xsl:element>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:for-each select="$element/*">
+	      <xsl:if test="string-length(.)">
+		<xsl:element name="{name()}">
+		  <xsl:value-of select="."/>
+		</xsl:element>
+	      </xsl:if>
+	    </xsl:for-each>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:element>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="handle-name">
+    <xsl:param name="element"/>
+    <xsl:element name="name">
+      <xsl:for-each select="$element/*">
+	<xsl:if test="string-length(.)">
+	  <xsl:element name="{name()}">
+	    <xsl:value-of select="."/>
+	  </xsl:element>
+	</xsl:if>
+      </xsl:for-each>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="handle-contact">
+    <xsl:param name="element"/>
+    <xsl:element name="email">
+      <xsl:value-of select="$element/email"/>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="handle-indicator">
+    <xsl:param name="element"/>
+    <xsl:variable name="actualLevel"><xsl:value-of select="normalize-space($element/level)"/></xsl:variable>
+    <xsl:attribute name="doc_level"><xsl:value-of select="$indicatorMapping/rule[in = $actualLevel]/out"/></xsl:attribute>
+    <xsl:variable name="actualGeo"><xsl:value-of select="normalize-space($element/geo)"/></xsl:variable>
+    <xsl:attribute name="doc_geo"><xsl:value-of select="$indicatorMapping/rule[in = $actualGeo]/out"/></xsl:attribute>
+    <xsl:variable name="actualReview"><xsl:value-of select="normalize-space($element/review)"/></xsl:variable>
+    <xsl:attribute name="doc_review"><xsl:value-of select="$indicatorMapping/rule[in = $actualReview]/out"/></xsl:attribute>
+  </xsl:template>
+  <xsl:template match="description">
+    <!-- Avoiding target output -->
+  </xsl:template>
+  
+  <xsl:template name="handle-ixxn">
+    <xsl:param name="element"/>
+
+    <xsl:choose>
+      <xsl:when test="$element/@type = 'ISSN'">
+	<xsl:variable name="replace-string">
+	  <xsl:call-template name="replace-substring">
+	    <xsl:with-param name="original" select="$element"/>
+	    <xsl:with-param name="substring" select="'-'"/>
+	    <xsl:with-param name="replacement" select="''"/>
+	  </xsl:call-template>
+	</xsl:variable>
+	<xsl:element name="issn">
+	  <xsl:value-of select="$replace-string"/>
+	</xsl:element>
+      </xsl:when>
+      <xsl:when test="$element/@type = 'ISBN'">
+	<xsl:element name="isbn">
+	  <xsl:value-of select="$replace-string"/>
+	</xsl:element>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="handle-imprint">
+    <xsl:param name="element"/>
+    <xsl:choose>
+      <xsl:when test="string-length($element/unstruc)">
+	<!-- not mapped according to Liv -->
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="$element/*">
+	  <xsl:if test="string-length(.)">
+	    <xsl:element name="{name(.)}">
+	      <xsl:value-of select="."/>
+	    </xsl:element>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="handle-bibliographics">
+    <xsl:param name="element"/>
+
+    <xsl:if test="$element/@vol">
+      <xsl:attribute name="vol"><xsl:value-of select="$element/@vol"/></xsl:attribute>
+    </xsl:if>
+    <xsl:if test="$element/@issue">
+      <xsl:attribute name="issue"><xsl:value-of select="$element/@issue"/></xsl:attribute>
+    </xsl:if>
+    <xsl:if test="$element/@year">
+      <xsl:attribute name="year"><xsl:value-of select="$element/@year"/></xsl:attribute>
+    </xsl:if>
+    <xsl:if test="$element/@pages">
+      <xsl:attribute name="pages"><xsl:value-of select="$element/@pages"/></xsl:attribute>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="handle-patent">
+    <xsl:param name="element"/>
+
+    <xsl:element name="patent">
+      <xsl:attribute name="pub_status">
+	<xsl:value-of select="$element/status"/>
+      </xsl:attribute>
+      <xsl:element name="country">
+	<xsl:value-of select="$element/contry"/>
+      </xsl:element>
+      <xsl:element name="ipc">
+	<xsl:value-of select="$element/ipc"/>
+      </xsl:element>
+      <xsl:element name="number">
+	<xsl:value-of select="$element/number"/>
+      </xsl:element>
+      <xsl:element name="date">
+	<xsl:choose>
+	  <xsl:when test="string-length(date)">
+	    <xsl:value-of select="date"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="year"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:element>
+      <xsl:element name="name">
+	<xsl:value-of select="$element/unstruc"/>
+      </xsl:element>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="handle-language">
+    <xsl:param name="element"/>
+    <xsl:variable name="actualLang"><xsl:value-of select="normalize-space($element/language)"/></xsl:variable>
+    <xsl:attribute name="doc_lang"><xsl:value-of select="$langMapping/rule[in = $actualLang]/out"/></xsl:attribute>
+  </xsl:template>
+
+
+  <xsl:template name="handle-admin">
+    <xsl:param name="element"/>
+
+    <xsl:attribute name="rec-upd"><xsl:value-of select="normalize-space($element/system/updated)"/></xsl:attribute>
+    <xsl:attribute name="rec_source"><xsl:value-of select="normalize-space($element/cataloguer[last()]/group)"/></xsl:attribute>
+      <xsl:variable name="actualStatus"><xsl:value-of select="normalize-space($element/cataloguer[last()]/status)"/></xsl:variable>
+      <xsl:attribute name="rec_status"><xsl:value-of select="$recStatusMapping/rule[in = $actualStatus]/out"/></xsl:attribute>
+  </xsl:template>
+  
+
+
+  <!-- TODO -->
+  <xsl:template name="handle-abstract">
+    <xsl:param name="element"/>
+    <xsl:element name="abstract">
+      <xsl:attribute name="xml:lang"><xsl:value-of select="$element/@lang"/></xsl:attribute>
+      <xsl:copy-of select="$element/text()"/>
+    </xsl:element>
+  </xsl:template>
+  
+  <xsl:template name="handle-note">
+    <xsl:param name="element"/>
+    <xsl:element name="note">
+      <xsl:attribute name="xml:lang"><xsl:value-of select="$element/@lang"/></xsl:attribute>
+      <xsl:copy-of select="$element/text()"/>
+    </xsl:element>
+  </xsl:template>
+  
+  <xsl:template name="handle-class">
+    <xsl:param name="element"/>
+    <xsl:element name="class">
+      <xsl:attribute name="class_type"><xsl:value-of select="$element/@type"/></xsl:attribute>
+      <!-- Note: $element/level is not mapped -->
+      
+      <xsl:copy-of select="$element/text()"/>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="handle-keyword">
+    <xsl:param name="element"/>
+    <xsl:element name="keyword">
+      <xsl:attribute name="key_type"><xsl:value-of select="$element/@type"/></xsl:attribute>
+      <!-- Note: $element/level is not mapped -->
+      
+      <xsl:copy-of select="$element/text()"/>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="handle-www">
+    <xsl:param name="element"/>
+    <xsl:element name="inetpub">
+      <xsl:element name="uri">
+	<xsl:value-of select="normalize-space($element/url)"/>
+      </xsl:element>
+    </xsl:element>
+    <!-- PS: name and text elements are not mapped -->
+  </xsl:template>
+
+  <xsl:template name="handle-hardcopy">
+    <xsl:param name="element"/>
+    <xsl:element name="note">
+      <xsl:copy-of select="$element/node()"/>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="handle-locals">
+    <xsl:param name="element"/>
+    <xsl:element name="local_field">
+      <xsl:if test="$element/@tag">
+	<xsl:attribute name="tag_type"><xsl:value-of select="normalize-space($element/@tag)"/></xsl:attribute>
+      </xsl:if>
+      <xsl:if test="$element/@lang">
+	<xsl:attribute name="xml:lang"><xsl:value-of select="normalize-space($element/@lang)"/></xsl:attribute>
+      </xsl:if>
+      <xsl:element name="data">
+	<xsl:value-of select="$element"/>
+      </xsl:element>
+      <xsl:element name="code">
+	<xsl:value-of select="$element/@tag"/>
+      </xsl:element>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="handle-unstruc">
+    <xsl:param name="element"/>
+    <!-- not mapped -->
+  </xsl:template>
+
+
+  <xsl:template match="* | @*">
+    <!-- Handling <xsl:value-of select="name()"/> -->
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template name="replace-substring">
+    <xsl:param name="original"/>
+    <xsl:param name="substring"/>
+    <xsl:param name="replacement" select="''"/>
+
+    <xsl:variable name="first">
+      <xsl:choose>
+	<xsl:when test="contains($original, $substring)">
+	   <xsl:value-of select="substring-before($original,$substring)"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$original"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="middle">
+      <xsl:choose>
+	<xsl:when test="contains($original, $substring)">
+	   <xsl:value-of select="$replacement"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text></xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="last">
+      <xsl:choose>
+	<xsl:when test="contains($original, $substring)">
+	  <xsl:choose>
+	    <xsl:when test="contains(substring-after($original,$substring), $substring)">
+	      <xsl:call-template name="replace-substring">
+		<xsl:with-param name="original" select="substring-after($original, $substring)"/>
+		<xsl:with-param name="substring" select="$substring"/>
+		<xsl:with-param name="replacement" select="$replacement"/>
+	      </xsl:call-template>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="substring-after($original, $substring)"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	   <xsl:value-of select="$replacement"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text></xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:value-of select="concat($first,$middle,$last)"/>
+  </xsl:template>
+  
+</xsl:stylesheet>
+

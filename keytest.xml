@@ -1,0 +1,107 @@
+<root>
+
+  <!-- ************************************************** -->
+  <record>
+    <person>
+      <name>Birthe</name>
+      <org id="111">
+        <name>DTV</name>
+      </org>
+    </person>
+    
+    <person>
+      <name>Alfred</name>
+      <org id="18678">
+        <name>BYG</name>
+      </org>
+    </person>
+    
+    <person>
+      <name>Roel</name>
+      <org id="111">
+        <name>DTV</name>
+      </org>
+    </person>
+  
+    <person>
+      <name>Mads</name>
+      <org>
+        <name>Nordija</name>
+      </org>
+    </person>
+    
+    <person>
+      <name>Lise</name>
+      <org>
+        <name>Biblioteksstyrelsen</name>
+      </org>
+    </person>
+    
+    <person>
+      <name>Morten</name>
+      <org>
+        <name>Nordija</name>
+      </org>
+    </person>
+  </record>
+
+  <!-- ************************************************** -->
+  <record>
+    <person>
+      <name>Hannah</name>
+      <org>
+        <name>KU</name>
+      </org>
+    </person>
+
+    <person>
+      <name>Peter</name>
+      <org id="111">
+        <name>DTV</name>
+      </org>
+    </person>
+
+    <person>
+      <name>Jessica</name>
+      <org>
+        <name>LUB</name>
+      </org>
+    </person>
+
+    <person>
+      <name>Nescio</name>
+      <org>
+        <name>DTV</name>
+      </org>
+    </person>
+  </record>
+
+  <!-- ************************************************** -->
+  <record>
+    <person>
+      <name>Diba</name>
+      <org>
+        <name>KU</name>
+      </org>
+    </person>
+  </record>
+
+  <!-- ************************************************** -->
+  <record>
+    <person>
+      <name>Liv</name>
+      <org id="111">
+        <name>DTV</name>
+      </org>
+    </person>
+
+    <person>
+      <name>Birthe</name>
+      <org id="111">
+        <name>DTV</name>
+      </org>
+    </person>
+  </record>
+
+
+</root>

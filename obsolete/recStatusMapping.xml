@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<mapping>
+
+  <description>
+    This transformation map is describing the mapping between
+    record status in applied in ORBIT and the exchange format.
+
+    Consider this deprecated. rec_status depends on a context (namely,
+    whomever we are delivering data to, or whomever is harvesting
+    ours, so we cannote determine a changed/new status. Currently all
+    are set to c.
+  </description>
+ 
+  <!-- ddf/@type -->
+  <rule>
+    <in>O3</in>
+    <out>N</out>
+  </rule>
+  <rule>
+    <in>O4</in>
+    <out>C</out>
+  </rule>
+  <rule>
+    <in>D</in> <!-- TODO !!!!!!!!! -->
+    <out>D</out>
+  </rule>
+
+</mapping>
+

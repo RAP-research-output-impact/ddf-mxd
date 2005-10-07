@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- table=cat_doc -->
+<!-- key=id -->
+
+<ddf id="153981" type="lalc" version="2.0">
+    <admin>
+        <cataloguer>
+            <form>
+                ddf_record_lalc
+            </form>
+            <group>
+                dtu_dtv
+            </group>
+            <id>
+                bk
+            </id>
+            <status>
+                O1
+            </status>
+            <timestamp>
+                1105614334
+            </timestamp>
+        </cataloguer>
+        <cataloguer>
+            <form>
+                ddf_record_lalc
+            </form>
+            <group>
+                dtu_dtv
+            </group>
+            <id>
+                bk
+            </id>
+            <status>
+                O1
+            </status>
+            <timestamp>
+                1105614334
+            </timestamp>
+        </cataloguer>
+        <heading>
+            test conf. paper in journal main title, test conf. paper in journal sub title
+        </heading>
+        <system>
+            <created>
+                20050113120534
+            </created>
+            <id>
+                153981
+            </id>
+            <updated>
+                20050113120534
+            </updated>
+        </system>
+    </admin>
+    <document authority_status="ddf_document_status.dtu" object="main" status="unpublished" type="conference in journal">
+        <abstract authority_lang="language" lang="dan">
+            test abstract
+        </abstract>
+        <class authority_type="ddf_class_type" type="local">
+            test classification
+        </class>
+        <document issue="test issue" object="aux" pages="1-2" role="in journal" type="journal" vol="test volume" year="2001">
+            <identifier type="ISSN">
+                12345678
+            </identifier>
+            <imprint>
+                <publisher>
+                    test publisher
+                </publisher>
+            </imprint>
+            <local2 authority="dtu_document_isi">
+                no
+            </local2>
+            <title>
+                <main>
+                    test main title in journal
+                </main>
+                <sub>
+                    test sub title in journal
+                </sub>
+            </title>
+        </document>
+        <event authority_type="ddf_event_type.dtu" object="aux" role="presented at" type="conference">
+            <dates>
+                <year>
+                    2001
+                </year>
+            </dates>
+            <name>
+                <acronym>
+                    acronym
+                </acronym>
+                <main>
+                    test conference main title
+                </main>
+                <number>
+                    number
+                </number>
+                <sub>
+                    test conference sub title
+                </sub>
+            </name>
+            <place>
+                test place
+            </place>
+        </event>
+        <indicator>
+            <geo authority="ddf_document_indicator_geo">
+                national
+            </geo>
+            <level authority="dtu_document_indicator_level">
+                popular
+            </level>
+            <review authority="ddf_document_indicator_review">
+                not reviewed
+            </review>
+        </indicator>
+        <keyword authority_type="ddf_keyword_type" type="local">
+            test keyword
+        </keyword>
+        <language authority="dtu_languages">
+            eng
+        </language>
+        <local>
+            <field authority="dtu_institut_local" tag="Institute owner" type="4">
+                DTV
+            </field>
+        </local>
+        <local1>
+            <field authority="sub_organisation_local.dtu" tag="Sub organisation" type="4">
+                camp
+            </field>
+        </local1>
+        <local3>
+            <field tag="Internal note" type="1">
+                test internal note
+            </field>
+        </local3>
+        <local4>
+            <field authority="dtu_annual_report_year" tag="Annual report year" type="4">
+                2001
+            </field>
+        </local4>
+        <note authority_lang="language" lang="dan">
+            CVT/BK
+        </note>
+        <person authority_role="dtu_document_person_role" id="33365" object="aux" role="author">
+            <contact>
+                <email>
+                    bk@dtv.dk
+                </email>
+            </contact>
+            <identifier type="cwisno">
+                1351
+            </identifier>
+            <name>
+                <first>
+                    Birthe
+                </first>
+                <last>
+                    Krog
+                </last>
+            </name>
+            <organisation id="33365" object="aux" role="employee">
+                <name>
+                    <main>
+                        Danmarks Tekniske Universitet
+                    </main>
+                    <sub>
+                        Danmarks Tekniske Videncenter
+                    </sub>
+                    <sub2 authority="ddf_organisation_sub2.dtu">
+                        Center for Viden Teknologi, CVT
+                    </sub2>
+                </name>
+            </organisation>
+        </person>
+        <title>
+            <main>
+                test conf. paper in journal main title
+            </main>
+            <sub>
+                test conf. paper in journal sub title
+            </sub>
+        </title>
+        <www>
+            <text authority="dtu_www_text">
+                full text
+            </text>
+            <url>
+                test www
+            </url>
+        </www>
+    </document>
+</ddf>
+

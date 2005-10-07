@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ddf id="182468" status="O3" type="lp" user_group="dtu_dtv" user_id="sitecore" version="2.0">
+  <admin>
+    <cataloguer>
+      <form>ddf_record_lp</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O3</status>
+      <timestamp>2005-10-04</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lp</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O1</status>
+      <timestamp>1128420251</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lp</form>
+      <group>dtu_dtv</group>
+      <id>sitecore</id>
+      <status>O21</status>
+      <timestamp>1128420257</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lp</form>
+      <group>dtu_dtv</group>
+      <id>darcdtv</id>
+      <status>O21</status>
+      <timestamp>1128420281</timestamp>
+    </cataloguer>
+    <cataloguer>
+      <form>ddf_record_lp</form>
+      <group>dtu_dtv</group>
+      <id>darcdtv</id>
+      <status>O3</status>
+      <timestamp>1128420287</timestamp>
+    </cataloguer>
+    <heading>Sitecore - hovedtitel, Sitecore - undertitel</heading>
+    <sortkey>0000</sortkey>
+    <system>
+      <created>20051004120411</created>
+      <id>182468</id>
+      <supplier type="dtu_dtv">
+        <code>dtu_dtv</code>
+        <name lang="eng">dtu_dtv</name>
+        <name lang="dan"/>
+      </supplier>
+      <updated>20051004120447</updated>
+    </system>
+    <type lang="eng">Patent (Only used by the DTU adm.) (DTU record)</type>
+    <type lang="dan">Patent (Anvendes kun af DTU's adm.) (DTU post)</type>
+  </admin>
+  <document object="main" status="published" type="patent application">
+    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Abstract</abstract>
+    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Abstract 2</abstract>
+    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">classification</class>
+    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">classification 2</class>
+    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Keywords</keyword>
+    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">keywords 2</keyword>
+    <local>
+      <field authority="dtu_institut_local" authority_dan="DTV" authority_eng="DTV" tag="Institute owner" tagsea="instituteowner" type="4">DTV</field>
+    </local>
+    <local>
+      <field authority="dtu_institut_local" authority_dan="COM" authority_eng="COM" tag="Institute owner" tagsea="instituteowner" type="4">COM</field>
+    </local>
+    <local>
+      <field authority="sub_organisation_local.dtu" authority_dan="CPE" authority_eng="CPE" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">cpe</field>
+    </local>
+    <local>
+      <field authority="sub_organisation_local.dtu" authority_dan="CAMP-DTU" authority_eng="CAMP-DTU" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">camp</field>
+    </local>
+    <local>
+      <field num="3" tag="Internal note" tagsea="internalnote" type="1">Internal note</field>
+    </local>
+    <local>
+      <field authority="dtu_annual_report_year" authority_dan="2005" authority_eng="2005" num="4" tag="Annual report year" tagsea="annualreportyear" type="4">2005</field>
+    </local>
+    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">note</note>
+    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">note 2</note>
+    <patent>
+      <country>Denmark</country>
+      <date>20050631</date>
+      <number>3452</number>
+    </patent>
+    <person id="155953" object="aux" role="inventor">
+      <contact>
+        <email>bk@dtv.dk</email>
+      </contact>
+      <identifier type="cwisno">1351</identifier>
+      <name>
+        <first>Birthe</first>
+        <full>Krog, Birthe</full>
+        <last>Krog</last>
+      </name>
+      <organisation id="155953" object="aux" role="employee">
+        <name>
+          <full>Technical University of Denmark, Technical Knowledge Center of Denmark, </full>
+          <main>Technical University of Denmark</main>
+          <sub>Technical Knowledge Center of Denmark</sub>
+          <sub2 authority="ddf_organisation_sub2.dtu" authority_dan="Center for Viden Teknologi" authority_eng="Center for Viden Teknologi">Center for Viden Teknologi</sub2>
+          <sub2code/>
+        </name>
+      </organisation>
+    </person>
+    <person object="aux" role="inventor">
+      <contact>
+        <email>fictive@email.kom</email>
+      </contact>
+      <identifier type="cwisno"/>
+      <name>
+        <first>Peter</first>
+        <full>Hansen, Peter</full>
+        <last>Hansen</last>
+      </name>
+      <organisation object="aux" role="affiliation">
+        <name>
+          <full>Fictive firm, Development Department, </full>
+          <main>Fictive firm</main>
+          <sub>Development Department</sub>
+        </name>
+      </organisation>
+    </person>
+    <title authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">
+      <main>Sitecore - main title of patent. This record can be used to check our xml-format</main>
+      <sub>Sitecore- sub title</sub>
+    </title>
+    <title authority_lang="language" authority_lang_dan="Dansk" authority_lang_eng="Danish" lang="dan">
+      <main>Sitecore - hovedtitel</main>
+      <sub>Sitecore - undertitel</sub>
+    </title>
+    <type lang="eng">Patent application</type>
+    <type lang="dan">Patent ansøgning</type>
+    <www>
+      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
+      <url>http://fictive/url</url>
+    </www>
+    <www>
+      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
+      <url>http://fictive/url 2</url>
+    </www>
+  </document>
+  <derived>
+    <type>
+      <eng>patent</eng>
+      <dan>patent</dan>
+    </type>
+  </derived>
+  <indexing>
+    <annualreportyear>2005</annualreportyear>
+    <instituteowner>DTV</instituteowner>
+    <instituteowner>COM</instituteowner>
+    <cwisno>1351</cwisno>
+    <firstauthor>Krog, Birthe</firstauthor>
+    <sorttitle>Sitecore - main title of patent. This record can be used to check our xml-format Sitecore- sub title</sorttitle>
+    <ownerclass>dtu</ownerclass>
+  </indexing>
+</ddf>

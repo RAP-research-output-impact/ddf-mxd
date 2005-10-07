@@ -1,0 +1,8 @@
+The directory test/cat contains records in the format in which they are
+stored in the database (plus some indentation). Main difference with 
+the exported (Zebra) is, that the local fields have tags like local,
+local2, local3 etc. to cater for Metatoo's (im)possibilities with forms.
+
+Look at test/*.xml to see the format that end-users get to see when
+they download records.
+

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<mapping>
+
+  <description>
+    This transformation map is describing the mapping between
+    person/@role applied in ORBIT and the DDF/MXD format.
+
+    BUGS
+    Orbit's @role="inventor" is ignored, it should be corrected in the db.
+  </description>
+ 
+  <rule>
+    <in>author</in>
+    <out>pau</out>
+  </rule>
+  <rule>
+    <in>corresponding author</in> 
+    <out>pau</out>
+  </rule>
+  <rule>
+    <in>editor</in> 
+    <out>ped</out>
+  </rule>
+  <rule>
+    <in>supervisor</in>
+    <out>pau</out> <!-- missing fit in MXD format -->
+  </rule>
+</mapping>

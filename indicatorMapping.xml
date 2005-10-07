@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<mapping>
+
+  <description>
+    This transformation map is describing the mapping between
+    indicators in applied in ORBIT and the exchange format.
+  </description>
+ 
+  <!-- ddf/document/level -->
+  <rule>
+    <in>scientific</in>
+    <out>sci</out>
+  </rule>
+  <rule>
+    <in>administrative</in>
+    <out>adm</out>
+  </rule>
+  <rule>
+    <in>educational</in>
+    <out>edu</out>
+  </rule>
+  <rule>
+    <in>popular</in>
+    <out>pop</out>
+  </rule>
+
+  <!-- ddf/document/review -->
+  <rule>
+    <in>peer reviewed</in>
+    <out>pr</out>
+  </rule>
+  <rule>
+    <in>not reviewed</in>
+    <out>nr</out>
+  </rule>
+  <rule>
+    <in>na</in>
+    <out>und</out>
+  </rule>
+  <rule>
+    <!-- this rule is deprecated; all records should get 'na' -->
+    <in></in>
+    <out>und</out>
+  </rule>
+
+</mapping>
+

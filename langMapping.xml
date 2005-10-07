@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<mapping>
+
+  <description>
+    This transformation map is describing the mapping between language
+    in applied in ORBIT (ddf/document/language) and the exchange
+    format.
+
+    current Orbit count:
+        4 chi
+     3011 dan
+    19623 eng
+        1 fre
+       18 ger
+        2 ita
+        1 jap eng
+        5 jpn
+       86 other
+        1 rus
+        4 spa
+        4 swe
+  </description>
+ 
+  <rule>
+    <in>eng</in>
+    <out>eng</out>
+  </rule>
+  <rule>
+    <in>fre</in>
+    <out>fre</out>
+  </rule>
+  <rule>
+    <in>dan</in> 
+    <out>dan</out>
+  </rule>
+  <rule>
+    <in>ger</in> 
+    <out>ger</out>
+  </rule>
+  <rule>
+    <in>ita</in> 
+    <out>ita</out>
+  </rule>
+  <rule>
+    <in>jpn</in> 
+    <out>jpn</out>
+  </rule>
+  <rule>
+    <in>rus</in> 
+    <out>rus</out>
+  </rule>
+  <rule>
+    <in>spa</in> 
+    <out>spa</out>
+  </rule>
+  <rule>
+    <in>swe</in> 
+    <out>swe</out>
+  </rule>
+  <rule>
+    <in>nor</in> 
+    <out>nor</out>
+  </rule>
+  <rule>
+    <in>chi</in>
+    <out>chi</out>
+  </rule>
+  <rule>
+    <in>other</in>
+    <out>und</out>
+  </rule>
+  <rule>
+    <in></in>
+    <out>und</out>
+  </rule>
+
+</mapping>
+
