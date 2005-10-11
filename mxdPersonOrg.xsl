@@ -64,6 +64,7 @@
   
 
   <xsl:template name="handle-person">
+    <xsl:param name="orgs"/>
     <xsl:element name="person">
       <xsl:attribute name="pers_role">
         <xsl:variable name="role" select="@role"/>
