@@ -16,26 +16,16 @@
 
   <xsl:template name="element-person-organisation">
 
+    <!-- I do not expect more than 1 org per person... -->
+    <xsl:variable name="orgs" select="document/person/organisation[not(name=../preceding-sibling::*/organisation/name)]"/>
+
     <xsl:for-each select="document/person">
-      <xsl:call-template name="handle-person"/>
+      <xsl:call-template name="handle-person">
+        <xsl:with-param name="orgs" select="$orgs"/>
+      </xsl:call-template>
     </xsl:for-each>
         
-    <!--
-        Hmm, problem: we'd like to avoid listing the same org twice,
-        AND I'd like to include @id in the key. I have no idea how I
-        could use a function like key() or concat() in a nodeset
-        comparison- I suppose it can't be done. You could try:
-        
-        person/org[not(. = ../preceding-sibling::*/org)]
-        
-        ...but that will compare the value-of the nodes and that
-        does not include @id.
-        
-        So for now we'll have to live with doubles. Alternatively we
-        can use only the value-of <organisation/name> as key.
-    -->
-    <!--xsl:for-each select="document/person/organisation"-->
-    <xsl:for-each select="document/person/organisation[not(. = ../preceding-sibling::*/organisation)]">
+    <xsl:for-each select="$orgs">
       <xsl:call-template name="handle-organisation"/>
     </xsl:for-each>
 
@@ -46,7 +36,7 @@
     <xsl:element name="organisation">
       <xsl:attribute name="org_role">oaf</xsl:attribute>
       <xsl:attribute name="aff_no">
-        <xsl:value-of select="generate-id(key('orgkey', name))"/>
+        <xsl:value-of select="position()"/>
       </xsl:attribute>
 
       <name>
@@ -79,8 +69,13 @@
         <xsl:variable name="role" select="@role"/>
         <xsl:value-of select="$personRoleMapping/rule[in=$role]/out"/>
       </xsl:attribute>
+      <xsl:variable name="thisorg" select="organisation/name"/>
       <xsl:attribute name="aff_no">
-        <xsl:value-of select="generate-id(key('orgkey', organisation/name))"/>
+        <xsl:for-each select="$orgs">
+          <xsl:if test="name=$thisorg">
+            <xsl:value-of select="position()"/>
+          </xsl:if>
+        </xsl:for-each>
       </xsl:attribute> 
 
       <name>

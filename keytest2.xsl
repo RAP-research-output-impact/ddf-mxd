@@ -11,11 +11,14 @@
 
     <root>
       <xsl:for-each select="record">
-        <xsl:variable name="orgs">
+
+        <xsl:variable name="orgs" select="person/org[not(name = ../preceding-sibling::*/org/name)]"/>
+        <!--
           <xsl:for-each select="person/org[not(. = ../preceding-sibling::*/org)]">
             <xsl:copy-of select="."/>
           </xsl:for-each>
         </xsl:variable>
+        -->
 
         <record>
           <xsl:for-each select="person">
@@ -23,11 +26,11 @@
               <xsl:with-param name="orgs" select="$orgs"/>
             </xsl:call-template>
           </xsl:for-each>
-          
-          <xsl:for-each select="$orgs/org">
+
+          <xsl:for-each select="$orgs">
             <xsl:call-template name="handle-organisation"/>
           </xsl:for-each>
-          </record>
+        </record>
       </xsl:for-each>        
 
     </root>
@@ -48,11 +51,11 @@
   <xsl:template name="handle-person">
     <xsl:param name="orgs"/>
 
-    <xsl:variable name="thisorg" select="organisation/name"/>
+    <xsl:variable name="thisorg" select="org/name"/>
 
     <xsl:element name="person">
       <xsl:attribute name="aff_no">
-        <xsl:for-each select="$orgs/org">
+        <xsl:for-each select="$orgs">
           <xsl:if test="name=$thisorg">
             <xsl:value-of select="position()"/>
           </xsl:if>

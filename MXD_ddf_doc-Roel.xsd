@@ -152,6 +152,7 @@
   </complexType>
   <complexType name="_LocalFieldType">
     <sequence>
+      <!-- RdC: replaced NCName by the less restrictive LocalFieldCodeType -->
       <element name="code" type="tns:_LocalFieldCodeType">
         <annotation>
           <documentation xml:lang="en-uk">Field code (tag) using a-z and 0-9 only</documentation>
@@ -183,6 +184,7 @@
   </complexType>
   <complexType name="_LocalFieldCodeDataType">
     <sequence>
+      <!-- RdC: replaced NCName by the less restrictive LocalFieldCodeType -->
       <element name="code" type="tns:_LocalFieldCodeType">
         <annotation>
           <documentation xml:lang="en-uk">Field code (tag) using a-z and 0-9 only</documentation>
