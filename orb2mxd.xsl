@@ -41,6 +41,17 @@
   <xsl:variable name="ddftype" select="/ddf/@type"/>
   <xsl:variable name="ddfdoctype" select="/ddf/document/@type"/>
 
+  <!-- for ddf_doc/@doc_type -->
+  <xsl:variable name="mxdtype" 
+                select="$docTypeMapping/rule[in = $ddftype]/out/text()"/>
+
+  <!-- for ddf_doc/publication/thingy: in_journal, in_book etc. -->
+  <xsl:variable name="mxdpubelm" 
+                select="$docTypeMapping/rule[in = $ddftype]/name"/>
+  <!-- TODO: more specific one, for later when document/@type has been corrected -->
+  <!--xsl:variable name="mxdpubelm" 
+       select="$docTypeMapping/rule[in = $ddftype and type = $ddfdoctype]/name"/-->
+
   <xsl:output method="xml" indent="yes" encoding="utf-8"/>
 
   <xsl:template match="/*">
@@ -52,13 +63,6 @@
 
   <xsl:template match="/ddf">
 
-    <!-- for ddf_doc/@doc_type -->
-    <xsl:variable name="mxdtype" 
-                  select="$docTypeMapping/rule[in = $ddftype]/out/text()"/>
-    <!-- for ddf_doc/publication/thingy: in_journal, in_book etc. -->
-    <xsl:variable name="mxdpubelm" 
-                  select="$docTypeMapping/rule[in = $ddftype and type = $ddfdoctype]/name"/>
-    
     <!-- <ddf_doc> -->
     <xsl:element name="ddf_doc">
       <!-- begin attributes -->
@@ -102,7 +106,6 @@
       </xsl:attribute>
       <!-- rec_status makes no sense without context -->
       <xsl:attribute name="rec_status">c</xsl:attribute>
-
 
       <!-- end attributes - do not insert elements before this line -->
 
@@ -303,8 +306,7 @@
   </xsl:template>
 
   <xsl:template name="element-publication">
-    <xsl:variable name="docelm" 
-                  select="$docTypeMapping/rule[in = $ddftype and type = $ddfdoctype]/name"/>
+    <xsl:variable name="docelm" select="$mxdpubelm"/>
     <xsl:variable name="auxdoc" select="document/document[@object='aux']"/>
 
     <xsl:element name="publication">
