@@ -41,16 +41,13 @@
   <xsl:variable name="ddftype" select="/ddf/@type"/>
   <xsl:variable name="ddfdoctype" select="/ddf/document/@type"/>
 
-  <!-- for ddf_doc/@doc_type -->
-  <xsl:variable name="mxdtype" 
-                select="$docTypeMapping/rule[in = $ddftype]/out/text()"/>
-
-  <!-- for ddf_doc/publication/thingy: in_journal, in_book etc. -->
-  <xsl:variable name="mxdpubelm" 
-                select="$docTypeMapping/rule[in = $ddftype]/name"/>
-  <!-- TODO: more specific one, for later when document/@type has been corrected -->
-  <!--xsl:variable name="mxdpubelm" 
-       select="$docTypeMapping/rule[in = $ddftype and type = $ddfdoctype]/name"/-->
+  <!-- 
+       I'd like to define mxdtype and mxdpubelm globally here from
+       $doctypeMapping, something which works in older Libxslt and
+       Sablotron, but not any more in newer Libxslt. So We'll have to
+       define these inside the toplevel template and transfer them to
+       other templates with xsl-param. Sigh.
+  -->
 
   <xsl:output method="xml" indent="yes" encoding="utf-8"/>
 
@@ -62,6 +59,17 @@
 
 
   <xsl:template match="/ddf">
+
+    <!-- for ddf_doc/@doc_type -->
+    <xsl:variable name="mxdtype" 
+                  select="$docTypeMapping/rule[in = $ddftype]/out/text()"/>
+
+    <!-- for ddf_doc/publication/thingy: in_journal, in_book etc. -->
+    <xsl:variable name="mxdpubelm" 
+                  select="$docTypeMapping/rule[in = $ddftype]/name/text()"/>
+    <!-- TODO: more specific one, for later when document/@type has been corrected -->
+    <!--xsl:variable name="mxdpubelm" 
+        select="$docTypeMapping/rule[in = $ddftype and type = $ddfdoctype]/name"/-->
 
     <!-- <ddf_doc> -->
     <xsl:element name="ddf_doc">
@@ -129,7 +137,9 @@
       <xsl:call-template name="element-local_field"/>
 
       <!-- <publication> -->
-      <xsl:call-template name="element-publication"/>
+      <xsl:call-template name="element-publication">
+        <xsl:with-param name="mxdpubelm" select="$mxdpubelm"/>
+      </xsl:call-template>
 
     </xsl:element> <!-- </ddf_doc> -->
   </xsl:template> <!-- match=/ddf -->
@@ -306,12 +316,13 @@
   </xsl:template>
 
   <xsl:template name="element-publication">
-    <xsl:variable name="docelm" select="$mxdpubelm"/>
+    <xsl:param name="mxdpubelm"/>
+
     <xsl:variable name="auxdoc" select="document/document[@object='aux']"/>
 
     <xsl:element name="publication">
       <!-- <in_journal|in_book|in_report|book|report|patent|inetpub|other> -->
-      <xsl:element name="{$docelm}">
+      <xsl:element name="{$mxdpubelm}">
         <xsl:variable name="pubstatus"> <!-- E.g. unpublished, published -->
           <xsl:value-of select="document/@status"/>
         </xsl:variable>
@@ -326,7 +337,7 @@
         -->
 
         <xsl:choose>
-          <xsl:when test="$docelm = 'in_journal'">
+          <xsl:when test="$mxdpubelm = 'in_journal'">
             <title>
               <xsl:value-of select="$auxdoc/title/main"/>
               <xsl:if test="$auxdoc/title/sub">
@@ -351,7 +362,7 @@
             </uri>
           </xsl:when>
 
-          <xsl:when test="$docelm = 'in_book'">
+          <xsl:when test="$mxdpubelm = 'in_book'">
             <title>
               <xsl:value-of select="$auxdoc/title/main"/>
               <xsl:if test="$auxdoc/title/sub">
@@ -420,7 +431,7 @@
             </uri>
           </xsl:when>
 
-          <xsl:when test="$docelm = 'in_report'">
+          <xsl:when test="$mxdpubelm = 'in_report'">
             <!-- Orbit has no chapter- or paper-in-report AFAIK. -->
             <title></title>
             <editor></editor>
@@ -433,7 +444,7 @@
             <uri></uri>
           </xsl:when>
 
-          <xsl:when test="$docelm = 'book'">
+          <xsl:when test="$mxdpubelm = 'book'">
             <edition>
               <xsl:value-of select="document/imprint/edition"/>
             </edition>
@@ -464,7 +475,7 @@
             </uri>
           </xsl:when>
 
-          <xsl:when test="$docelm = 'report'">
+          <xsl:when test="$mxdpubelm = 'report'">
             <isbn>
               <xsl:call-template name="subst">
                 <xsl:with-param name="in" select="document/identifier[@type='ISBN']"/>
@@ -491,7 +502,7 @@
             </uri>
           </xsl:when>
 
-          <xsl:when test="$docelm = 'patent'">
+          <xsl:when test="$mxdpubelm = 'patent'">
             <!--TODO -->
             <country></country>
             <ipc></ipc>
@@ -500,7 +511,7 @@
             <uri></uri>
           </xsl:when>
 
-          <xsl:when test="$docelm = 'inetpub'">
+          <xsl:when test="$mxdpubelm = 'inetpub'">
             <!--maybe TODO -->
             <text></text>
             <uri></uri>
