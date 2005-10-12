@@ -152,7 +152,8 @@
   </complexType>
   <complexType name="_LocalFieldType">
     <sequence>
-      <element name="code" type="NCName">
+      <!-- RdC: replaced NCName by the less restrictive LocalFieldCodeType -->
+      <element name="code" type="tns:_LocalFieldCodeType">
         <annotation>
           <documentation xml:lang="en-uk">Field code (tag) using a-z and 0-9 only</documentation>
         </annotation>
@@ -183,7 +184,8 @@
   </complexType>
   <complexType name="_LocalFieldCodeDataType">
     <sequence>
-      <element name="code" type="NCName">
+      <!-- RdC: replaced NCName by the less restrictive LocalFieldCodeType -->
+      <element name="code" type="tns:_LocalFieldCodeType">
         <annotation>
           <documentation xml:lang="en-uk">Field code (tag) using a-z and 0-9 only</documentation>
         </annotation>
@@ -451,7 +453,8 @@
           <documentation xml:lang="en-uk">Country of legal residence using ISO country codes</documentation>
         </annotation>
       </element>
-      <element name="uri" type="anyURI">
+      <!-- RdC: added minOccurs=0 to uri -->
+      <element name="uri" type="anyURI" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
         </annotation>
@@ -1622,14 +1625,22 @@
       </enumeration>
     </restriction>
   </simpleType>
+  <!-- RdC: added _LocalFieldCodeType -->
+  <simpleType name="_LocalFieldCodeType">
+    <restriction base="string">
+      <pattern value="[0-9a-zA-Z]+"/>
+    </restriction>
+  </simpleType>
   <simpleType name="_ISSNType">
     <restriction base="string">
-      <pattern value="\d{8}"/>
+      <!-- RdC: allow x or X as last char of ISSN -->
+      <pattern value="\d{7}[0-9Xx]"/>
     </restriction>
   </simpleType>
   <simpleType name="_ISBNType">
     <restriction base="string">
-      <pattern value="\d{10}"/>
+      <!-- RdC: as of jan 2005, ISBN can be 13 digits -->
+      <pattern value="\d{10,13}"/>
     </restriction>
   </simpleType>
   <simpleType name="_PagesType">
