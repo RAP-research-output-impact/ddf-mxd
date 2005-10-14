@@ -36,12 +36,26 @@
     <xsl:element name="organisation">
       <xsl:attribute name="org_role">oaf</xsl:attribute>
       <xsl:attribute name="aff_no">
-        <xsl:value-of select="position()"/>
+        <xsl:choose>
+          <xsl:when test="normalize-space(./name)">
+            <xsl:value-of select="position()"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>0</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:attribute>
 
       <name>
         <level1>
-          <xsl:value-of select="./name/main"/>
+          <xsl:choose>
+            <xsl:when test="normalize-space(./name)">
+              <xsl:value-of select="./name/main"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>[affiliation unknown]</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
         </level1>
         <level2>
           <xsl:value-of select="./name/sub"/>

@@ -32,11 +32,14 @@
           <documentation xml:lang="en-uk">Title of the work in focus. Other titles such as conference titles and titles of host publications (journals, books) are recorded in other elements, ddf_doc/event and ddf_doc/publication respectively. The element is organised in the following 2 sub-elements: title/original (mandatory) title/translated (optional and repeatable)</documentation>
         </annotation>
       </element>
-      <element name="description" type="tns:_DescriptionType">
-        <annotation>
-          <documentation xml:lang="en-uk">The description element is the common container for a variety of descriptive data types that deal with the content of the document, such as notes, abstracts, subject classifications and keywords etc. The description element is not mandatory but should be used whenever such data is available. The element is organised in the following sub-elements: description/abstract (summary of the content), description/thesis (special structured note for academic thesis), description/note (other descriptive notes), description/subject/keyword (free or controlled keywords), description/subject/class (classification system codes).</documentation>
-        </annotation>
-      </element>
+      <!-- RdC: description is not mandatory -->
+      <sequence minOccurs="0" maxOccurs="1">
+        <element name="description" type="tns:_DescriptionType">
+          <annotation>
+            <documentation xml:lang="en-uk">The description element is the common container for a variety of descriptive data types that deal with the content of the document, such as notes, abstracts, subject classifications and keywords etc. The description element is not mandatory but should be used whenever such data is available. The element is organised in the following sub-elements: description/abstract (summary of the content), description/thesis (special structured note for academic thesis), description/note (other descriptive notes), description/subject/keyword (free or controlled keywords), description/subject/class (classification system codes).</documentation>
+          </annotation>
+        </element>
+      </sequence>
       <sequence minOccurs="0" maxOccurs="unbounded">
         <element name="person" type="tns:_PersonType">
           <annotation>
@@ -1175,355 +1178,355 @@
   </simpleType>
   <simpleType name="_RecSourceType">
     <restriction base="string">
-      <enumeration value="AAA">
+      <enumeration value="aaa">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Arkitektskolen i Aarhus</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="AARDAS">
+      <enumeration value="aardas">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Århus Dag- og Aftenseminarium</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="AAS">
+      <enumeration value="aas">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Aalborg Sygehus</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="AFG">
+      <enumeration value="afg">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Dansk Institut for Klinisk Epidemiologi</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="AGRI">
+      <enumeration value="agri">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks JordbrugsForskning</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="AI">
+      <enumeration value="ai">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">ArbejdsmiljøInformation</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="AKF">
+      <enumeration value="akf">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Amternes og kommunernes forskningsinstitut</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="AMI">
+      <enumeration value="ami">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Arbejdsmiljøinstituttet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="AMR">
+      <enumeration value="amr">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Arbejdsmiljørådets Service Center</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="AU">
+      <enumeration value="au">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Aarhus Universitet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="AUC">
+      <enumeration value="auc">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Aalborg Universitet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="BIO">
+      <enumeration value="bio">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Det Bioteknologiske Forsknings- og Udviklingsprogram</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="BIOTEKNIK">
+      <enumeration value="bioteknik">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Teknologisk Institut. Bioteknik</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="CAN">
+      <enumeration value="can">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Kræftens Bekæmpelse</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="CEMTV">
+      <enumeration value="cemtv">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Center for Evaluering af Medicinsk Teknologivurering</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="CFB">
+      <enumeration value="cfb">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Center for Børnelitteratur</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="CUF">
+      <enumeration value="cuf">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Dansk Center for Internationale Studier og Menneskerettigheder</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DBI ">
+      <enumeration value="dbi ">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Biblioteksskole</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DDS">
+      <enumeration value="dds">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Designskole</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DFS">
+      <enumeration value="dfs">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Dansk Folkemindesamling</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DLH">
+      <enumeration value="dlh">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Lærerhøjskole</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DMF">
+      <enumeration value="dmf">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Dansk Matematisk Forening</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DMU">
+      <enumeration value="dmu">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Miljøundersøgelser</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DPI">
+      <enumeration value="dpi">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Pædagogiske Institut</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DPU">
+      <enumeration value="dpu">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Pædagogiske Universitet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DSS">
+      <enumeration value="dss">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Dansk Institut for Sundheds- og Sygeplejeforskning</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DTF">
+      <enumeration value="dtf">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks TransportForskning</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="DTU">
+      <enumeration value="dtu">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Tekniske Universitet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="ENS">
+      <enumeration value="ens">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Energistyrelsen</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="FAR">
+      <enumeration value="far">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Farmaceutiske Universitet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="FOR ">
+      <enumeration value="for ">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Forskningsstyrelsen</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="FOU ">
+      <enumeration value="fou ">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">FOU Forsknings- og udviklingscentret for Hjælpemidler og Rehabilitering</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="FRI">
+      <enumeration value="fri">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Forskningscenter Risø</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="FSL">
+      <enumeration value="fsl">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Forskningscenter for Skov og Landskab</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="FTU">
+      <enumeration value="ftu">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">FTU-programmet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="GEUS">
+      <enumeration value="geus">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks og Grønlands Geologiske Undersøgelse</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="HHA">
+      <enumeration value="hha">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Handelshøjskolen i Århus</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="HHK">
+      <enumeration value="hhk">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Copenhagen Business School</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="HHS">
+      <enumeration value="hhs">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Handelshøjskole Syd</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="IFG">
+      <enumeration value="ifg">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Institut for grænseregionsforskning</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="IFO">
+      <enumeration value="ifo">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Institut for Forskning i Idræt og Folkelig Oplysning</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="JPSEM">
+      <enumeration value="jpsem">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Jydsk Pædagogseminarium</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="KA">
+      <enumeration value="ka">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Kunstakademiets Arkitektskole</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="KAB">
+      <enumeration value="kab">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Kunstbibliotek</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="KIB">
+      <enumeration value="kib">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Kunstindustrimuseets Bibliotek</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="KU">
+      <enumeration value="ku">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Københavns Universitet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="KVL">
+      <enumeration value="kvl">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Den Kgl. Veterinær- og Landbohøjskole</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="MUP">
+      <enumeration value="mup">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Det Materialeteknologiske Udviklingsprogram</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="NLB">
+      <enumeration value="nlb">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Natur- og Lægevidenskabelige Bibliotek</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="RUC">
+      <enumeration value="ruc">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Roskilde Universitet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="SBI">
+      <enumeration value="sbi">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">By og Byg. Statens Byggeforskningsinstitut</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="SDU">
+      <enumeration value="sdu">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Syddansk Universitet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="SEB">
+      <enumeration value="seb">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Sekretariat for Børnekultur netværk</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="SHU">
+      <enumeration value="shu">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Statens Husdyrbrugsforsøg</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="SJI">
+      <enumeration value="sji">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Statens Jordbrugs- og Fiskeriøkonomiske Institut</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="SP">
+      <enumeration value="sp">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Statens Planteavlsforsøg</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="SSL">
+      <enumeration value="ssl">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Statens Skadedyrslaboratorium</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="SUC">
+      <enumeration value="suc">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Sydjysk Universitetscenter</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="SVS">
+      <enumeration value="svs">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Statens Veterinære Serumlab. og Statens Veterinære. Inst. for Virusforskning</documentation>

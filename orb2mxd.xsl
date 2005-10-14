@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-		version="1.0">
+                xmlns:ext="http://exslt.org/common"
+                version="1.0">
 
   <xsl:key name="orgkey" match="//person/organisation" use="name"/>
   <xsl:include href="mxdPersonOrg.xsl"/>
@@ -91,6 +92,9 @@
              the cataloguing record, but (Zebra) export formats have
              the more sensible <local num="3"> construct. I'll presume
              the sensible one.
+
+             Any which way, Metatoo tends to export them even without
+             sensible text content.
         -->
         <xsl:value-of select="normalize-space(document/local/field[@tag='Annual report year'])"/>
       </xsl:attribute>
@@ -103,8 +107,8 @@
         <xsl:variable name="lev" select="document/indicator/level"/>
         <xsl:value-of select="$indicatorMapping/rule[in=$lev]/out"/>
       </xsl:attribute>
-      <xsl:attribute name="rec_source">DTU</xsl:attribute>
-      <xsl:attribute name="rec_id">dtu<xsl:value-of select="@id"/></xsl:attribute>
+      <xsl:attribute name="rec_source">dtu</xsl:attribute>
+      <xsl:attribute name="rec_id"><xsl:value-of select="@id"/></xsl:attribute>
       <xsl:attribute name="rec_upd">
         <xsl:variable name="upd" select="/ddf/admin/system/updated"/>
         <xsl:value-of select="concat(
@@ -172,7 +176,7 @@
 
     <xsl:element name="description">
       <xsl:for-each select="document/abstract">
-        <xsl:variable name="lang" select="@lang"/>
+        <xsl:variable name="lang" select="string(@lang)"/>
         <xsl:element name="abstract">
           <xsl:attribute name="xml:lang">
             <xsl:value-of select="$langMapping/rule[in=$lang]/out"/>
@@ -182,7 +186,7 @@
       </xsl:for-each>      
 
       <xsl:for-each select="document/note">
-        <xsl:variable name="lang" select="@lang"/>
+        <xsl:variable name="lang" select="string(@lang)"/>
         <xsl:element name="note">
           <xsl:attribute name="xml:lang">
             <xsl:value-of select="$langMapping/rule[in=$lang]/out"/>
@@ -290,27 +294,33 @@
          Remember that the catalogued format uses local, local2,
          local3 etc. to overcome restrictions in Metatoo- we assume
          the above "loopable" construct here.
+
+         Metatoo tends to export <local> even without sensible text
+         content.
+
     -->
     <xsl:for-each select="document/local/field">
-      <xsl:element name="local_field">
-        <xsl:attribute name="tag_type">
-          <xsl:value-of select="@type"/>
-        </xsl:attribute>
-        <xsl:if test="@lang">
-          <xsl:variable name="lang" select="@lang"/>
-          <xsl:attribute name="xml:lang">
-            <xsl:value-of select="$langMapping/rule[in=$lang]/out"/>
+      <xsl:if test="normalize-space(./text())">
+        <xsl:element name="local_field">
+          <xsl:attribute name="tag_type">
+            <xsl:value-of select="@type"/>
           </xsl:attribute>
-        </xsl:if>
-
-        <code>
-          <!-- Make this 0 if @num is undefined -->
-          <xsl:value-of select="number(concat('0', @num))"/>
-        </code>
-        <data>
-          <xsl:value-of select="."/>
-        </data>
-      </xsl:element>
+          <xsl:if test="@lang">
+            <xsl:variable name="lang" select="string(@lang)"/>
+            <xsl:attribute name="xml:lang">
+              <xsl:value-of select="$langMapping/rule[in=$lang]/out"/>
+            </xsl:attribute>
+          </xsl:if>
+          
+          <code>
+            <!-- Make this 0 if @num is undefined -->
+            <xsl:value-of select="number(concat('0', @num))"/>
+          </code>
+          <data>
+            <xsl:value-of select="."/>
+          </data>
+        </xsl:element>
+      </xsl:if>
     </xsl:for-each>
 
   </xsl:template>
