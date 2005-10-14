@@ -1,12 +1,15 @@
 <?xml version="1.0"?>
-<!-- $Id$ -->
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
                 xmlns:ext="http://exslt.org/common"
                 version="1.0">
 
-  <xsl:key name="orgkey" match="//person/organisation" use="name"/>
+  <!--
+      General TODOs:
+      - lang code must be 2 chars
+  -->
+
   <xsl:include href="mxdPersonOrg.xsl"/>
-  <!--xsl:include href="mxdDocument.xsl"/-->
 
   <!-- Description:
        *   

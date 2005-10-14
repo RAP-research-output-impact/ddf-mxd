@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-		version="1.0">
+                xmlns:ext="http://exslt.org/common"
+                version="1.0">
 
   <!-- 
-       Somewhat tentative code to segregate <person>s and their
-       affiliate <organisation>s to obey the MXD format. This is quite
-       impossible for a variety of XSL restrictions you'll bump into,
-       one by one, if you try it.
+       Somewhat frobbed code to segregate <person>s and their
+       affiliate <organisation>s to obey the MXD format. 
+       This is not as straightforward in XSL as you'd like it to be,
+       unless you resort to the node-set() extension.
 
        We only take persons from the /ddf/document element, which in
        practice always is the object="main" doc. MXD doesn't allow for
@@ -86,11 +87,18 @@
       </xsl:attribute>
       <xsl:variable name="thisorg" select="organisation/name"/>
       <xsl:attribute name="aff_no">
-        <xsl:for-each select="$orgs">
-          <xsl:if test="name=$thisorg">
-            <xsl:value-of select="position()"/>
-          </xsl:if>
-        </xsl:for-each>
+        <xsl:choose>
+          <xsl:when test="not(normalize-space($thisorg))">
+            <xsl:text>0</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:for-each select="$orgs">
+              <xsl:if test="name=$thisorg">
+                <xsl:value-of select="position()"/>
+              </xsl:if>
+            </xsl:for-each>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:attribute> 
 
       <name>
