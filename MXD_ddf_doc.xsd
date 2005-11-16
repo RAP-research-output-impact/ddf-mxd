@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- version 1.1.0 of August 9th 2005  -->
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://dtv.dk/mxd/xml/schemas/2005/08/12/" targetNamespace="http://dtv.dk/mxd/xml/schemas/2005/08/12/" elementFormDefault="qualified" xml:lang="EN">
+<!-- version 1.0.0.0 of November 16 2005 -->
+<!--schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://dtv.dk/mxd/xml/schemas/2005/08/12/" targetNamespace="http://dtv.dk/mxd/xml/schemas/2005/08/12/" elementFormDefault="qualified" xml:lang="EN"-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.0" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.0" elementFormDefault="qualified" xml:lang="EN">
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
   <element name="ddf_doc" type="tns:DdfDocType">
     <unique name="organisationAffiliationKey">
@@ -98,7 +99,7 @@
     </attribute>
     <attribute name="doc_lang" type="language" use="required">
       <annotation>
-        <documentation xml:lang="en-uk">Code for language of the document itself. Codes must follow the W3C rules for xml:lang, which means complying with IETF RFC 1766 and ISO 639.</documentation>
+        <documentation xml:lang="en-uk">Code for language of the document itself. Codes must follow the W3C rules for xml:lang, complying with IETF RFC 3066 and ISO 639-1 2-letter codes, or ISO639-2 for 3-letter codes.</documentation>
       </annotation>
     </attribute>
     <attribute name="doc_year" type="gYear" use="required">
