@@ -79,7 +79,7 @@
     <xsl:element name="ddf_doc">
       <!-- begin attributes -->
       <xsl:attribute name="xmlns">
-        <xsl:text>http://dtv.dk/mxd/xml/schemas/2005/08/12/</xsl:text>
+        <xsl:text>http://mx.forskningsdatabasen.dk/ns/mxd/1.0</xsl:text>
       </xsl:attribute>
       <xsl:attribute name="format_version">1.0.0</xsl:attribute>
       <xsl:attribute name="doc_type">
