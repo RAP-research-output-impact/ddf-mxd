@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:ext="http://exslt.org/common"
-                version="1.0">
+                xmlns:func="http://exslt.org/functions"
+                xmlns:my="http://www.dtv.dk/ns"
+                xmlns:str="http://exslt.org/strings"
+                extension-element-prefixes="ext func str my">
 
   <!--
       General TODOs:
@@ -153,7 +156,7 @@
 
 
   <xsl:template match="* | @*">
-    <!-- Handling <xsl:value-of select="name()"/> -->
+    <!-- never reached. --> 
     <xsl:apply-templates/>
   </xsl:template>
 

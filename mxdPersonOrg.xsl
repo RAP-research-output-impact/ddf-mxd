@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:ext="http://exslt.org/common"
-                version="1.0">
+                xmlns:func="http://exslt.org/functions"
+                xmlns:my="http://www.dtv.dk/ns"
+                xmlns:str="http://exslt.org/strings"
+                extension-element-prefixes="ext func str my">
 
   <!-- 
        Somewhat frobbed code to segregate <person>s and their
@@ -18,7 +21,21 @@
   <xsl:template name="element-person-organisation">
 
     <!-- I do not expect more than 1 org per person... -->
-    <xsl:variable name="orgs" select="document/person/organisation[not(name=../preceding-sibling::*/organisation/name)]"/>
+    <xsl:variable name="preorgs-rtf">
+      <xsl:for-each select="document/person/organisation">
+        <organisation>
+          <xsl:attribute name="hash">
+            <xsl:value-of select="normalize-space(concat(name/main, name/sub, name/sub2))"/>
+          </xsl:attribute>
+          <xsl:copy-of select="./*"/>
+        </organisation>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="preorgs" select="ext:node-set($preorgs-rtf)"/>
+    <!-- You may hit me with a salmon and call me Jeryll if I understand
+         how preceding-sibling:: works, but this seems to do the trick
+    -->
+    <xsl:variable name="orgs" select="$preorgs/organisation[not(@hash=preceding-sibling::*/@hash)]"/>
 
     <xsl:for-each select="document/person">
       <xsl:call-template name="handle-person">
@@ -86,19 +103,13 @@
         <xsl:value-of select="$personRoleMapping/rule[in=$role]/out"/>
       </xsl:attribute>
       <xsl:variable name="thisorg" select="organisation/name"/>
+      <xsl:variable name="thisorg-hash" select="normalize-space(concat($thisorg/main,$thisorg/sub,$thisorg/sub2))"/>
       <xsl:attribute name="aff_no">
-        <xsl:choose>
-          <xsl:when test="not(normalize-space($thisorg))">
-            <xsl:text>0</xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:for-each select="$orgs">
-              <xsl:if test="name=$thisorg">
-                <xsl:value-of select="position()"/>
-              </xsl:if>
-            </xsl:for-each>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:for-each select="$orgs">
+          <xsl:if test="$thisorg-hash = ./@hash">
+            <xsl:value-of select="position()"/>
+          </xsl:if>
+        </xsl:for-each>
       </xsl:attribute> 
 
       <name>
