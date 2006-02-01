@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+                xmlns:fit="http://toolxite.net/ns/metatoo/fit/"
                 xmlns:ext="http://exslt.org/common"
                 xmlns:func="http://exslt.org/functions"
                 xmlns:my="http://www.dtv.dk/ns"
@@ -116,7 +117,7 @@
       <xsl:attribute name="rec_source">dtu</xsl:attribute>
       <xsl:attribute name="rec_id"><xsl:value-of select="@id"/></xsl:attribute>
       <xsl:attribute name="rec_upd">
-        <xsl:variable name="upd" select="/ddf/admin/system/updated"/>
+        <xsl:variable name="upd" select="/ddf/fit:admin/fit:system/fit:updated"/>
         <xsl:value-of select="concat(
           substring($upd, 1, 4), '-',
           substring($upd, 5, 2), '-',
@@ -400,18 +401,21 @@
                 such source publications normally have any.
             -->
             
-            <xsl:for-each select="$auxdoc/person[@role='editor']">
-              <!-- 
-                   Substitute the full name(s); MXD does not allow
-                   further structure or a reference to a <person>
-                   structure here.
-              -->
+            <xsl:if test="$auxdoc/person[@role='editor']">
               <editor>
-                <xsl:value-of select="name/first"/>
-                <xsl:text> </xsl:text>
-                <xsl:value-of select="name/last"/>
+                <xsl:for-each select="$auxdoc/person[@role='editor']">
+                  <!-- 
+                       Substitute the full name(s); MXD does not allow
+                       further structure or a reference to a <person>
+                       structure here.
+                  -->
+                  <xsl:value-of select="name/first"/>
+                  <xsl:text> </xsl:text>
+                  <xsl:value-of select="name/last"/>
+                  <xsl:text>; </xsl:text>
+                </xsl:for-each>
               </editor>
-            </xsl:for-each>
+            </xsl:if>
             
             <isbn>
               <!-- no joy
