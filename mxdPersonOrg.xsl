@@ -54,16 +54,8 @@
     <xsl:element name="organisation">
       <xsl:attribute name="org_role">oaf</xsl:attribute>
       <xsl:attribute name="aff_no">
-        <xsl:choose>
-          <xsl:when test="normalize-space(./name)">
-            <xsl:value-of select="position()"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>0</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:value-of select="position()"/>
       </xsl:attribute>
-
       <name>
         <level1>
           <xsl:choose>
@@ -118,10 +110,9 @@
       </name>
       <xsl:if test="identifier[@type='cwisno']/text()">
         <id id_type="loc_per">
-          DTU-<xsl:value-of select="identifier[@type='cwisno']"/>
+          <xsl:value-of select="concat('DTU-', identifier[@type='cwisno'])"/>
         </id>
       </xsl:if>
-      <!-- TODO: title and other elms -->
 
     </xsl:element>
   </xsl:template>
