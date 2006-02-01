@@ -4,7 +4,9 @@
 
 #data=/usr/local/urbit/urbit.data/records
 data=/usr/local/urbit/urbit.data/drafts
-set="182412 182413 182414 182416 182417 182419 182421 182423 182426 182468"
+set="184664 184667 184669 184670 184676 184681 184691 184683 184688 184690"
+# personal recs: "181048 181049 181050 181051 181052 181053 181054 181055 181056 181058 184686 186345"
+
 
 ######################################################
 TMPDIR=/tmp/gettest-$$
@@ -19,9 +21,13 @@ for f in $set; do
     fill=`printf '%08d' $f`
     # Substringing is very bashy...
     path=$data/${fill:0:4}/${fill:4}
-    xmllint --format $path >$TMPDIR/$f
-    # Try to get the /ddf/@type; there should be only 1 of each type
-    # grep --only-matching does not work in older greps
-    type=`grep '<ddf' $TMPDIR/$f |sed 's/^.*type="//' |sed 's/".*//'`
-    mv -iv $TMPDIR/$f test/$type.xml
+    if ! [ -f $path ]; then
+        echo "w00t! could not find $path"
+    else
+        xmllint --format $path >$TMPDIR/$f
+        # Try to get the /ddf/@type; there should be only 1 of each type
+        # grep --only-matching does not work in older greps
+        type=`grep '<ddf' $TMPDIR/$f |sed 's/^.*type="//' |sed 's/".*//'`
+        mv -i $TMPDIR/$f test/$type.xml
+    fi
 done
