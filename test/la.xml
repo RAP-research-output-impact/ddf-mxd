@@ -1,109 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ddf id="182412" status="O3" type="la" user_group="dtu_dtv" user_id="sitecore" version="2.0">
-  <admin>
-    <cataloguer>
-      <form>ddf_record_la</form>
-      <group>dtu_dtv</group>
-      <id>sitecore</id>
-      <status>O3</status>
-      <timestamp>2005-10-04</timestamp>
-    </cataloguer>
-    <cataloguer>
-      <form>ddf_record_la</form>
-      <group>dtu_dtv</group>
-      <id>sitecore</id>
-      <status>O1</status>
-      <timestamp>1128082659</timestamp>
-    </cataloguer>
-    <cataloguer>
-      <form>ddf_record_la</form>
-      <group>dtu_dtv</group>
-      <id>sitecore</id>
-      <status>O1</status>
-      <timestamp>1128413068</timestamp>
-    </cataloguer>
-    <cataloguer>
-      <form>ddf_record_la</form>
-      <group>dtu_dtv</group>
-      <id>sitecore</id>
-      <status>O21</status>
-      <timestamp>1128413076</timestamp>
-    </cataloguer>
-    <cataloguer>
-      <form>ddf_record_la</form>
-      <group>dtu_dtv</group>
-      <id>darcdtv</id>
-      <status>O21</status>
-      <timestamp>1128418141</timestamp>
-    </cataloguer>
-    <cataloguer>
-      <form>ddf_record_la</form>
-      <group>dtu_dtv</group>
-      <id>darcdtv</id>
-      <status>O3</status>
-      <timestamp>1128418147</timestamp>
-    </cataloguer>
-    <heading>Sitecore - main title. This record can be used to check our xml-format, Sitecore - sub title</heading>
-    <sortkey>2005</sortkey>
-    <system>
-      <created>20050930141739</created>
-      <id>182412</id>
-      <supplier type="dtu_dtv">
-        <code>dtu_dtv</code>
-        <name lang="eng">dtu_dtv</name>
-        <name lang="dan"/>
-      </supplier>
-      <updated>20051004112907</updated>
-    </system>
-    <type lang="eng">Article in journal (DTU record)</type>
-    <type lang="dan">Artikel i tidsskrift (DTU post)</type>
-  </admin>
-  <document authority_status="ddf_document_status.dtu" authority_status_dan="Udgivet" authority_status_eng="Published" object="main" status="published" type="journal article">
-    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - abstract</abstract>
-    <abstract authority_lang="language" authority_lang_dan="Dansk" authority_lang_eng="Danish" lang="dan">Sitecore - abstrakt 2</abstract>
-    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification</class>
-    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification 2</class>
-    <document issue="2" object="aux" pages="2-5" role="in journal" type="journal" vol="1" year="2005">
-      <identifier type="ISSN">1234-5678</identifier>
+<ddf xmlns:fit="http://toolxite.net/ns/metatoo/fit/" id="184664" status="O1" type="la" user_group="dtu_dtv" user_id="1351" version="2.0">
+  <document fit:authority_status="ddf_document_status.dtu" fit:authority_status_dan="[Akcepteret]" fit:authority_status_eng="[Accepted]" fit:authority_type="ddf_document_type_la" fit:authority_type_dan="Tidsskriftartikel" fit:authority_type_eng="Journal article" object="main" status="accepted" type="journal article">
+    <abstract fit:authority_lang="language" fit:authority_lang_dan="Engelsk" fit:authority_lang_eng="English" lang="eng">Abstract</abstract>
+    <abstract fit:authority_lang="language" fit:authority_lang_dan="Dansk" fit:authority_lang_eng="Danish" lang="dan">Resume</abstract>
+    <class fit:authority_type="ddf_class_type" fit:authority_type_dan="Lokal" fit:authority_type_eng="Local" type="local">621</class>
+    <class fit:authority_type="ddf_class_type" fit:authority_type_dan="Lokal" fit:authority_type_eng="Local" type="local">444</class>
+    <document fit:authority_type="ddf_document_type" fit:authority_type_dan="Tidsskrift (som helhed)" fit:authority_type_eng="Journal (as a whole)" issue="7" object="aux" pages="3" role="in journal" type="journal" vol="5" year="2006">
+      <identifier type="ISSN">3245-5454</identifier>
       <imprint>
-        <publisher>Sitecore - publisher</publisher>
+        <publisher>Elsevier</publisher>
       </imprint>
-      <journal>Sitecore - main title in journal</journal>
-      <local authority="dtu_document_isi" authority_dan="Nej" authority_eng="No">no</local>
+      <journal>test</journal>
+      <local fit:authority="dtu_document_isi" fit:authority_dan="Nej" fit:authority_eng="No">no</local>
       <title>
-        <main>Sitecore - main title in journal</main>
-        <sub>Sitecore - sub title in journal</sub>
+        <main>test</main>
+        <sub>Sub title</sub>
       </title>
     </document>
     <indicator>
-      <geo authority="ddf_document_indicator_geo" authority_dan="National" authority_eng="National">national</geo>
-      <level authority="dtu_document_indicator_level" authority_dan="Formidlende" authority_eng="Popular">popular</level>
-      <review authority="ddf_document_indicator_review" authority_dan="Ikke reviewed" authority_eng="Not reviewed">not reviewed</review>
+      <geo fit:authority="ddf_document_indicator_geo" fit:authority_dan="National" fit:authority_eng="National">national</geo>
+      <level fit:authority="dtu_document_indicator_level" fit:authority_dan="Videnskabelig" fit:authority_eng="Scientific">scientific</level>
+      <review fit:authority="ddf_document_indicator_review" fit:authority_dan="Ikke reviewed" fit:authority_eng="Not reviewed">not reviewed</review>
     </indicator>
-    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keywords</keyword>
-    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keywords 2</keyword>
-    <language authority="dtu_languages" authority_dan="Engelsk" authority_eng="English">eng</language>
+    <keyword fit:authority_type="ddf_keyword_type" fit:authority_type_dan="Lokale" fit:authority_type_eng="Local" type="local">Keywords</keyword>
+    <keyword fit:authority_type="ddf_keyword_type" fit:authority_type_dan="Lokale" fit:authority_type_eng="Local" type="local">Keywords 2</keyword>
+    <language fit:authority="dtu_languages" fit:authority_dan="Engelsk" fit:authority_eng="English">eng</language>
     <local>
-      <field authority="dtu_institut_local" authority_dan="DTV" authority_eng="DTV" tag="Institute owner" tagsea="instituteowner" type="4">DTV</field>
+      <field fit:authority="dtu_institut_local" fit:authority_dan="DTV" fit:authority_eng="DTV" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" tag="Institute owner" tagsea="instituteowner" type="4">DTV</field>
     </local>
     <local>
-      <field authority="dtu_institut_local" authority_dan="CTT" authority_eng="CTT" tag="Institute owner" tagsea="instituteowner" type="4">CTT</field>
+      <field fit:authority="dtu_institut_local" fit:authority_dan="COM" fit:authority_eng="COM" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" tag="Institute owner" tagsea="instituteowner" type="4">COM</field>
     </local>
     <local>
-      <field authority="sub_organisation_local.dtu" authority_dan="CPE" authority_eng="CPE" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">cpe</field>
+      <field fit:authority="sub_organisation_local.dtu" fit:authority_dan="ARTEK" fit:authority_eng="ARTEK" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">ARTEK</field>
     </local>
     <local>
-      <field authority="sub_organisation_local.dtu" authority_dan="CAMP-DTU" authority_eng="CAMP-DTU" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">camp</field>
+      <field fit:authority="sub_organisation_local.dtu" fit:authority_dan="BioChemical Engineering" fit:authority_eng="BioChemical Engineering" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">BIOTECH</field>
     </local>
     <local>
-      <field num="3" tag="Internal note" tagsea="internalnote" type="1">Sitecore - internal note</field>
+      <field fit:authority_type="ddf_local_type" fit:authority_type_dan="Not exported to search module" fit:authority_type_eng="Not exported to search module" num="3" tag="Internal note" tagsea="internalnote" type="1">Internal note</field>
     </local>
     <local>
-      <field authority="dtu_annual_report_year" authority_dan="2005" authority_eng="2005" num="4" tag="Annual report year" tagsea="annualreportyear" type="4">2005</field>
+      <field fit:authority_type="ddf_local_type" fit:authority_type_dan="Not exported to search module" fit:authority_type_eng="Not exported to search module" num="3" tag="Internal note" tagsea="internalnote" type="1">Internal note 2</field>
     </local>
-    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - note</note>
-    <note authority_lang="language" authority_lang_dan="Dansk" authority_lang_eng="Danish" lang="dan">Sitecore - note 2</note>
-    <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" id="155953" object="aux" role="author">
+    <local>
+      <field fit:authority="dtu_annual_report_year" fit:authority_dan="2006" fit:authority_eng="2006" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" num="4" tag="Annual report year" tagsea="annualreportyear" type="4">2006</field>
+    </local>
+    <note fit:authority_lang="language" fit:authority_lang_dan="Engelsk" fit:authority_lang_eng="English" lang="eng">Note</note>
+    <note fit:authority_lang="language" fit:authority_lang_dan="Dansk" fit:authority_lang_eng="Danish" lang="dan">note 2</note>
+    <person fit:authority_role="dtu_document_person_role" fit:authority_role_dan="Forfatter" fit:authority_role_eng="Author" id="155953" object="aux" role="author">
       <contact>
         <email>bk@dtv.dk</email>
       </contact>
@@ -116,14 +61,14 @@
       <organisation id="155953" object="aux" role="employee">
         <name>
           <full>Technical University of Denmark, Technical Knowledge Center of Denmark, </full>
-          <main>Technical University of Denmark</main>
-          <sub>Technical Knowledge Center of Denmark</sub>
-          <sub2 authority="ddf_organisation_sub2.dtu" authority_dan="Center for Viden Teknologi" authority_eng="Center for Viden Teknologi">Center for Viden Teknologi</sub2>
-          <sub2code/>
+          <main code="DTU">Technical University of Denmark</main>
+          <sub code="DTV">Technical Knowledge Center of Denmark</sub>
+          <sub2 code="DTV_CVT">Center of Knowledge Technology</sub2>
+          <sub2code xmlns:ext="http://exslt.org/common"/>
         </name>
       </organisation>
     </person>
-    <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" id="30000" object="aux" role="author">
+    <person fit:authority_role="dtu_document_person_role" fit:authority_role_dan="Forfatter" fit:authority_role_eng="Author" id="30000" object="aux" role="author">
       <contact>
         <email>ajh@dtv.dk</email>
       </contact>
@@ -133,64 +78,102 @@
         <full>Heller, Alfred</full>
         <last>Heller</last>
       </name>
-      <organisation id="30000" object="aux" role="employee">
+      <organisation id="30000" object="aux" role="affiliation">
         <name>
-          <full>Technical University of Denmark, Technical Knowledge Center of Denmark, </full>
-          <main>Technical University of Denmark</main>
-          <sub>Technical Knowledge Center of Denmark</sub>
-          <sub2 authority="ddf_organisation_sub2.dtu" authority_dan="Center for Viden Teknologi" authority_eng="Center for Viden Teknologi">Center for Viden Teknologi</sub2>
-          <sub2code/>
-        </name>
-      </organisation>
-    </person>
-    <person authority_role="dtu_document_person_role" authority_role_dan="Forfatter" authority_role_eng="Author" object="aux" role="author">
-      <contact>
-        <email>fiktiv@mail.kom</email>
-      </contact>
-      <identifier type="cwisno"/>
-      <name>
-        <first>Jens</first>
-        <full>Hansen, Jens</full>
-        <last>Hansen</last>
-      </name>
-      <organisation object="aux" role="affiliation">
-        <name>
-          <full>Danmarks fiktive byggefirma, Bygningsafdelingen, </full>
-          <main>Danmarks fiktive byggefirma</main>
-          <sub>Bygningsafdelingen</sub>
+          <full>Danmarks Tekniske Universitet, Danmarks Tekniske Videncenter, </full>
+          <main code="DTU">Danmarks Tekniske Universitet</main>
+          <sub code="DTV">Danmarks Tekniske Videncenter</sub>
+          <sub2 code="DTV_CVT">Center for Viden Teknologi</sub2>
+          <sub2code xmlns:ext="http://exslt.org/common"/>
         </name>
       </organisation>
     </person>
     <title>
-      <main>Sitecore - main title. This record can be used to check our xml-format</main>
-      <sub>Sitecore - sub title</sub>
+      <main>Test af level 3 2 jan 2006</main>
+      <sub>Sub title</sub>
     </title>
     <type lang="eng">Journal article</type>
     <type lang="dan">Tidsskriftartikel</type>
     <www>
-      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
-      <url>http://Sitecore - url</url>
+      <text fit:authority="dtu_www_text" fit:authority_dan="Hele teksten" fit:authority_eng="Full text">full text</text>
+      <url>http://URL</url>
     </www>
     <www>
-      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
-      <url>http://Sitecore - url 2</url>
+      <text fit:authority="dtu_www_text" fit:authority_dan="Hele teksten" fit:authority_eng="Full text">full text</text>
+      <url>http://URL2</url>
     </www>
   </document>
-  <derived>
+  <fit:admin>
+    <fit:cataloguer>
+      <fit:form>ddf_record_la</fit:form>
+      <fit:group>dtu_dtv</fit:group>
+      <fit:id>1351</fit:id>
+      <fit:status>O1</fit:status>
+      <fit:timestamp>2006-02-01</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_la</fit:form>
+      <fit:group>dtu_dtv</fit:group>
+      <fit:id>1351</fit:id>
+      <fit:status>O1</fit:status>
+      <fit:timestamp>1136283543</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_la</fit:form>
+      <fit:group>dtu_dtv</fit:group>
+      <fit:id>1351</fit:id>
+      <fit:status>O1</fit:status>
+      <fit:timestamp>1136286654</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_la</fit:form>
+      <fit:group>dtu_dtv</fit:group>
+      <fit:id>1351</fit:id>
+      <fit:status>O1</fit:status>
+      <fit:timestamp>1138783126</fit:timestamp>
+    </fit:cataloguer>
+    <fit:heading>Test af level 3 2 jan 2006, Sub title</fit:heading>
+    <fit:sortkey>2006</fit:sortkey>
+    <fit:system>
+      <fit:created>20060103111903</fit:created>
+      <fit:id>184664</fit:id>
+      <fit:supplier fit:type="dtu_dtv">
+        <fit:code>dtu_dtv</fit:code>
+        <fit:name fit:lang="eng">dtu_dtv</fit:name>
+        <fit:name fit:lang="dan"/>
+      </fit:supplier>
+      <fit:updated>20060201093846</fit:updated>
+    </fit:system>
+    <fit:type fit:lang="eng">Article in journal (DTU record)</fit:type>
+    <fit:type fit:lang="dan">Artikel i tidsskrift (DTU post)</fit:type>
+  </fit:admin>
+  <derived xmlns:ext="http://exslt.org/common">
     <type>
       <eng>journal article</eng>
       <dan>tidsskriftartikel</dan>
     </type>
   </derived>
-  <indexing>
-    <annualreportyear>2005</annualreportyear>
-    <instituteowner>DTV</instituteowner>
-    <instituteowner>CTT</instituteowner>
+  <indexing xmlns:ext="http://exslt.org/common">
+    <annualreportyear>2006</annualreportyear>
+    <instituteowner>
+      <subcode>DTV</subcode>
+    </instituteowner>
+    <instituteowner>
+      <subcode>COM</subcode>
+    </instituteowner>
+    <instituteowner>
+      <subcode>DTV</subcode>
+      <sub2code>DTV_CVT</sub2code>
+    </instituteowner>
+    <instituteowner>
+      <subcode>DTV</subcode>
+      <sub2code>DTV_CVT</sub2code>
+    </instituteowner>
     <cwisno>1351</cwisno>
     <cwisno>2685</cwisno>
     <dtu_document_isi>no</dtu_document_isi>
     <firstauthor>Krog, Birthe</firstauthor>
-    <sorttitle>Sitecore - main title. This record can be used to check our xml-format Sitecore - sub title</sorttitle>
-    <ownerclass>dtu</ownerclass>
+    <sorttitle>Test af level 3 2 jan 2006 Sub title</sorttitle>
+    <ownerclass>department</ownerclass>
   </indexing>
 </ddf>

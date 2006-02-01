@@ -1,150 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ddf id="182426" status="O3" type="pr" user_group="dtu_dtv" user_id="sitecore" version="2.0">
-  <admin>
-    <cataloguer>
-      <form>ddf_record_pr</form>
-      <group>dtu_dtv</group>
-      <id>sitecore</id>
-      <status>O3</status>
-      <timestamp>2005-10-04</timestamp>
-    </cataloguer>
-    <cataloguer>
-      <form>ddf_record_pr</form>
-      <group>dtu_dtv</group>
-      <id>sitecore</id>
-      <status>O1</status>
-      <timestamp>1128084943</timestamp>
-    </cataloguer>
-    <cataloguer>
-      <form>ddf_record_pr</form>
-      <group>dtu_dtv</group>
-      <id>sitecore</id>
-      <status>O1</status>
-      <timestamp>1128413850</timestamp>
-    </cataloguer>
-    <cataloguer>
-      <form>ddf_record_pr</form>
-      <group>dtu_dtv</group>
-      <id>sitecore</id>
-      <status>O21</status>
-      <timestamp>1128413856</timestamp>
-    </cataloguer>
-    <cataloguer>
-      <form>ddf_record_pr</form>
-      <group>dtu_dtv</group>
-      <id>darcdtv</id>
-      <status>O21</status>
-      <timestamp>1128417886</timestamp>
-    </cataloguer>
-    <cataloguer>
-      <form>ddf_record_pr</form>
-      <group>dtu_dtv</group>
-      <id>darcdtv</id>
-      <status>O3</status>
-      <timestamp>1128417891</timestamp>
-    </cataloguer>
-    <heading>Sitecor - hoved titel på projektet. Denne post kan anvendes til at checke vores xml-format, Sitecore- undertitel, Sitecore- akronym</heading>
-    <sortkey>2007 0601</sortkey>
-    <system>
-      <created>20050930145543</created>
-      <id>182426</id>
-      <supplier type="dtu_dtv">
-        <code>dtu_dtv</code>
-        <name lang="eng">dtu_dtv</name>
-        <name lang="dan"/>
-      </supplier>
-      <updated>20051004112451</updated>
-    </system>
-    <type lang="eng">Project (DTU record)</type>
-    <type lang="dan">Projektbeskrivelse (DTU post)</type>
-  </admin>
+<ddf xmlns:fit="http://toolxite.net/ns/metatoo/fit/" id="184690" status="O1" type="pr" user_group="dtu_dtv" user_id="1351" version="2.0">
+  <fit:admin>
+    <fit:cataloguer>
+      <fit:form>ddf_record_pr</fit:form>
+      <fit:group>dtu_dtv</fit:group>
+      <fit:id>1351</fit:id>
+      <fit:status>O1</fit:status>
+      <fit:timestamp>2006-02-01</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_pr</fit:form>
+      <fit:group>dtu_dtv</fit:group>
+      <fit:id>1351</fit:id>
+      <fit:status>O1</fit:status>
+      <fit:timestamp>1136286512</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_pr</fit:form>
+      <fit:group>dtu_dtv</fit:group>
+      <fit:id>1351</fit:id>
+      <fit:status>O1</fit:status>
+      <fit:timestamp>1138787500</fit:timestamp>
+    </fit:cataloguer>
+    <fit:heading>test of level 3 - 2 jan 2006, Sub title, ACR</fit:heading>
+    <fit:sortkey>2006 0101</fit:sortkey>
+    <fit:system>
+      <fit:created>20060103120832</fit:created>
+      <fit:id>184690</fit:id>
+      <fit:supplier fit:type="dtu_dtv">
+        <fit:code>dtu_dtv</fit:code>
+        <fit:name fit:lang="eng">dtu_dtv</fit:name>
+        <fit:name fit:lang="dan"/>
+      </fit:supplier>
+      <fit:updated>20060201105140</fit:updated>
+    </fit:system>
+    <fit:type fit:lang="eng">Project (DTU record)</fit:type>
+    <fit:type fit:lang="dan">Projektbeskrivelse (DTU post)</fit:type>
+  </fit:admin>
   <project object="main">
-    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - description</abstract>
-    <abstract authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - description 2</abstract>
-    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification</class>
-    <class authority_type="ddf_class_type" authority_type_dan="Lokal" authority_type_eng="Local" type="local">Sitecore - classification 2</class>
+    <abstract fit:authority_lang="language" fit:authority_lang_dan="Engelsk" fit:authority_lang_eng="English" lang="eng">Description</abstract>
+    <abstract fit:authority_lang="language" fit:authority_lang_dan="Dansk" fit:authority_lang_eng="Danish" lang="dan">beskrivelse</abstract>
+    <class fit:authority_type="ddf_class_type" fit:authority_type_dan="Lokal" fit:authority_type_eng="Local" type="local">621</class>
+    <class fit:authority_type="ddf_class_type" fit:authority_type_dan="Lokal" fit:authority_type_eng="Local" type="local">432</class>
     <dates>
-      <end authority_type="ddf_project_dates_end_type" authority_type_dan="Forventet" authority_type_eng="Expected" type="expected">20070601</end>
-      <start>20011201</start>
+      <end fit:authority_type="ddf_project_dates_end_type" fit:authority_type_dan="Forventet" fit:authority_type_eng="Expected" type="expected">20060101</end>
+      <start>20050101</start>
     </dates>
     <finance>
-      <body authority="dtu_finance_budget" authority_dan="Ph.d Central finansieret" authority_eng="Ph.d Central finansieret">111</body>
-      <budget>50.000</budget>
-      <contract>34</contract>
+      <body>0</body>
+      <budget>Budget</budget>
+      <contract>35353</contract>
     </finance>
     <finance>
-      <body>0</body>
-      <budget>59.000</budget>
-      <contract>26</contract>
+      <body fit:authority="dtu_finance_budget" fit:authority_dan="Ph.d Central finansieret" fit:authority_eng="Ph.d Central finansieret">111</body>
+      <budget>budget</budget>
+      <contract>56422</contract>
     </finance>
-    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keyword</keyword>
-    <keyword authority_type="ddf_keyword_type" authority_type_dan="Lokale" authority_type_eng="Local" type="local">Sitecore - keyword 2</keyword>
+    <keyword fit:authority_type="ddf_keyword_type" fit:authority_type_dan="Frie" fit:authority_type_eng="Free" type="free">Project</keyword>
+    <keyword fit:authority_type="ddf_keyword_type" fit:authority_type_dan="Frie" fit:authority_type_eng="Free" type="free">projekt 2</keyword>
     <local>
-      <field authority="dtu_institut_local" authority_dan="DTV" authority_eng="DTV" tag="Institute owner" tagsea="instituteowner" type="4">DTV</field>
+      <field fit:authority="dtu_institut_local" fit:authority_dan="DTV" fit:authority_eng="DTV" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" tag="Institute owner" tagsea="instituteowner" type="4">DTV</field>
     </local>
     <local>
-      <field authority="dtu_institut_local" authority_dan="BIC" authority_eng="BIC" tag="Institute owner" tagsea="instituteowner" type="4">BIC</field>
+      <field fit:authority="dtu_institut_local" fit:authority_dan="FYS" fit:authority_eng="FYS" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" tag="Institute owner" tagsea="instituteowner" type="4">FYS</field>
     </local>
     <local>
-      <field authority="sub_organisation_local.dtu" authority_dan="CPE" authority_eng="CPE" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">cpe</field>
+      <field fit:authority="sub_organisation_local.dtu" fit:authority_dan="ARTEK" fit:authority_eng="ARTEK" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">ARTEK</field>
     </local>
     <local>
-      <field authority="sub_organisation_local.dtu" authority_dan="CAMP-DTU" authority_eng="CAMP-DTU" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">camp</field>
+      <field fit:authority="sub_organisation_local.dtu" fit:authority_dan="Nano·DTU" fit:authority_eng="Nano·DTU" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" num="1" tag="Sub organisation" tagsea="suborganisation" type="4">NANODTU</field>
     </local>
     <local>
-      <field num="3" tag="Internal note" tagsea="internalnote" type="1">Sitecore - internal note</field>
+      <field fit:authority_type="ddf_local_type" fit:authority_type_dan="Not exported to search module" fit:authority_type_eng="Not exported to search module" num="3" tag="Internal note" tagsea="internalnote" type="1">Internal note</field>
     </local>
-    <name authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">
-      <acronym>Sitecore - acronym</acronym>
-      <full>Sitecore - main title of project. This record can be used to check our xml-format, Sitecore - sub title of project, Sitecore - acronym</full>
-      <main>Sitecore - main title of project. This record can be used to check our xml-format</main>
-      <sub>Sitecore - sub title of project</sub>
+    <local>
+      <field fit:authority_type="ddf_local_type" fit:authority_type_dan="Not exported to search module" fit:authority_type_eng="Not exported to search module" num="3" tag="Internal note" tagsea="internalnote" type="1">Internal note 2</field>
+    </local>
+    <name fit:authority_lang="language" fit:authority_lang_dan="Engelsk" fit:authority_lang_eng="English" lang="eng">
+      <acronym>ACR</acronym>
+      <full>test of level 3 - 2 jan 2006, Sub title, ACR</full>
+      <main>test of level 3 - 2 jan 2006</main>
+      <sub>Sub title</sub>
     </name>
-    <name authority_lang="language" authority_lang_dan="Dansk" authority_lang_eng="Danish" lang="dan">
-      <acronym>Sitecore- akronym</acronym>
-      <full>Sitecor - hoved titel på projektet. Denne post kan anvendes til at checke vores xml-format, Sitecore- undertitel, Sitecore- akronym</full>
-      <main>Sitecor - hoved titel på projektet. Denne post kan anvendes til at checke vores xml-format</main>
-      <sub>Sitecore- undertitel</sub>
+    <name fit:authority_lang="language" fit:authority_lang_dan="Dansk" fit:authority_lang_eng="Danish" lang="dan">
+      <acronym>ACR 2</acronym>
+      <full>Hovedtitel, Undertitel, ACR 2</full>
+      <main>Hovedtitel</main>
+      <sub>Undertitel</sub>
     </name>
-    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - note</note>
-    <note authority_lang="language" authority_lang_dan="Engelsk" authority_lang_eng="English" lang="eng">Sitecore - note 2</note>
-    <organisation authority_role="dtu_project_organisation_role" authority_role_dan="Projektdeltager" authority_role_eng="Project member" authority_type="dtu_organisation_type" authority_type_dan="Universiteter og højere læreanstalter" authority_type_eng="Universities and higher education" id="7458" object="aux" role="project member" type="cu">
+    <note fit:authority_lang="language" fit:authority_lang_dan="Engelsk" fit:authority_lang_eng="English" lang="eng">Note</note>
+    <note fit:authority_lang="language" fit:authority_lang_dan="Dansk" fit:authority_lang_eng="Danish" lang="dan">note 2</note>
+    <organisation fit:authority_role="dtu_project_organisation_role" fit:authority_role_dan="Projektdeltager" fit:authority_role_eng="Project member" fit:authority_type="dtu_organisation_type" fit:authority_type_dan="Universiteter og højere læreanstalter" fit:authority_type_eng="Universities and higher education" id="7458" object="aux" role="project member" type="cu">
       <contact>
         <email>dtv@dtv.dk</email>
-        <email>fictive@email.kom</email>
+        <email>dtv@dtv.dk2</email>
         <fax>+ 45 4588 3040</fax>
-        <fax>+ 45 7689 9876</fax>
-        <mobile>+ 45 3456 7888</mobile>
-        <mobile>+ 45 7678 7876</mobile>
+        <fax>+ 45 4588 3042</fax>
+        <mobile>555555</mobile>
+        <mobile>555559</mobile>
         <post>
           <building>101</building>
           <city>Kgs. Lyngby</city>
           <country>Denmark</country>
-          <room>134</room>
+          <room>200</room>
           <street>Anker Engelunds Vej 1</street>
           <zipcode>2800</zipcode>
         </post>
         <tel>+ 45 4525 7200</tel>
         <url>http://www.dtv.dk/om.aspx</url>
-        <url>http://fictive/url</url>
+        <url>http://www.dtv.dk</url>
       </contact>
-      <country>country</country>
+      <country>Denmark</country>
       <name>
-        <full>Technical University of Denmark, Technical Knowledge Center of Denmark, </full>
-        <main>Technical University of Denmark</main>
-        <sub>Technical Knowledge Center of Denmark</sub>
-        <sub2 authority="ddf_organisation_sub2.dtu" authority_dan="Center for Viden Teknologi" authority_eng="Center for Viden Teknologi">Center for Viden Teknologi</sub2>
-        <sub2code/>
+        <full>Danmarks Tekniske Universitet, Danmarks Tekniske Videncenter, </full>
+        <main>Danmarks Tekniske Universitet</main>
+        <sub code="DTV">Danmarks Tekniske Videncenter</sub>
+        <sub2>cvt</sub2>
+        <sub2code xmlns:ext="http://exslt.org/common"/>
       </name>
-      <person authority_role="dtu_project_person_role" authority_role_dan="Projektmedarbejder" authority_role_eng="Project staff" id="7458" object="aux" postition_title="director" role="project staff">
-        <identifier type="cwisno">2605</identifier>
-        <name>
-          <first>Annette Winkel</first>
-          <full>Schwarz, Annette Winkel</full>
-          <last>Schwarz</last>
-        </name>
-      </person>
-      <person authority_role="dtu_project_person_role" authority_role_dan="Kontaktperson" authority_role_eng="Contact person" id="155953" object="aux" role="contact person">
+      <person fit:authority_role="dtu_project_person_role" fit:authority_role_dan="Kontaktperson" fit:authority_role_eng="Contact person" id="155953" object="aux" postition_title="System Librarian" role="contact person">
         <identifier type="cwisno">1351</identifier>
         <name>
           <first>Birthe</first>
@@ -152,82 +126,100 @@
           <last>Krog</last>
         </name>
       </person>
+      <person fit:authority_role="dtu_project_person_role" fit:authority_role_dan="Projektmedarbejder" fit:authority_role_eng="Project staff" id="33163" object="aux" postition_title="Librarian" role="project staff">
+        <identifier type="cwisno">1610</identifier>
+        <name>
+          <first>Marianne</first>
+          <full>Meister, Marianne</full>
+          <last>Meister</last>
+        </name>
+      </person>
     </organisation>
-    <organisation authority_role="dtu_project_organisation_role" authority_role_dan="Projektleder" authority_role_eng="Project leader" authority_type="dtu_organisation_type" authority_type_dan="Non-profit institutioner" authority_type_eng="Non-profit institutions" object="aux" role="project leader" type="np">
+    <organisation fit:authority_role="dtu_project_organisation_role" fit:authority_role_dan="Projektdeltager" fit:authority_role_eng="Project member" fit:authority_type="dtu_organisation_type" fit:authority_type_dan="Universiteter og højere læreanstalter" fit:authority_type_eng="Universities and higher education" id="7419" object="aux" role="project member" type="cu">
       <contact>
-        <email>fictive@email.kom</email>
-        <email>fictive2@email.kom</email>
-        <fax>+45 5739 5730</fax>
-        <fax>+45 2846 3947</fax>
-        <mobile>4075 6574</mobile>
-        <mobile>6574 9393</mobile>
+        <email>dtv@dtv.dk</email>
+        <email>cvt@dtv.dk</email>
+        <fax>+45 4588 3040</fax>
+        <fax>+45 4588 3041</fax>
+        <mobile>5678 5678</mobile>
+        <mobile>4565 6753</mobile>
         <post>
-          <building>2</building>
-          <city>Fictive city</city>
-          <country>Fictive country</country>
-          <room>123</room>
-          <street>Fictive street</street>
-          <zipcode>2234</zipcode>
+          <building>101</building>
+          <city>Kgs. Lyngby</city>
+          <country>Denmark</country>
+          <room>5</room>
+          <street>Anker Engelunds Vej 1</street>
+          <zipcode>2800</zipcode>
         </post>
-        <tel>+45 8746 5746</tel>
-        <url>http://fictive/url/non-profit</url>
-        <url>http://fictive2/url/non-profit</url>
+        <tel>+45 4525 7200</tel>
+        <url>http://www.dtv.dk/</url>
+        <url>http://www.dtv.dk/cvt.aspx</url>
       </contact>
-      <country>Fictive country</country>
+      <country>Denmark</country>
       <name>
-        <full>The non-profit fictive institution, Development Department, </full>
-        <main>The non-profit fictive institution</main>
-        <sub>Development Department</sub>
+        <full>Technical University of Denmark, Technical Knowledge Center of Denmark, </full>
+        <main>Technical University of Denmark</main>
+        <sub code="DTV">Technical Knowledge Center of Denmark</sub>
+        <sub2>Center of Knowledge Technology</sub2>
+        <sub2code xmlns:ext="http://exslt.org/common"/>
       </name>
-      <person authority_role="dtu_project_person_role" authority_role_dan="Projektleder" authority_role_eng="Project leader" object="aux" postition_title="Director" role="project leader">
-        <identifier type="cwisno"/>
+      <person fit:authority_role="dtu_project_person_role" fit:authority_role_dan="Kontaktperson" fit:authority_role_eng="Contact person" id="7419" object="aux" role="contact person">
+        <identifier type="cwisno">3414</identifier>
         <name>
-          <first>Peter</first>
-          <full>Fictivesen, Peter</full>
-          <last>Fictivesen</last>
+          <first>Bettina</first>
+          <full>Engler, Bettina</full>
+          <last>Engler</last>
         </name>
       </person>
-      <person authority_role="dtu_project_person_role" authority_role_dan="Projektmedarbejder" authority_role_eng="Project staff" id="63810" object="aux" postition_title="Administative leader" role="project staff">
-        <identifier type="cwisno"/>
+      <person fit:authority_role="dtu_project_person_role" fit:authority_role_dan="Projektleder" fit:authority_role_eng="Project leader" id="30000" object="aux" postition_title="VIP" role="project leader">
+        <identifier type="cwisno">2685</identifier>
         <name>
-          <first>Liv</first>
-          <full>Fugl, Liv</full>
-          <last>Fugl</last>
+          <first>Alfred</first>
+          <full>Heller, Alfred</full>
+          <last>Heller</last>
         </name>
       </person>
     </organisation>
-    <status authority="ddf_project_status" authority_dan="Løbende" authority_eng="Current" lang="eng">Current</status>
+    <status fit:authority="ddf_project_status" fit:authority_dan="Løbende" fit:authority_eng="Current" lang="eng">Current</status>
     <status lang="dan">Løbende</status>
     <www>
-      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
-      <url>http://Sitecore - url</url>
+      <text fit:authority="dtu_www_text" fit:authority_dan="Hele teksten" fit:authority_eng="Full text">full text</text>
+      <url>http://URL</url>
     </www>
     <www>
-      <text authority="dtu_www_text" authority_dan="Hele teksten" authority_eng="Full text">full text</text>
-      <url>http://Sitecore - url 2</url>
+      <text fit:authority="dtu_www_text" fit:authority_dan="Hele teksten" fit:authority_eng="Full text">full text</text>
+      <url>http://url 2</url>
     </www>
   </project>
-  <derived>
+  <derived xmlns:ext="http://exslt.org/common">
     <type>
       <eng>project</eng>
       <dan>projekt</dan>
     </type>
   </derived>
-  <indexing>
-    <instituteowner>DTV</instituteowner>
-    <instituteowner>BIC</instituteowner>
-    <cwisno>2605</cwisno>
+  <indexing xmlns:ext="http://exslt.org/common">
+    <instituteowner>
+      <subcode>DTV</subcode>
+    </instituteowner>
+    <instituteowner>
+      <subcode>FYS</subcode>
+    </instituteowner>
+    <instituteowner>
+      <subcode>DTV</subcode>
+    </instituteowner>
+    <instituteowner>
+      <subcode>DTV</subcode>
+    </instituteowner>
     <cwisno>1351</cwisno>
-    <pyear>2001</pyear>
-    <pyear>2002</pyear>
-    <pyear>2003</pyear>
-    <pyear>2004</pyear>
+    <cwisno>1610</cwisno>
+    <cwisno>3414</cwisno>
+    <cwisno>2685</cwisno>
     <pyear>2005</pyear>
     <pyear>2006</pyear>
-    <pyear>2007</pyear>
-    <prstart>2001</prstart>
-    <prend>2007</prend>
-    <sorttitle>Sitecore - main title of project. This record can be used to check our xml-format Sitecore - sub title of project</sorttitle>
+    <prstart>2005</prstart>
+    <prend>2006</prend>
+    <firstauthor>Heller, Alfred</firstauthor>
+    <sorttitle>test of level 3 - 2 jan 2006 Sub title</sorttitle>
     <ownerclass>dtu</ownerclass>
   </indexing>
 </ddf>
