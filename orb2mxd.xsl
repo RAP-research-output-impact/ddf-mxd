@@ -8,27 +8,21 @@
                 xmlns:str="http://exslt.org/strings"
                 extension-element-prefixes="ext func str my">
 
-  <!--
-      General TODOs:
-      - lang code must be 2 chars
-  -->
-
   <xsl:include href="mxdPersonOrg.xsl"/>
 
   <!-- Description:
-       *   
-       *      
-       *  This stylesheet transforms the ORBIT research database XML 
-       *  to the Danish national Exchange Format for Documents MXD
-       * 
-       *  Usage: sabcmd xsl2xsl.xsl records.xml result.xml
-       *  where 
-       *  xsl2xsl.xsl is the current stylesheet
-       *  records.xml contains the orbit records             
-       *  result.xml is the resulting xml in exchange format
-       *
-       * You can also use xsltproc, of course.
-       *
+
+       This stylesheet transforms the ORBIT research database XML 
+       to the Danish national Exchange Format for Documents MXD
+        
+       Usage: sabcmd xsl2xsl.xsl records.xml result.xml
+       where 
+       xsl2xsl.xsl is the current stylesheet
+       records.xml contains the orbit records             
+       result.xml is the resulting xml in exchange format
+
+       You can also use xsltproc, but 4xslt doesn't like me creating
+       an xmlns attribute, so I'll have to figure that one out.
   -->
 
   <!--
