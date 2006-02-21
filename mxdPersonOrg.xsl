@@ -92,7 +92,14 @@
     <xsl:element name="person">
       <xsl:attribute name="pers_role">
         <xsl:variable name="role" select="@role"/>
-        <xsl:value-of select="$personRoleMapping/rule[in=$role]/out"/>
+        <xsl:choose>
+          <xsl:when test="$personRoleMapping/rule[in=$role]/out">
+            <xsl:value-of select="$personRoleMapping/rule[in=$role]/out"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>pau</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:attribute>
       <xsl:variable name="thisorg" select="organisation/name"/>
       <xsl:variable name="thisorg-hash" select="normalize-space(concat($thisorg/main,$thisorg/sub,$thisorg/sub2))"/>
