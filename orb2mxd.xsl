@@ -207,7 +207,14 @@
           <xsl:variable name="type" select="@type"/>          
           <xsl:element name="keyword">
             <xsl:attribute name="key_type">
-              <xsl:value-of select="$keyTypeMapping/rule[in=$type]/out"/>
+              <xsl:choose>
+                <xsl:when test="$keyTypeMapping/rule[in=$type]/out">
+                  <xsl:value-of select="$keyTypeMapping/rule[in=$type]/out"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>fre</xsl:text>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:attribute>
             <xsl:value-of select="."/>
           </xsl:element>
