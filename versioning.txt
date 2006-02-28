@@ -1,0 +1,85 @@
+Hi all involved in the definition of the MXD/exchange format,
+
+Liv and I have been pondering about how to handle the namespace and
+version numberings of both the schema definition and the standard
+description. Here are the considerations.
+
+The format description has a three-level release number, and I propose
+a 4-digit schema versioning number, where the first 3 digits reflect
+the corresponding format description and the fourth is for bugfixes in
+the schema. I'll come back to this later.
+
+The target namespace declaration to be used in that schema is another
+thing. I suggest using the first two revision levels like:
+targetNamespace="http://forskningsdatabasen.dk/1.0"
+
+This implies, however, that the preface of the documentation needs some
+sharpening. I propose something like this ( [this] is added text and
+{this} is removed text):
+
+1. represents a major version - an increment would require a thorough
+   study of the new version and subsequent changes of style sheets and
+   other programs.
+
+   [Changes in major version always imply both a new release of the
+   schema, AND a change in the namespace declaration. The new version
+   of the schema will therefore NOT validate older documents.]
+
+2. represents a revision, which modifies some [data] definitions of
+   the previous version [in a way that is not necessarily backward
+   compatible with older versions, and/or adds new elements]. An
+   increment [of the revision number] would most likely require the
+   update of XSLT style sheets for presentation or similar purposes.
+
+   [Changes in revision always imply both a new release of the schema,
+   AND a change in the namespace declaration. The new version of the
+   schema will therefore NOT validate older documents .]
+
+3. represents a minor revision, { which adds new definitions to the
+   previous version } [which only contains changes in wording or
+   clarifications that do not invalidate the current schema.]
+
+   An increment [in minor revision number] should {normally} not
+   require update of XSLT style sheets or similar. [The version number
+   of the schema is changed, as may be the comments contained in it,
+   but the definitions and the namespace stay the same.]
+
+So I'm quite a bit more stringent on when the middle revision number
+needs to be bumped, because XML Schema AFAIK does neither allow to
+define multiple target namespaces, nor have a mechanism for defining
+that e.g. namespace "foo/1.1.2" is backward compatible with
+"foo/1.1.1". If you change a single definition, you have to change the
+namespace, and that means the new schema will no longer validate older
+documents.
+
+So basically, for the first release:
+
+Format/document version:  1.0.0
+Will have namespace:      forskningsdatabasen.dk/1.0
+May have schema versions: 1.0.0.0, 1.0.0.1, ...
+
+where the 4th digit is only used for correcting obvious mistakes in
+the schema (to be avoided, of course).
+
+If the document's wording is changed, or the ISBN gets 12 digits
+rather than 10 but the current schema already allows this, it would
+become:
+
+Format/document version:  1.0.1
+Will have namespace:      forskningsdatabasen.dk/1.0
+With schema versions:     1.0.1.0, 1.0.1.1, ...
+
+If the definition of doc_lang is changed, or the ISBN gets 12 digits
+while the current schema will only allow 10:
+
+Format/document version:  1.1.0
+Will have namespace:      forskningsdatabasen.dk/1.1
+With schema versions:     1.1.0.0, 1.1.0.1, ...
+
+Maybe I'm shooting a fly with a cannon, but we'd better have this
+straight before we release it, because changing namespaces is not
+something to be taken lightly. In fact, to avoid it from happening too
+often, we should take care not to be overrestrictive in the schema;
+something that Jacob unwittingly did with the ISBN.
+
+Roel
