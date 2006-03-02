@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- version 1.0.0.0 of November 16 2005 -->
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.0" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.0" elementFormDefault="qualified" xml:lang="EN">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.1" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.1" elementFormDefault="qualified" xml:lang="EN">
+  <!-- 
+       2005-11-16  1.0.0.0 initial release
+       2006-03-01  1.1.0.0 relaxed data definition of vol, pages (in book/article),
+                   issue, event/number; allow ISBN ending in X; added doc_type dx; 
+                   added record_source hvhosp and kas. Update your namespace.
+  -->
+
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
   <element name="ddf_doc" type="tns:DdfDocType">
     <unique name="organisationAffiliationKey">
@@ -249,7 +255,7 @@
           <documentation xml:lang="en-uk">Acronym event title, like "ECDL"</documentation>
         </annotation>
       </element>
-      <element name="number" type="positiveInteger" minOccurs="0">
+      <element name="number" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Number in series of recurrent events, like "8"</documentation>
         </annotation>
@@ -1106,6 +1112,12 @@
           <documentation xml:lang="da-dk">Radio/TV-udsendelse</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="dx">
+        <annotation>
+          <documentation xml:lang="en-uk">Exhibition catalogue</documentation>
+          <documentation xml:lang="da-dk">Udstillingskatalog</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="do">
         <annotation>
           <documentation xml:lang="en-uk">Other</documentation>
@@ -1532,6 +1544,18 @@
           <documentation xml:lang="da-dk">Statens Veterinære Serumlab. og Statens Veterinære. Inst. for Virusforskning</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="hvhosp">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Hvidovre Hospital</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kas">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Københavns Amts Sygehusvæsen</documentation>
+        </annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   <simpleType name="_RecStatusType">
@@ -1642,22 +1666,26 @@
   </simpleType>
   <simpleType name="_ISBNType">
     <restriction base="string">
-      <!-- RdC: as of jan 2005, ISBN can be 13 digits -->
-      <pattern value="\d{10,13}"/>
+      <!-- RdC: as of jan 2005, ISBN can be 10 or 13 digits, the last of which can be x -->
+      <pattern value="(\d{9}|\d{12})[\dxX]"/>
     </restriction>
   </simpleType>
+
   <simpleType name="_PagesType">
     <union>
       <simpleType>
         <restriction base="string">
-          <pattern value="\d{1,6}-\d{1,6}"/>
+          <pattern value="\w?\d{1,6}-\w?\d{1,6}"/>
         </restriction>
       </simpleType>
       <simpleType>
-        <restriction base="positiveInteger"/>
+        <restriction base="string">
+          <pattern value="\w?\d{1,6}"/>
+        </restriction>
       </simpleType>
     </union>
   </simpleType>
+
   <complexType name="_InJournalType">
     <sequence>
       <element name="title">
@@ -1677,12 +1705,12 @@
           <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
         </annotation>
       </element>
-      <element name="vol" type="positiveInteger" minOccurs="0">
+      <element name="vol" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Volume number</documentation>
         </annotation>
       </element>
-      <element name="issue" type="positiveInteger" minOccurs="0">
+      <element name="issue" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Issue number</documentation>
         </annotation>
@@ -1867,7 +1895,7 @@
           <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
         </annotation>
       </element>
-      <element name="pages" type="positiveInteger" minOccurs="0">
+      <element name="pages" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Total no. of pages</documentation>
         </annotation>
@@ -1920,7 +1948,7 @@
           <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
         </annotation>
       </element>
-      <element name="pages" type="positiveInteger" minOccurs="0">
+      <element name="pages" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Total no. of pages</documentation>
         </annotation>
