@@ -5,6 +5,8 @@
        2006-03-01  1.1.0.0 relaxed data definition of vol, pages (in book/article),
                    issue, event/number; allow ISBN ending in X; added doc_type dx; 
                    added record_source hvhosp and kas. Update your namespace.
+       2006-03-15  1.1.0.1 fixed forgotten format_version, mental note: remember
+                   next time!
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -92,9 +94,9 @@
         </element>
       </sequence>
     </sequence>
-    <attribute name="format_version" use="required" fixed="1.0.0">
+    <attribute name="format_version" use="required" fixed="1.1.0">
       <annotation>
-        <documentation xml:lang="en-uk">The particular version of the exchange format used, for the current version "1.0.0". Once subsequent versions have been issued, this will aid the schema validation and other applications parsing the XML.</documentation>
+        <documentation xml:lang="en-uk">The particular version of the exchange format used, for the current version "1.1.0". Once subsequent versions have been issued, this will aid the schema validation and other applications parsing the XML.</documentation>
       </annotation>
     </attribute>
     <attribute name="doc_type" type="tns:_DocTypeType" use="required">
