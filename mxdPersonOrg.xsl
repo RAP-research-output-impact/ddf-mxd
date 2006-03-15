@@ -6,6 +6,10 @@
                 xmlns:str="http://exslt.org/strings"
                 extension-element-prefixes="ext func str my">
 
+
+  <!-- As of 2006-03, this file is incorporated in orb2mxd and therefore DEPRECATED -->
+
+
   <!-- 
        Somewhat frobbed code to segregate <person>s and their
        affiliate <organisation>s to obey the MXD format. 
@@ -91,15 +95,8 @@
     <xsl:param name="orgs"/>
     <xsl:element name="person">
       <xsl:attribute name="pers_role">
-        <xsl:variable name="role" select="@role"/>
-        <xsl:choose>
-          <xsl:when test="$personRoleMapping/rule[in=$role]/out">
-            <xsl:value-of select="$personRoleMapping/rule[in=$role]/out"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>pau</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:variable name="role" select="string(@role)"/>
+        <xsl:value-of select="$personRoleMapping/rule[in=$role]/out"/>
       </xsl:attribute>
       <xsl:variable name="thisorg" select="organisation/name"/>
       <xsl:variable name="thisorg-hash" select="normalize-space(concat($thisorg/main,$thisorg/sub,$thisorg/sub2))"/>
