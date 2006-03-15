@@ -8,8 +8,6 @@
                 xmlns:str="http://exslt.org/strings"
                 extension-element-prefixes="ext func str my">
 
-  <xsl:include href="mxdPersonOrg.xsl"/>
-
   <!-- Description:
 
        This stylesheet transforms the ORBIT research database XML 
@@ -30,6 +28,10 @@
       FIXME: problem that must be fixed to comply with MXD standard
       EXTRA: things that should be added when time allows
   -->
+
+  <!-- Version numbers -->
+  <xsl:variable name="schemaversion">1.1</xsl:variable>
+  <xsl:variable name="formatversion">1.1.0</xsl:variable>
 
   <!-- Mapping files for specific element -->
   <xsl:variable name="docTypeMapping" select="document('docTypeMapping.xml')/*"/>
@@ -74,12 +76,16 @@
         select="$docTypeMapping/rule[in = $ddftype and type = $ddfdoctype]/name"/-->
 
     <!-- <ddf_doc> -->
+
     <xsl:element name="ddf_doc">
       <!-- begin attributes -->
       <xsl:attribute name="xmlns">
-        <xsl:text>http://mx.forskningsdatabasen.dk/ns/mxd/1.0</xsl:text>
+        <xsl:text>http://mx.forskningsdatabasen.dk/ns/mxd/</xsl:text>
+        <xsl:value-of select="$schemaversion"/>
       </xsl:attribute>
-      <xsl:attribute name="format_version">1.0.0</xsl:attribute>
+      <xsl:attribute name="format_version">
+        <xsl:value-of select="$formatversion"/>
+      </xsl:attribute>
       <xsl:attribute name="doc_type">
         <xsl:value-of select="$mxdtype"/>
       </xsl:attribute>
@@ -105,7 +111,7 @@
         <xsl:value-of select="$indicatorMapping/rule[in=$rev]/out"/>
       </xsl:attribute>
       <xsl:attribute name="doc_level">
-        <xsl:variable name="lev" select="document/indicator/level"/>
+        <xsl:variable name="lev" select="string(document/indicator/level)"/>
         <xsl:value-of select="$indicatorMapping/rule[in=$lev]/out"/>
       </xsl:attribute>
       <xsl:attribute name="rec_source">dtu</xsl:attribute>
@@ -129,7 +135,6 @@
       <xsl:call-template name="element-description"/>
 
       <!-- <person>, <organistion> repeat -->
-      <!-- this is in mxdPersonOrg.xsl -->
       <xsl:call-template name="element-person-organisation"/>
 
       <!-- <project> repeats -->
@@ -204,17 +209,10 @@
 
         <!-- virtually all keywords in Orbit are 'free', a few are 'local' -->
         <xsl:for-each select="document/keyword">
-          <xsl:variable name="type" select="@type"/>          
+          <xsl:variable name="type" select="string(@type)"/>          
           <xsl:element name="keyword">
             <xsl:attribute name="key_type">
-              <xsl:choose>
-                <xsl:when test="$keyTypeMapping/rule[in=$type]/out">
-                  <xsl:value-of select="$keyTypeMapping/rule[in=$type]/out"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:text>fre</xsl:text>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:value-of select="$keyTypeMapping/rule[in=$type]/out"/>
             </xsl:attribute>
             <xsl:value-of select="."/>
           </xsl:element>
@@ -222,7 +220,7 @@
 
         <!-- class is seldom used in Orbit; only @type=local is in use -->
         <xsl:for-each select="document/class">
-          <xsl:variable name="type" select="@type"/>
+          <xsl:variable name="type" select="string(@type)"/>
           <xsl:element name="class">
             <xsl:attribute name="class_type">
               <xsl:value-of select="$keyTypeMapping/rule[in=$type]/out"/>
@@ -543,6 +541,119 @@
     </xsl:element> <!-- </publication> -->
   </xsl:template> <!-- element-pubication -->
 
+
+  <!-- person/affiliation handling templates (formerly mxdPersonOrg.xsl) -->
+
+  <!-- 
+       Somewhat frobbed code to segregate <person>s and their
+       affiliate <organisation>s to obey the MXD format. 
+       This is not as straightforward in XSL as you'd like it to be,
+       unless you resort to the node-set() extension- which we do.
+
+       We only take persons from the /ddf/document element, which in
+       practice always is the object="main" doc. MXD doesn't allow for
+       complex person data in for example the 'editor of the book in
+       which this chapter appears'.
+  -->
+
+  <xsl:template name="element-person-organisation">
+
+    <!-- I do not expect more than 1 org per person... -->
+    <xsl:variable name="preorgs-rtf">
+      <xsl:for-each select="document/person/organisation">
+        <organisation>
+          <xsl:attribute name="hash">
+            <xsl:value-of select="normalize-space(concat(name/main, name/sub, name/sub2))"/>
+          </xsl:attribute>
+          <xsl:copy-of select="./*"/>
+        </organisation>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="preorgs" select="ext:node-set($preorgs-rtf)"/>
+    <!-- You may hit me with a salmon and call me Jeryll if I understand
+         how preceding-sibling:: works, but this seems to do the trick
+    -->
+    <xsl:variable name="orgs" select="$preorgs/organisation[not(@hash=preceding-sibling::*/@hash)]"/>
+
+    <xsl:for-each select="document/person">
+      <xsl:call-template name="handle-person">
+        <xsl:with-param name="orgs" select="$orgs"/>
+      </xsl:call-template>
+    </xsl:for-each>
+        
+    <xsl:for-each select="$orgs">
+      <xsl:call-template name="handle-organisation"/>
+    </xsl:for-each>
+  </xsl:template>
+
+
+  <xsl:template name="handle-organisation">
+    <xsl:element name="organisation">
+      <xsl:attribute name="org_role">oaf</xsl:attribute>
+      <xsl:attribute name="aff_no">
+        <xsl:value-of select="position()"/>
+      </xsl:attribute>
+      <name>
+        <level1>
+          <xsl:choose>
+            <xsl:when test="normalize-space(./name)">
+              <xsl:value-of select="./name/main"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>[affiliation unknown]</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </level1>
+        <level2>
+          <xsl:value-of select="./name/sub"/>
+        </level2>
+        <level3>
+          <xsl:value-of select="./name/sub2"/>
+        </level3>
+        <acronym>
+          <xsl:value-of select="./name/FIXME"/>
+        </acronym>
+      </name>
+      <xsl:if test="./@id">
+        <!-- TODO: check this: maybe we should us the sub2code instead? -->
+        <id id_type="loc_org">
+          DTU-<xsl:value-of select="./@id"/>
+        </id>
+      </xsl:if>
+    </xsl:element>
+  </xsl:template>
+  
+
+  <xsl:template name="handle-person">
+    <xsl:param name="orgs"/>
+    <xsl:element name="person">
+      <xsl:attribute name="pers_role">
+        <xsl:variable name="role" select="string(@role)"/>
+        <xsl:value-of select="$personRoleMapping/rule[in=$role]/out"/>
+      </xsl:attribute>
+      <xsl:variable name="thisorg" select="organisation/name"/>
+      <xsl:variable name="thisorg-hash" select="normalize-space(concat($thisorg/main,$thisorg/sub,$thisorg/sub2))"/>
+      <xsl:attribute name="aff_no">
+        <xsl:for-each select="$orgs">
+          <xsl:if test="$thisorg-hash = ./@hash">
+            <xsl:value-of select="position()"/>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:attribute> 
+
+      <name>
+        <first><xsl:value-of select="./name/first"/></first>
+        <last><xsl:value-of select="./name/last"/></last>
+      </name>
+      <xsl:if test="identifier[@type='cwisno']/text()">
+        <id id_type="loc_per">
+          <xsl:value-of select="concat('DTU-', identifier[@type='cwisno'])"/>
+        </id>
+      </xsl:if>
+
+    </xsl:element>
+  </xsl:template>
+    
 
   <!-- utility templates -->
 

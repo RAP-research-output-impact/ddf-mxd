@@ -18,7 +18,7 @@
 
   <rule>
     <in></in>
-    <out>fre</out>
+    <out>loc</out>
   </rule>
 
 </mapping>
