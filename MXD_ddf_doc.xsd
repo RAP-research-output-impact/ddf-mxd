@@ -7,6 +7,9 @@
                    added record_source hvhosp and kas. Update your namespace.
        2006-03-15  1.1.0.1 fixed forgotten format_version, mental note: remember
                    next time!
+       2006-03-21  1.1.0.2 Changed the pattern in _ISBNType to two patterns
+                           with a union to avoid some problems with some
+                           versions of libxml2
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -1667,10 +1670,19 @@
     </restriction>
   </simpleType>
   <simpleType name="_ISBNType">
-    <restriction base="string">
-      <!-- RdC: as of jan 2005, ISBN can be 10 or 13 digits, the last of which can be x -->
-      <pattern value="(\d{9}|\d{12})[\dxX]"/>
-    </restriction>
+    <!-- RdC: as of jan 2005, ISBN can be 10 or 13 digits, the last of which can be x -->
+    <union>
+      <simpleType>
+        <restriction base="string">
+          <pattern value="\d{9}[\dxX]"/>
+        </restriction>
+      </simpleType>
+      <simpleType>
+        <restriction base="string">
+          <pattern value="\d{12}[\dxX]"/>
+        </restriction>
+      </simpleType>
+    </union>
   </simpleType>
 
   <simpleType name="_PagesType">
