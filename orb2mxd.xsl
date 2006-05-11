@@ -6,7 +6,8 @@
                 xmlns:func="http://exslt.org/functions"
                 xmlns:my="http://www.dtv.dk/ns"
                 xmlns:str="http://exslt.org/strings"
-                extension-element-prefixes="ext func str my">
+                xmlns:re="http://exslt.org/regular-expressions"
+                extension-element-prefixes="ext func str my re">
 
   <!-- Description:
 
@@ -55,25 +56,43 @@
 
   <xsl:output method="xml" indent="yes" encoding="utf-8"/>
 
+<!--
   <xsl:template match="/*">
     <xsl:element name="records">
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
-
+-->
 
   <xsl:template match="/ddf">
+    <!-- cast out non-DTU; personal records are already omitted in SQL  -->
+    <xsl:if test="(/ddf/document/@status and /ddf/document/@status != 'published')
+                  or $ddfdoctype='master thesis' or $ddfdoctype='bachelor thesis'
+                  or $ddfdoctype='slide show' or $ddfdoctype='unpublished papers'
+                  or $ddfdoctype='lecture'
+                  or starts-with(/ddf/document/@fit:authority_type_eng, '[')">
+      <xsl:message terminate="yes">Record <xsl:value-of select="/ddf/@id"/>: not a DTU public record</xsl:message>
+    </xsl:if>
+
+    <xsl:variable name="whichmap" 
+                  select="$docTypeMapping/rule[in = $ddftype and 
+                          (type = '' or type = $ddfdoctype)]"/>
 
     <!-- for ddf_doc/@doc_type -->
-    <xsl:variable name="mxdtype" 
-                  select="$docTypeMapping/rule[in = $ddftype]/out/text()"/>
+    <xsl:variable name="mxdtype" select="$whichmap/out/text()"/>
 
     <!-- for ddf_doc/publication/thingy: in_journal, in_book etc. -->
-    <xsl:variable name="mxdpubelm" 
-                  select="$docTypeMapping/rule[in = $ddftype]/name/text()"/>
-    <!-- TODO: more specific one, for later when document/@type has been corrected -->
-    <!--xsl:variable name="mxdpubelm" 
-        select="$docTypeMapping/rule[in = $ddftype and type = $ddfdoctype]/name"/-->
+    <xsl:variable name="premxdpubelm" select="$whichmap/name/text()"/>
+    <xsl:variable name="mxdpubelm">
+      <xsl:choose>
+        <xsl:when test="$premxdpubelm"><xsl:value-of select="$premxdpubelm"/></xsl:when>
+        <xsl:otherwise>
+          <xsl:message terminate="yes">Record <xsl:value-of select="/ddf/@id"/>: could not establish pubelm</xsl:message>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <!-- handy note: xsltproc sends message to STDERR and sets return
+         code != 0 when terminated like this -->
 
     <!-- <ddf_doc> -->
 
@@ -106,7 +125,6 @@
         <xsl:value-of select="normalize-space(document/local/field[@tag='Annual report year'])"/>
       </xsl:attribute>
       <xsl:attribute name="doc_review">
-        <!--xsl:variable name="rev" select="concat('', document/indicator/review)"/-->
         <xsl:variable name="rev" select="string(document/indicator/review)"/>
         <xsl:value-of select="$indicatorMapping/rule[in=$rev]/out"/>
       </xsl:attribute>
@@ -149,6 +167,7 @@
       <!-- <publication> -->
       <xsl:call-template name="element-publication">
         <xsl:with-param name="mxdpubelm" select="$mxdpubelm"/>
+        <xsl:with-param name="mxdtype" select="$mxdtype"/>
       </xsl:call-template>
 
     </xsl:element> <!-- </ddf_doc> -->
@@ -200,10 +219,16 @@
           <xsl:value-of select="."/>
         </xsl:element>
       </xsl:for-each>
-      <!-- TODO: DDF hardcopy (not in Orbit) ==> <note> -->
      
-      <!-- TODO: <thesis> -->
-    
+      <!-- maybe TODO: <thesis>. however, there is no explicit
+           awarding institution in Orbit, so for now I won't bother. -->
+      <!--
+      <xsl:if test="starts-with($mxdtype, 'dt')">
+        <xsl:element name="thesis">
+        </xsl:element>
+      </xsl:if>
+      -->
+
       <xsl:element name="subject">
         <!-- neither keywords nor classes have a language. -->
 
@@ -237,7 +262,7 @@
   <xsl:template name="element-project">
     <xsl:if test="//project">  <!-- or so -->
       <xsl:element name="project">
-        <!-- TODO later: no projects are used in Orbit literature -->
+        <!-- maybe TODO: no projects are used in Orbit literature -->
       </xsl:element> <!-- </project> -->
     </xsl:if>
   </xsl:template>
@@ -328,11 +353,12 @@
         </xsl:element>
       </xsl:if>
     </xsl:for-each>
-
   </xsl:template>
+
 
   <xsl:template name="element-publication">
     <xsl:param name="mxdpubelm"/>
+    <xsl:param name="mxdtype"/>
 
     <xsl:variable name="auxdoc" select="document/document[@object='aux']"/>
 
@@ -411,24 +437,22 @@
                   <xsl:value-of select="name/first"/>
                   <xsl:text> </xsl:text>
                   <xsl:value-of select="name/last"/>
-                  <xsl:text>; </xsl:text>
+                  <xsl:if test="not(last())">
+                    <xsl:text>; </xsl:text>
+                  </xsl:if>
                 </xsl:for-each>
               </editor>
             </xsl:if>
             
             <isbn>
-              <!-- no joy
-              <xsl:call-template name="replace-substring">
-                <xsl:with-param name="string" select="$auxdoc/identifier[@type='ISBN']"/>
-                <xsl:with-param name="substring" select="'-'"/>
-                <xsl:with-param name="replacement" select="''"/>
-              </xsl:call-template>
-              -->
+              <!--
               <xsl:call-template name="subst">
                 <xsl:with-param name="in" select="$auxdoc/identifier[@type='ISBN']"/>
                 <xsl:with-param name="from" select="'-'"/>
                 <xsl:with-param name="to" select="''"/>
               </xsl:call-template>
+              -->
+              <xsl:value-of select="my:replace($auxdoc/identifier[@type='ISBN'], '-', '')"/>
             </isbn>
             <place>
               <xsl:value-of select="$auxdoc/imprint/place"/>
@@ -451,7 +475,7 @@
           </xsl:when>
 
           <xsl:when test="$mxdpubelm = 'in_report'">
-            <!-- Orbit has no chapter- or paper-in-report AFAIK. -->
+            <!-- Orbit has no chapter- or paper-in-report -->
             <title></title>
             <editor></editor>
             <isbn></isbn>
@@ -468,11 +492,14 @@
               <xsl:value-of select="document/imprint/edition"/>
             </edition>
             <isbn>
+              <!--
               <xsl:call-template name="subst">
                 <xsl:with-param name="in" select="document/identifier[@type='ISBN']"/>
                 <xsl:with-param name="from" select="'-'"/>
                 <xsl:with-param name="to" select="''"/>
               </xsl:call-template>
+              -->
+              <xsl:value-of select="my:replace(document/identifier[@type='ISBN'], '-', '')"/>
             </isbn>
             <place>
               <xsl:value-of select="document/imprint/place"/>
@@ -523,15 +550,29 @@
 
           <xsl:when test="$mxdpubelm = 'patent'">
             <!--TODO -->
-            <country></country>
+            <country>
+              <!-- seldom used -->
+              <xsl:value-of select="document/patent/country"/>
+            </country>
             <ipc></ipc>
-            <number></number>
-            <date></date>
+            <number>
+              <xsl:value-of select="document/patent/number"/>
+            </number>
+            <!-- 20605 there's either a date or a year here, think
+                 date's most recent; its format is freeform :-( -->
+            <date>
+              <xsl:if test="document/patent/year">
+                <xsl:value-of select="document/patent/year"/>
+              </xsl:if>
+              <xsl:if test="document/patent/date">
+                <xsl:value-of select="document/patent/date"/>
+              </xsl:if>
+            </date>
             <uri></uri>
           </xsl:when>
 
           <xsl:when test="$mxdpubelm = 'inetpub'">
-            <!--maybe TODO -->
+            <!--maybe TODO later -->
             <text></text>
             <uri></uri>
           </xsl:when>
@@ -545,6 +586,8 @@
   <!-- person/affiliation handling templates (formerly mxdPersonOrg.xsl) -->
 
   <!-- 
+       NOTE: requires EXSLT
+
        Somewhat frobbed code to segregate <person>s and their
        affiliate <organisation>s to obey the MXD format. 
        This is not as straightforward in XSL as you'd like it to be,
@@ -657,62 +700,7 @@
 
   <!-- utility templates -->
 
-  <xsl:template name="replace-substring">
-    <!-- This one doesn't quite work (see isbn). Use subst instead. -->
-    <xsl:param name="original"/>
-    <xsl:param name="substring"/>
-    <xsl:param name="replacement" select="''"/>
-
-    <xsl:variable name="first">
-      <xsl:choose>
-	<xsl:when test="contains($original, $substring)">
-	   <xsl:value-of select="substring-before($original,$substring)"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="$original"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-
-    <xsl:variable name="middle">
-      <xsl:choose>
-	<xsl:when test="contains($original, $substring)">
-	   <xsl:value-of select="$replacement"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text></xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-
-    <xsl:variable name="last">
-      <xsl:choose>
-	<xsl:when test="contains($original, $substring)">
-	  <xsl:choose>
-	    <xsl:when test="contains(substring-after($original,$substring), $substring)">
-	      <xsl:call-template name="replace-substring">
-		<xsl:with-param name="original" select="substring-after($original, $substring)"/>
-		<xsl:with-param name="substring" select="$substring"/>
-		<xsl:with-param name="replacement" select="$replacement"/>
-	      </xsl:call-template>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:value-of select="substring-after($original, $substring)"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	   <xsl:value-of select="$replacement"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text></xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:value-of select="concat($first,$middle,$last)"/>
-  </xsl:template> <!-- replace-substring -->
-
-
   <xsl:template name="subst">
-    <!-- Do not specify an empty thing in $from, or Sablotron will freak out -->
     <xsl:param name="in"/>
     <xsl:param name="from"/>
     <xsl:param name="to"/>
@@ -730,6 +718,27 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+
+  <func:function name="my:replace">
+    <!-- NOTE: requires EXSLT -->
+    <xsl:param name="in"/>
+    <xsl:param name="from"/>
+    <xsl:param name="to"/>
+    <func:result>
+      <xsl:choose>
+        <xsl:when test="contains($in,$from)">
+          <xsl:value-of select="concat(substring-before($in, $from), $to, 
+                                my:replace(substring-after($in,$from), $from, $to))"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$in"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </func:result>
+  </func:function>
+
+
   
 </xsl:stylesheet>
 

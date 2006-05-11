@@ -1,52 +1,97 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
-our $xmllint   = '/usr/bin/xmllint';
-our $schema    = 'MXD_ddf_doc.xsd';
-our $chunksize = 100;  # files per commandline call
+use strict;
+use XML::LibXML;
 
-#################################
-use Data::Dumper;
-#use IO::Handle;
-use POSIX qw(floor ceil);
-
-my @files = <>;
-for(my $i= 0; $i <= $#files; $i++) {
-  chomp $files[$i];
+my ($FIX) = $ENV{'FIX'} || 0;
+my ($schema, $parser, $file, $xml, $doc, @err, $err);
+$file = shift (@ARGV);
+open (TEMP, '>&STDERR');
+open (STDERR, '> /dev/null');
+eval { $schema = XML::LibXML::Schema->new (location => $file) };
+if ($@) {
+    die ($@);
 }
-my $chunks = ceil(@files / $chunksize);
-
-for(my $i=0; $i < $chunks; $i++) {
-  my %ret;
-  my $base = $i * $chunksize;
-  # prevent reaching over the top, will cause undefs in chunking
-  my $top = $i == $chunks-1 ? $#files : $base+$chunksize+1;
-  my @batch = @files[$base .. $top];
-  check(\%ret, @batch);
-
-  print STDERR "Done chunk ", $i+1, " of $chunks\n";
-  # Only problem with hashes is, the order get mangled.
-  foreach my $fn (@batch) {
-    next unless exists $ret{$fn};
-    print "$fn\n";
-    foreach my $err (@{$ret{$fn}}) {
-      print "  $err\n";
+open (STDERR, '>&TEMP');
+$parser = XML::LibXML->new;
+while ($file = shift (@ARGV)) {
+    if (!open (FIN, $file)) {
+        die ("failed to open $file; $!");
     }
-  }
-}
+    $xml = join ('', <FIN>);
+    close (FIN);
+    if ($FIX) {
+#       Checking pages
+        if ($xml =~ m/<pages>([^<]*)<\/pages>/s) {
+            my ($p) = $1;
 
+            if (($p !~ m/^[0-9]+$/) && ($p !~ m/^[0-9]+-[0-9]+/)) {
+                $p =~ s/p?p\.//g;
+                $p =~ s/\s+//g;
+                if (($p =~ m/^[0-9]+$/) || ($p =~ m/^[0-9]+-[0-9]+/)) {
+                    $xml =~ s/<pages>([^<]*)<\/pages>/<pages>$p<\/pages>/s;
+                } else {
+                    print (STDERR "=== pages: $p\n");
+                }
+            }
+        }
+#       Checking vol
+        if ($xml =~ m/<vol>([^<]*)<\/vol>/s) {
+            my ($p) = $1;
 
-sub check
-{
-  my($hash, @files) = @_;
-  my $args = join(' ', @files);
+            if ($p !~ m/^[0-9]+$/) {
+#               if ($p =~ m/^[0-9]+$/) {
+#                   $xml =~ s/<pages>([^<]*)<\/pages>/<pages>$p<\/pages>/s;
+#               } else {
+                    print (STDERR "=== vol: $p\n");
+#               }
+            }
+        }
+#       Checking issue
+        if ($xml =~ m/<issue>([^<]*)<\/issue>/s) {
+            my ($p) = $1;
 
-  my @res = `$xmllint --noout --schema $schema $args 2>&1`;
-  while(my $l = shift @res) {
-    chomp $l;
-    # ignore bogus xs:language errors for 3-char languages
-    next unless $l =~ /validity error/i && $l !~ /not a valid value of the atomic type 'xs:language'/i;
-    my($file) = $l =~ /^(.+?):/;
-    push(@{$hash->{$file}}, $l);
-  }
-  return $hash;
+            if ($p !~ m/^[0-9]+$/) {
+#               if ($p =~ m/^[0-9]+$/) {
+#                   $xml =~ s/<pages>([^<]*)<\/pages>/<pages>$p<\/pages>/s;
+#               } else {
+                    print (STDERR "=== issue: $p\n");
+#               }
+            }
+        }
+    } # if FIX
+    $doc = $parser->parse_string ($xml);
+    eval { $schema->validate ($doc) };
+    @err = ();
+    foreach $err (split ("\n", $@)) {
+        if ($err =~ m/'language'.*The value '[a-z]{3}' is not valid/) {
+            next;
+        }
+        push (@err, $err);
+    }
+    my ($org) = {};
+    my ($org_used) = {};
+    while ($xml =~ s/<organisation [^>]*aff_no="([0-9]+)"//s) {
+        $org->{$1} = 1;
+    }
+    while ($xml =~ s/<person [^>]*aff_no="([0-9]+)"//s) {
+        if ($org->{$1}) {
+            $org_used->{$1} = 1;
+        } else {
+            push (@err, "person aff_no=$1 does not match any organisation");
+        }
+    }
+    foreach $err (keys (%{$org})) {
+        if (!$org_used->{$err}) {
+            push (@err, "organisation aff_no=$1 not used by any person");
+        }
+    }
+    if (@err) {
+        print (STDERR "--- $file:\n");
+        foreach $err (@err) {
+            print (STDERR "    $err\n");
+        }
+    } else {
+        print (STDERR "+++ $file validated successfully\n");
+    }
 }

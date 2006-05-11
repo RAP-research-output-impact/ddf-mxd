@@ -5,21 +5,21 @@
     This transformation map is describing the mapping between
     document types applied in ORBIT and the exchange format.
 
-    For Orbit, the combinations currently (20050914) exist:
+    For Orbit, the combinations currently (20050914) exist (* is wrong):
 
     125 in
    9501 la      journal article
      66 lalc    conference in journal
-    747 lbra    article book
+    747 lbra   *article book
     334 lbra    book chapter
-     46 lbra    book chapter/article
-    380 lbralc  abstract
-   3891 lbralc  article book
-      1 lbralc  book
+     46 lbra   *book chapter/article
+    380 lbralc *abstract
+   3891 lbralc *article book
+      1 lbralc *book
    2431 lbralc  conference in book
-    394 lbralc  conference paper
+    394 lbralc *conference paper
    1640 lbr     book
-      1 lc
+      1 lc     *
     303 lc      abstract
     276 lc      lecture
     267 lc      poster
@@ -31,7 +31,7 @@
     369 ld      ph.d.-thesis
      28 lp      patent application
      54 lp      patent publication
-     66 lr      lecture notes
+     66 lr     *lecture notes        (now a separate type, ln)
    2955 lr      report
    8219 pe
    3324 pr
@@ -54,6 +54,7 @@
    ld     -  doctoral thesis       
    ld     -  master thesis         
    ld     -  ph.d.-thesis          
+   ln     -  lecture notes
    lp     -  patent application    
    lp     -  patent publication    
    lr     -  report   
@@ -63,39 +64,126 @@
 
    Incidentally, there are about 25000 literature records of which 85%
    is covered by {la,lbralc,lbr,lr}
+ 
+   in   = /ddf/@type
+   type = /ddf/document/@type to match, empty when irrelevant
+   out  = /ddf_doc/@doc_type
+   name = /ddf_doc/publication/*
+
+  Note for Roel: document/@type with a capital is a database error!
 
   </description>
- 
-  <!-- in = ddf/@type  AND type = /ddf/document/@type -->
-  <!-- Note for Roel: document/@type with a capital is a database error! -->
 
   <rule>
     <in>la</in>
-    <type>journal article</type>
+    <type></type>
     <out>dja</out>
     <name>in_journal</name>
   </rule>
 
   <rule>
-    <!-- orbit -->
     <in>lbralc</in>
-    <type>conference in book</type>
+    <type></type>
     <out>dba</out>
     <name>in_book</name>
   </rule>
 
   <rule>
     <in>lbr</in>
-    <type>book</type>
+    <type></type>
     <out>db</out>
     <name>book</name>
   </rule>
 
   <rule>
     <in>lr</in>
-    <type>report</type>
+    <type></type>
     <out>dr</out>
     <name>report</name>
+  </rule>
+
+  <rule>
+    <in>lalc</in>
+    <type></type>
+    <out>dcp</out>
+    <name>in_journal</name>
+  </rule>
+
+  <rule>
+    <in>lbra</in>
+    <type></type>
+    <out>dba</out>
+    <name>in_book</name>
+  </rule>
+
+  <rule>
+    <in>lc</in>
+    <type>abstract</type>
+    <out>dca</out>
+    <name>other</name>
+  </rule>
+
+  <rule>
+    <in>lc</in>
+    <type>lecture</type>
+    <out>dct</out>
+    <name>other</name>
+  </rule>
+
+  <rule>
+    <in>lc</in>
+    <type>poster</type>
+    <out>dco</out>
+    <name>other</name>
+  </rule>
+
+  <rule>
+    <in>lc</in>
+    <type>slide show</type>
+    <out>dct</out>
+    <name>other</name>
+  </rule>
+
+  <rule>
+    <in>lp</in>
+    <type></type>
+    <out>dp</out>
+    <name>patent</name>
+  </rule>
+
+  <rule>
+    <in>ld</in>
+    <type>bachelor thesis</type>
+    <out>dts</out> <!-- FIXME: disputably a student report -->
+    <name>book</name>
+  </rule>
+
+  <rule>
+    <in>ld</in>
+    <type>doctoral thesis</type>
+    <out>dtd</out>
+    <name>book</name>
+  </rule>
+
+  <rule>
+    <in>ld</in>
+    <type>master thesis</type>
+    <out>dtm</out>
+    <name>book</name>
+  </rule>
+
+  <rule>
+    <in>ld</in>
+    <type>ph.d.-thesis</type>
+    <out>dtp</out>
+    <name>book</name>
+  </rule>
+
+  <rule>
+    <in>ln</in>
+    <type></type>
+    <out>dln</out>
+    <name>other</name>
   </rule>
 
 </mapping>
