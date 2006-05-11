@@ -213,7 +213,7 @@
   </complexType>
   <complexType name="_EventType">
     <sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
+      <sequence minOccurs="1" maxOccurs="unbounded">
         <element name="title" type="tns:_EventTitleType">
           <annotation>
             <documentation xml:lang="en-uk">Title - only repeatable in case of language variants – use sub-elements below</documentation>
@@ -221,7 +221,7 @@
         </element>
       </sequence>
       <sequence>
-        <element name="dates" type="tns:_EventDatesType">
+        <element name="dates" minOccurs="0" maxOccurs="1" type="tns:_EventDatesType">
           <annotation>
             <documentation xml:lang="en-uk">Start and end dates of event – use sub-elements below:</documentation>
           </annotation>
