@@ -12,6 +12,11 @@
     <out>sci</out>
   </rule>
   <rule>
+    <!-- FIXME batch fix in Orbit! -->
+    <in>Scientific</in>
+    <out>sci</out>
+  </rule>
+  <rule>
     <in>administrative</in>
     <out>adm</out>
   </rule>

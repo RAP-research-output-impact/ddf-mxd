@@ -22,6 +22,12 @@
 
        You can also use xsltproc, but 4xslt doesn't like me creating
        an xmlns attribute, so I'll have to figure that one out.
+
+       BUGS
+
+       Metatoo inserts spurious empty elements (event, person) if a
+       single attribute in its input form has a default, leading this
+       script to think that there is something where there's nothing.
   -->
 
   <!--
@@ -122,7 +128,19 @@
              Any which way, Metatoo tends to export them even without
              sensible text content.
         -->
-        <xsl:value-of select="normalize-space(document/local/field[@tag='Annual report year'])"/>
+        <xsl:choose>
+          <xsl:when test="document/local/field[@tag='Annual report year']">
+            <xsl:value-of select="normalize-space(document/local/field[@tag='Annual report year'])"/>
+          </xsl:when>
+          <xsl:when test="/ddf/document/event/dates/year">
+            <!-- FIXME records without annual report year must be fixed in Orbit -->
+            <!-- this workaround works fairly well for conference types -->
+            <xsl:value-of select="normalize-space(/ddf/document/event/dates/year)"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>1900</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:attribute>
       <xsl:attribute name="doc_review">
         <xsl:variable name="rev" select="string(document/indicator/review)"/>
@@ -269,7 +287,7 @@
 
 
   <xsl:template name="element-event">
-    <xsl:if test="document/event">
+    <xsl:if test="normalize-space(document/event) != ''">
       <xsl:element name="event">
         <!-- Let's just use 'presented at' here -->
         <xsl:attribute name="event_role">ep</xsl:attribute>
@@ -278,7 +296,17 @@
       
         <title>
           <full>
-            <xsl:value-of select="$event/name/main"/>
+            <xsl:choose>
+              <xsl:when test="$event/name/main">
+                <xsl:value-of select="$event/name/main"/>
+              </xsl:when>
+              <!-- FIXME missing event titles must be fixed in Orbit -->
+              <xsl:when test="($ddftype = 'lalc' or $ddftype = 'lbralc' or $ddftype='lc')
+                              and document/document/title/main">
+                <!-- hopefully the aux title is the conference title-->
+                [<xsl:value-of select="document/document/title/main"/>]
+              </xsl:when>
+            </xsl:choose>
             <xsl:if test="$event/name/sub">
               : <xsl:value-of select="$event/name/sub"/>
             </xsl:if>
@@ -386,17 +414,15 @@
                 : <xsl:value-of select="$auxdoc/title/sub"/>
               </xsl:if>
             </title>
+            <!-- FIXME ISSN must be fixed in Orbit -->
             <issn>
-              <xsl:call-template name="subst">
-                <xsl:with-param name="in" select="$auxdoc/identifier[@type='ISSN']"/>
-                <xsl:with-param name="from" select="'-'"/>
-                <xsl:with-param name="to" select="''"/>
-              </xsl:call-template>
+              <xsl:value-of select="my:replace($auxdoc/identifier[@type='ISSN'], '-', '')"/>
             </issn>
             <year><xsl:value-of select="$auxdoc/@year"/></year>
             <vol><xsl:value-of select="$auxdoc/@vol"/></vol>
             <issue><xsl:value-of select="$auxdoc/@issue"/></issue>
-            <pages><xsl:value-of select="$auxdoc/@pages"/></pages>
+            <!--pages><xsl:value-of select="$auxdoc/@pages"/></pages-->
+            <pages><xsl:value-of select="my:cleanpages($auxdoc/@pages)"/></pages>
             <!-- TODO: what's this? <paperid></paperid> -->
             <!-- <doi></doi> -->
             <uri>
@@ -406,10 +432,21 @@
 
           <xsl:when test="$mxdpubelm = 'in_book'">
             <title>
-              <xsl:value-of select="$auxdoc/title/main"/>
-              <xsl:if test="$auxdoc/title/sub">
-                : <xsl:value-of select="$auxdoc/title/sub"/>
-              </xsl:if>
+              <!-- FIXME: esp. conferences that lack an aux title must
+                   be fixed in Orbit. We'll take the event name as
+                   book title for now. -->
+              <xsl:choose>
+                <xsl:when test="$auxdoc/title/main">
+                  <xsl:value-of select="$auxdoc/title/main"/>
+                  <xsl:if test="$auxdoc/title/sub">
+                    : <xsl:value-of select="$auxdoc/title/sub"/>
+                  </xsl:if>
+                </xsl:when>
+                <xsl:when test="($ddftype = 'lalc' or $ddftype = 'lbralc' or $ddftype='lc')
+                                and /ddf/document/event/name">
+                  [<xsl:value-of select="/ddf/document/event/name/main"/>]
+                </xsl:when>
+              </xsl:choose>
             </title>
             <!-- part is ambiguous; should we indeed use series/part? -->
             <part>
@@ -452,6 +489,7 @@
                 <xsl:with-param name="to" select="''"/>
               </xsl:call-template>
               -->
+              <!-- FIXME ISBN must be fixed in Orbit -->
               <xsl:value-of select="my:replace($auxdoc/identifier[@type='ISBN'], '-', '')"/>
             </isbn>
             <place>
@@ -464,7 +502,8 @@
               <xsl:value-of select="$auxdoc/imprint/year"/>
             </year>
             <pages>
-               <xsl:value-of select="$auxdoc/imprint/pages"/>
+              <xsl:value-of select="my:cleanpages($auxdoc/@pages)"/>
+              <!--xsl:value-of select="$auxdoc/imprint/pages"/-->
             </pages>
             <series>
               <xsl:value-of select="$auxdoc/document[@role='in series']/title/main"/>
@@ -499,6 +538,7 @@
                 <xsl:with-param name="to" select="''"/>
               </xsl:call-template>
               -->
+              <!-- FIXME ISBN must be fixed in Orbit -->
               <xsl:value-of select="my:replace(document/identifier[@type='ISBN'], '-', '')"/>
             </isbn>
             <place>
@@ -611,6 +651,14 @@
           <xsl:copy-of select="./*"/>
         </organisation>
       </xsl:for-each>
+      <!-- see if there's anyone without org -->
+      <xsl:if test="document/person[not(organisation/name/main)]">
+        <organisation hash="undef">
+          <name>
+            <main>[affiliation unknown]</main>
+          </name>
+        </organisation>
+      </xsl:if>
     </xsl:variable>
     <xsl:variable name="preorgs" select="ext:node-set($preorgs-rtf)"/>
     <!-- You may hit me with a salmon and call me Jeryll if I understand
@@ -631,6 +679,7 @@
 
 
   <xsl:template name="handle-organisation">
+    <!-- must be called from a for-each loop -->
     <xsl:element name="organisation">
       <xsl:attribute name="org_role">oaf</xsl:attribute>
       <xsl:attribute name="aff_no">
@@ -639,11 +688,13 @@
       <name>
         <level1>
           <xsl:choose>
-            <xsl:when test="normalize-space(./name)">
+            <xsl:when test="normalize-space(./name/main)">
+              <!-- This MAY result in affiliation unknown -->
               <xsl:value-of select="./name/main"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:text>[affiliation unknown]</xsl:text>
+              <!-- FIXME missing organisation/name/main must be fixed in Orbit -->
+              <xsl:text>[affiliation name could not be established]</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
         </level1>
@@ -675,7 +726,16 @@
         <xsl:value-of select="$personRoleMapping/rule[in=$role]/out"/>
       </xsl:attribute>
       <xsl:variable name="thisorg" select="organisation/name"/>
-      <xsl:variable name="thisorg-hash" select="normalize-space(concat($thisorg/main,$thisorg/sub,$thisorg/sub2))"/>
+      <xsl:variable name="thisorg-hash">
+        <xsl:choose>
+          <xsl:when test="$thisorg/main">
+            <xsl:value-of select="normalize-space(concat($thisorg/main,$thisorg/sub,$thisorg/sub2))"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>undef</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
       <xsl:attribute name="aff_no">
         <xsl:for-each select="$orgs">
           <xsl:if test="$thisorg-hash = ./@hash">
@@ -739,6 +799,35 @@
   </func:function>
 
 
+  <func:function name="my:cleanpages">
+  <!--xsl:template name="dummy"-->
+    <!-- 
+         try to make page ranges fit to the schema PagesType. FIXME in
+         Orbit later. 
+    -->
+    <xsl:param name="pages"/>
+    <xsl:variable name="pp" select="normalize-space($pages)"/>
+    
+    <func:result>
+      <xsl:choose>
+        <xsl:when test="not($pp)">
+          <!-- this is because Exslt screws up parameters when the
+               first one is undef or empty, or so -->
+          <xsl:text></xsl:text>
+        </xsl:when>
+        <xsl:when test="re:test($pp,'^pp?\.? ?[0-9]','i')">
+          <xsl:value-of select="re:replace($pp, '^pp?\.? ?', 'i', '')"/>
+        </xsl:when>
+        <xsl:when test="re:test($pp,' ?pp?\.?$','i')">
+          <xsl:value-of select="re:replace($pp, ' ?pp?\.?$', 'i', '')"/>
+        </xsl:when>
+        <xsl:when test="re:test($pp,' - ', 'i')">
+          <xsl:value-of select="re:replace($pp, ' - ', 'i', '-')"/>
+        </xsl:when>
+      </xsl:choose>
+    </func:result>
+  <!--/xsl:template-->
+  </func:function>
   
 </xsl:stylesheet>
 

@@ -6,7 +6,7 @@
     person/@role applied in ORBIT and the DDF/MXD format.
 
     BUGS
-    Orbit's @role="inventor" is ignored, it should be corrected in the db.
+    Orbit's @role="inventor" and "supervisor" should be added to MXD.
   </description>
  
   <rule>
@@ -23,6 +23,14 @@
   </rule>
   <rule>
     <in>supervisor</in>
-    <out>pau</out> <!-- missing fit in MXD format -->
+    <out>pau</out> <!-- FIXME missing fit in MXD format -->
+  </rule>
+  <rule>
+    <in>inventor</in>
+    <out>pau</out> <!-- FIXME missing fit in MXD format -->
+  </rule>
+  <rule>
+    <in></in>      <!-- FIXME to be corrected in Orbit -->
+    <out>pau</out>
   </rule>
 </mapping>

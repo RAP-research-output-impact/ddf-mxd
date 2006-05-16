@@ -84,7 +84,7 @@
   <rule>
     <in>lbralc</in>
     <type></type>
-    <out>dba</out>
+    <out>dcp</out>
     <name>in_book</name>
   </rule>
 
