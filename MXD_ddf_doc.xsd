@@ -86,7 +86,7 @@
           </annotation>
         </element>
       </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
+      <sequence minOccurs="1" maxOccurs="1">
         <element name="publication" type="tns:PublicationType">
           <annotation>
             <documentation xml:lang="en-uk">
@@ -285,14 +285,13 @@
         </annotation>
       </element>
     </sequence>
-    <attribute ref="xml:lang"/>
   </complexType>
   <simpleType name="_EventDateType">
     <union memberTypes="gYear date gYearMonth"/>
   </simpleType>
   <complexType name="_ProjectType">
     <sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
+      <sequence minOccurs="1" maxOccurs="unbounded">
         <element name="title" type="tns:_ProjectTitleType">
           <annotation>
             <documentation xml:lang="en-uk">Title - only repeatable in case of language variants – use sub-elements below</documentation>
@@ -322,7 +321,7 @@
   </complexType>
   <complexType name="_ProjectTitleType">
     <sequence minOccurs="0" maxOccurs="unbounded">
-      <element name="main" type="string" minOccurs="0">
+      <element name="main" type="string" minOccurs="1">
         <annotation>
           <documentation xml:lang="en-uk">Main title</documentation>
         </annotation>
@@ -338,7 +337,7 @@
         </annotation>
       </element>
     </sequence>
-    <attribute ref="xml:lang" use="required">
+    <attribute ref="xml:lang">
       <annotation>
         <documentation xml:lang="en-uk">Language of project title (mandatory if title is repeated)</documentation>
       </annotation>
@@ -429,7 +428,7 @@
   <complexType name="_PersonIDType">
     <simpleContent>
       <extension base="string">
-        <attribute name="id_type" type="tns:_IDTypeType">
+        <attribute use="required" name="id_type" type="tns:_IDTypeType">
           <annotation>
             <documentation xml:lang="en-uk">Type of ID, registered with DDF - like Danish CPR no.</documentation>
           </annotation>
@@ -440,7 +439,7 @@
   <complexType name="_ProjectIDType">
     <simpleContent>
       <extension base="string">
-        <attribute name="id_type" type="tns:_IDTypeType">
+        <attribute use="required" name="id_type" type="tns:_IDTypeType">
           <annotation>
             <documentation xml:lang="en-uk">Type of ID, registered with DDF - like local project number</documentation>
           </annotation>
@@ -450,7 +449,7 @@
   </complexType>
   <complexType name="_OrganisationType">
     <sequence>
-      <element name="name" type="tns:_OrganisationNameType">
+      <element name="name" type="tns:_OrganisationNameType" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">Name - only repeatable in case of language variants - use sub-elements below</documentation>
         </annotation>
@@ -522,7 +521,7 @@
   <complexType name="_OrganisationIDType">
     <simpleContent>
       <extension base="string">
-        <attribute name="id_type" type="tns:_IDTypeType">
+        <attribute use="required" name="id_type" type="tns:_IDTypeType">
           <annotation>
             <documentation xml:lang="en-uk">Type of ID, registered with DDF - like Danish CVR no.</documentation>
           </annotation>
@@ -607,7 +606,7 @@
   <complexType name="_ClassType">
     <simpleContent>
       <extension base="string">
-        <attribute name="class_type" type="tns:_ClassTypeType">
+        <attribute use="required" name="class_type" type="tns:_ClassTypeType">
           <annotation>
             <documentation xml:lang="en-uk">Classification system used, like "DDC", "UDC", "DEF", "DK5"</documentation>
           </annotation>
@@ -623,7 +622,7 @@
   <complexType name="_KeywordType">
     <simpleContent>
       <extension base="string">
-        <attribute name="key_type" type="tns:_KeyTypeType">
+        <attribute use="required" name="key_type" type="tns:_KeyTypeType">
           <annotation>
             <documentation xml:lang="en-uk">Vocabulary/theasurus used, like "EUDISED", "INSPEC" or "free".</documentation>
           </annotation>
@@ -726,15 +725,12 @@
         </annotation>
       </element>
     </sequence>
-    <attribute ref="xml:lang" use="optional">
+    <attribute ref="xml:lang" use="required">
       <annotation>
         <documentation xml:lang="en-uk">Language of title</documentation>
       </annotation>
     </attribute>
   </complexType>
-  <simpleType name="_RecUpdType">
-    <restriction base="string"/>
-  </simpleType>
   <simpleType name="_LocalFieldTagType">
     <restriction base="positiveInteger">
       <enumeration value="1">
@@ -797,6 +793,18 @@
   </simpleType>
   <simpleType name="_PersonRoleType">
     <restriction base="string">
+      <enumeration value="inv">
+        <annotation>
+          <documentation xml:lang="en-uk">Inventor</documentation>
+          <documentation xml:lang="da-dk">Opfinder</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sup">
+        <annotation>
+          <documentation xml:lang="en-uk">Supervisor</documentation>
+          <documentation xml:lang="da-dk">Vejleder</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="pau">
         <annotation>
           <documentation xml:lang="en-uk">Author</documentation>
@@ -1375,13 +1383,13 @@
           <documentation xml:lang="da-dk">Danmarks Farmaceutiske Universitet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="for ">
+      <enumeration value="for">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Forskningsstyrelsen</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="fou ">
+      <enumeration value="fou">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">FOU Forsknings- og udviklingscentret for Hjælpemidler og Rehabilitering</documentation>
@@ -1429,6 +1437,12 @@
           <documentation xml:lang="da-dk">Handelshøjskole Syd</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="hvhosp">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Hvidovre Hospital</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="ifg">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
@@ -1457,6 +1471,12 @@
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Danmarks Kunstbibliotek</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kas">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Københavns Amts Sygehusvæsen</documentation>
         </annotation>
       </enumeration>
       <enumeration value="kib">
@@ -1547,18 +1567,6 @@
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Statens Veterinære Serumlab. og Statens Veterinære. Inst. for Virusforskning</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="hvhosp">
-        <annotation>
-          <documentation xml:lang="en-uk">n/a</documentation>
-          <documentation xml:lang="da-dk">Hvidovre Hospital</documentation>
-        </annotation>
-      </enumeration>
-      <enumeration value="kas">
-        <annotation>
-          <documentation xml:lang="en-uk">n/a</documentation>
-          <documentation xml:lang="da-dk">Københavns Amts Sygehusvæsen</documentation>
         </annotation>
       </enumeration>
     </restriction>
@@ -1685,7 +1693,9 @@
     </union>
   </simpleType>
 
-  <simpleType name="_PagesType">
+  <simpleType name="alternate_PagesType">
+    <!-- Some validators choke on parenthesised subexpressions - if
+         so, use this one -->
     <union>
       <simpleType>
         <restriction base="string">
@@ -1698,6 +1708,12 @@
         </restriction>
       </simpleType>
     </union>
+  </simpleType>
+
+  <simpleType name="_PagesType">
+    <restriction base="string">
+      <pattern value="\w?\d{1,6}(-\w?\d{1,6})?"/>
+    </restriction>
   </simpleType>
 
   <complexType name="_InJournalType">
@@ -1874,7 +1890,7 @@
         </annotation>
       </element>
     </sequence>
-    <attribute name="pub_status" type="tns:_PublishingStatusType" use="required">
+    <attribute name="pub_status" type="tns:_PublishingStatusType">
       <annotation>
         <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published"</documentation>
       </annotation>
@@ -1973,7 +1989,7 @@
         </annotation>
       </element>
     </sequence>
-    <attribute name="pub_status" type="tns:_PublishingStatusType" use="required">
+    <attribute name="pub_status" type="tns:_PublishingStatusType">
       <annotation>
         <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published"</documentation>
       </annotation>
