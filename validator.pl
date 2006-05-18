@@ -64,7 +64,10 @@ while ($file = shift (@ARGV)) {
     eval { $schema->validate ($doc) };
     @err = ();
     foreach $err (split ("\n", $@)) {
-        if ($err =~ m/'language'.*The value '[a-z]{3}' is not valid/) {
+        # message from older and newer libxml
+        if ($err =~ m/'language'.*The value '[a-z]{3}' is not valid/ ||
+            $err =~ m/'[a-z]{3}' is not a valid value of the atomic type 'xs:language'/
+           ) {
             next;
         }
         push (@err, $err);
