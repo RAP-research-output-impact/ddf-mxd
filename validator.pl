@@ -9,10 +9,11 @@ $file = shift (@ARGV);
 open (TEMP, '>&STDERR');
 open (STDERR, '> /dev/null');
 eval { $schema = XML::LibXML::Schema->new (location => $file) };
-if ($@) {
-    die ($@);
-}
+my $schtoink = $@;
 open (STDERR, '>&TEMP');
+if ($schtoink) {
+    die ("Error parsing schema: $schtoink");
+}
 $parser = XML::LibXML->new;
 while ($file = shift (@ARGV)) {
     if (!open (FIN, $file)) {
