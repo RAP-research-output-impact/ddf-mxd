@@ -396,9 +396,11 @@
         <xsl:variable name="pubstatus"> <!-- E.g. unpublished, published -->
           <xsl:value-of select="document/@status"/>
         </xsl:variable>
-        <xsl:attribute name="pub_status">
-          <xsl:value-of select="$pubStatusMapping/rule[in = $pubstatus]/out"/>
-        </xsl:attribute>
+        <xsl:if test="$mxdpubelm != 'other'">
+          <xsl:attribute name="pub_status">
+            <xsl:value-of select="$pubStatusMapping/rule[in = $pubstatus]/out"/>
+          </xsl:attribute>
+        </xsl:if>
 
         <!-- 
              The various <document> elements contain a small truckload
@@ -409,7 +411,15 @@
         <xsl:choose>
           <xsl:when test="$mxdpubelm = 'in_journal'">
             <title>
-              <xsl:value-of select="$auxdoc/title/main"/>
+              <xsl:choose>
+                <xsl:when test="$auxdoc/title/main">
+                  <xsl:value-of select="$auxdoc/title/main"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <!-- FIXME in Orbit -->
+                  [source title could not be established]
+                </xsl:otherwise>
+              </xsl:choose>
               <xsl:if test="$auxdoc/title/sub">
                 : <xsl:value-of select="$auxdoc/title/sub"/>
               </xsl:if>
@@ -446,6 +456,10 @@
                                 and /ddf/document/event/name">
                   [<xsl:value-of select="/ddf/document/event/name/main"/>]
                 </xsl:when>
+                <xsl:otherwise>
+                  <!-- FIXME in Orbit -->
+                  [a source title could not be established]
+                </xsl:otherwise>
               </xsl:choose>
             </title>
             <!-- part is ambiguous; should we indeed use series/part? -->
@@ -527,17 +541,12 @@
           </xsl:when>
 
           <xsl:when test="$mxdpubelm = 'book'">
+            <!-- FIXME some records in Orbit seem to lack any of imprint or aux document,
+            leading to an empty <book> which does not validate -->
             <edition>
               <xsl:value-of select="document/imprint/edition"/>
             </edition>
             <isbn>
-              <!--
-              <xsl:call-template name="subst">
-                <xsl:with-param name="in" select="document/identifier[@type='ISBN']"/>
-                <xsl:with-param name="from" select="'-'"/>
-                <xsl:with-param name="to" select="''"/>
-              </xsl:call-template>
-              -->
               <!-- FIXME ISBN must be fixed in Orbit -->
               <xsl:value-of select="my:replace(document/identifier[@type='ISBN'], '-', '')"/>
             </isbn>
@@ -615,6 +624,21 @@
             <!--maybe TODO later -->
             <text></text>
             <uri></uri>
+          </xsl:when>
+
+          <xsl:when test="$mxdpubelm = 'other'">
+            <!-- FIXME: This is to get rid of conference
+                 abstracts/posters for now. -->
+            <xsl:text>&#160;</xsl:text>
+            <!--
+              <xsl:text>Origin: </xsl:text>
+              <xsl:text>ddftype=</xsl:text>
+              <xsl:value-of select="$ddftype"/>
+              <xsl:text>; ddfdoctype=</xsl:text>
+              <xsl:value-of select="$ddfdoctype"/>
+              <xsl:text>; ddfauxtype=</xsl:text>
+              <xsl:value-of select="/ddf/document/document/@type"/>
+            -->
           </xsl:when>
         </xsl:choose>
 

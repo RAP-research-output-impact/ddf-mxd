@@ -70,7 +70,9 @@
    out  = /ddf_doc/@doc_type
    name = /ddf_doc/publication/*
 
-  Note for Roel: document/@type with a capital is a database error!
+  FIXME in Orbit:: document/@type with a capital is a database error!
+  FIXME in conversion: I could try to make something more out of
+  lc-type abstracts etc.
 
   </description>
 
