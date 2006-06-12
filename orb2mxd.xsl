@@ -39,14 +39,17 @@
   <!-- Version numbers -->
   <xsl:variable name="schemaversion">1.1</xsl:variable>
   <xsl:variable name="formatversion">1.1.0</xsl:variable>
+  <!-- if you want absolute includes, fill in a URL ending in a slash her, like
+       http://heth.cvt.dk/orbit2mxd/1.1.0-2/abs/ -->
+  <xsl:variable name="baseurl"></xsl:variable>
 
   <!-- Mapping files for specific element -->
-  <xsl:variable name="docTypeMapping" select="document('docTypeMapping.xml')/*"/>
-  <xsl:variable name="keyTypeMapping" select="document('keyTypeMapping.xml')/*"/>
-  <xsl:variable name="pubStatusMapping" select="document('pubStatusMapping.xml')/*"/>
-  <xsl:variable name="indicatorMapping" select="document('indicatorMapping.xml')/*"/>
-  <xsl:variable name="langMapping" select="document('langMapping.xml')/*"/>
-  <xsl:variable name="personRoleMapping" select="document('personRoleMapping.xml')/*"/>
+  <xsl:variable name="docTypeMapping"    select="document(concat($baseurl, 'docTypeMapping.xml'))/*"/>
+  <xsl:variable name="keyTypeMapping"    select="document(concat($baseurl, 'keyTypeMapping.xml'))/*"/>
+  <xsl:variable name="pubStatusMapping"  select="document(concat($baseurl, 'pubStatusMapping.xml'))/*"/>
+  <xsl:variable name="indicatorMapping"  select="document(concat($baseurl, 'indicatorMapping.xml'))/*"/>
+  <xsl:variable name="langMapping"       select="document(concat($baseurl, 'langMapping.xml'))/*"/>
+  <xsl:variable name="personRoleMapping" select="document(concat($baseurl, 'personRoleMapping.xml'))/*"/>
 
   <!-- Some vars we need time and again, globally -->
   <xsl:variable name="ddftype" select="/ddf/@type"/>
