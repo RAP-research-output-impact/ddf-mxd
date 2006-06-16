@@ -155,12 +155,20 @@
       </xsl:attribute>
       <xsl:attribute name="rec_source">dtu</xsl:attribute>
       <xsl:attribute name="rec_id"><xsl:value-of select="@id"/></xsl:attribute>
+      <!-- rec_upd holds a fix for MySQL's date format change in 4.1 -->
       <xsl:attribute name="rec_upd">
         <xsl:variable name="upd" select="/ddf/fit:admin/fit:system/fit:updated"/>
-        <xsl:value-of select="concat(
-          substring($upd, 1, 4), '-',
-          substring($upd, 5, 2), '-',
-          substring($upd, 7, 2))" />
+        <xsl:choose>
+          <xsl:when test="contains ($upd, ' ')">
+            <xsl:value-of select="substring-before ($upd, ' ')"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="concat(
+               substring($upd, 1, 4), '-',
+               substring($upd, 5, 2), '-',
+               substring($upd, 7, 2))" />
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:attribute>
       <!-- rec_status makes no sense without context -->
       <xsl:attribute name="rec_status">c</xsl:attribute>
