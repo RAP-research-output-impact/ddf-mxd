@@ -3,7 +3,7 @@
 SRCLIST=~/tmp/mxdtest-candidates
 DESTLIST=~/tmp/mxdtest-newnames
 TYPES="(la|lbralc|lbr|lr)"
-ORBITDATA=/usr/local/urbit/urbit.data
+ORBITDATA=/usr/local/orbit/urbit.data
 DESTFILE=~/tmp/mxdtest-all.xml
 
 pushd $ORBITDATA || exit 1

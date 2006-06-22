@@ -2,8 +2,8 @@
 
 # Get prepared sample records, which have all possible fields filled in.
 
-#data=/usr/local/urbit/urbit.data/records
-data=/usr/local/urbit/urbit.data/drafts
+#data=/usr/local/orbit/urbit.data/records
+data=/usr/local/orbit/urbit.data/drafts
 set="184664 184667 184669 184670 184676 184681 184691 184683 184688 184690"
 # personal recs: "181048 181049 181050 181051 181052 181053 181054 181055 181056 181058 184686 186345"
 
