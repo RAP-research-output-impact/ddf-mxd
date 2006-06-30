@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--
+  Copy config.xml.in to config.xml and put local variations to suit
+  your MXD conversion here. Boolean values are 1 or 0.
+-->
+<mxdconfig>
+  <include-department-records>0</include-department-records>
+</mxdconfig>
