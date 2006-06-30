@@ -44,6 +44,7 @@
   <xsl:variable name="baseurl"></xsl:variable>
 
   <!-- Mapping files for specific element -->
+  <xsl:variable name="config"            select="document(concat($baseurl, 'config.xml'))/*"/>
   <xsl:variable name="docTypeMapping"    select="document(concat($baseurl, 'docTypeMapping.xml'))/*"/>
   <xsl:variable name="keyTypeMapping"    select="document(concat($baseurl, 'keyTypeMapping.xml'))/*"/>
   <xsl:variable name="pubStatusMapping"  select="document(concat($baseurl, 'pubStatusMapping.xml'))/*"/>
@@ -74,13 +75,16 @@
 -->
 
   <xsl:template match="/ddf">
-    <!-- cast out non-DTU; personal records are already omitted in SQL  -->
-    <xsl:if test="(/ddf/document/@status and /ddf/document/@status != 'published')
-                  or $ddfdoctype='master thesis' or $ddfdoctype='bachelor thesis'
-                  or $ddfdoctype='slide show' or $ddfdoctype='unpublished papers'
-                  or $ddfdoctype='lecture'
-                  or starts-with(/ddf/document/@fit:authority_type_eng, '[')">
-      <xsl:message terminate="yes">Record <xsl:value-of select="/ddf/@id"/>: not a DTU public record</xsl:message>
+    <!-- optionally cast out non-DTU; personal records are already
+         omitted in SQL -->
+    <xsl:if test="$config/include-department-records = 0">
+      <xsl:if test="(/ddf/document/@status and /ddf/document/@status != 'published')
+                    or $ddfdoctype='master thesis' or $ddfdoctype='bachelor thesis'
+                    or $ddfdoctype='slide show' or $ddfdoctype='unpublished papers'
+                    or $ddfdoctype='lecture'
+                    or starts-with(/ddf/document/@fit:authority_type_eng, '[')">
+        <xsl:message terminate="yes">Record <xsl:value-of select="/ddf/@id"/>: not a DTU public record</xsl:message>
+      </xsl:if>
     </xsl:if>
 
     <xsl:variable name="whichmap" 
