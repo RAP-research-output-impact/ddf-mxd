@@ -863,6 +863,9 @@
         <xsl:when test="re:test($pp,' - ', 'i')">
           <xsl:value-of select="re:replace($pp, ' - ', 'i', '-')"/>
         </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$pp"/>
+        </xsl:otherwise>
       </xsl:choose>
     </func:result>
   <!--/xsl:template-->
