@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.1" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.1" elementFormDefault="qualified" xml:lang="EN">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" elementFormDefault="qualified" xml:lang="EN">
   <!-- 
        2005-11-16  1.0.0.0 initial release
+
        2006-03-01  1.1.0.0 relaxed data definition of vol, pages (in book/article),
                    issue, event/number; allow ISBN ending in X; added doc_type dx; 
                    added record_source hvhosp and kas. Update your namespace.
+
        2006-03-15  1.1.0.1 fixed forgotten format_version, mental note: remember
                    next time!
+
        2006-03-21  1.1.0.2 Changed the pattern in _ISBNType to two patterns
                    with a union to avoid some problems with some versions
                    of libxml2
+
        2006-05-18  1.1.0.3 More elements/attributes marked as mandatory, others
                    relaxed; added author types sup,inv; minor typos and list
-                   order fixes; Changed _CountryType to be an actual enummeration
+                   order fixes; Changed _CountryType to be an actual enumeration
                    of valid codes; In _PatentType, changed coutry to be of type 
                    _CountryType rather than language.
+
+       2007-11-07  1.2.0.0 New revision under Mikael Elbæks supervision. Added digital
+                   objects, report-issue field, access attributes, issn and isbn @type.
+                   
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -48,7 +56,6 @@
           <documentation xml:lang="en-uk">Title of the work in focus. Other titles such as conference titles and titles of host publications (journals, books) are recorded in other elements, ddf_doc/event and ddf_doc/publication respectively. The element is organised in the following 2 sub-elements: title/original (mandatory) title/translated (optional and repeatable)</documentation>
         </annotation>
       </element>
-      <!-- RdC: description is not mandatory -->
       <sequence minOccurs="0" maxOccurs="1">
         <element name="description" type="tns:_DescriptionType">
           <annotation>
@@ -95,16 +102,15 @@
         <element name="publication" type="tns:PublicationType">
           <annotation>
             <documentation xml:lang="en-uk">
-              The mandatory publication element carries all the information about how the document was published in the widest sense of the word, including electronic availability via personal homepages, institutional repositories and similar web sites. The publication element is structured in 8 publication cases, each with its own repertoire of subelements: • In a journal (as an article or similar) • In a book (as a chapter or similar) • In a report (as a chapter or similar) • As a book (the book as a whole) • As a report (the report as a whole) • As a patent (or patent application) • As an Internet publication (institutional repository, preprint archive, home page etc.) • Any other form of publication These cases correspond to the sub-elements: in_journal, in_book, in_report, book, report, patent, inetpub and other. At least one of these cases must be applied, but often two or more cases may be applied concurrently. For example, a journal article may be published "In a
-              journal" and at the same be available at the author’s institutional repository “As an Internet publication".
+              The mandatory publication element carries all the information about how the document was published in the widest sense of the word, including electronic availability via personal homepages, institutional repositories and similar web sites. The publication element is structured in 8 publication cases, each with its own repertoire of subelements: • In a journal (as an article or similar) • In a book (as a chapter or similar) • In a report (as a chapter or similar) • As a book (the book as a whole) • As a report (the report as a whole) • As a patent (or patent application) • As an Internet publication (institutional repository, preprint archive, home page etc.) • Any other form of publication These cases correspond to the sub-elements: in_journal, in_book, in_report, book, report, patent, inetpub and other. At least one of these cases must be applied, but often two or more cases may be applied concurrently. For example, a journal article may be published "In a journal" and at the same be available at the author’s institutional repository “As an Internet publication".
             </documentation>
           </annotation>
         </element>
       </sequence>
     </sequence>
-    <attribute name="format_version" use="required" fixed="1.1.0">
+    <attribute name="format_version" use="required" fixed="1.2.0">
       <annotation>
-        <documentation xml:lang="en-uk">The particular version of the exchange format used, for the current version "1.1.0". Once subsequent versions have been issued, this will aid the schema validation and other applications parsing the XML.</documentation>
+        <documentation xml:lang="en-uk">The particular version of the exchange format used, for the current version "1.2.0". Once subsequent versions have been issued, this will aid the schema validation and other applications parsing the XML.</documentation>
       </annotation>
     </attribute>
     <attribute name="doc_type" type="tns:_DocTypeType" use="required">
@@ -240,7 +246,7 @@
         </element>
       </sequence>
       <sequence minOccurs="0">
-        <element name="uri" type="anyURI">
+        <element name="uri" type="tns:_MxdUriType" minOccurs="0">
           <annotation>
             <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
           </annotation>
@@ -311,7 +317,7 @@
         </element>
       </sequence>
       <sequence minOccurs="0">
-        <element name="uri" type="anyURI">
+        <element name="uri" type="tns:_MxdUriType" minOccurs="0">
           <annotation>
             <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
           </annotation>
@@ -398,7 +404,7 @@
         </element>
       </sequence>
       <sequence minOccurs="0">
-        <element name="uri" type="anyURI">
+        <element name="uri" type="tns:_MxdUriType" minOccurs="0">
           <annotation>
             <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
           </annotation>
@@ -471,8 +477,7 @@
           <documentation xml:lang="en-uk">Country of legal residence using ISO country codes</documentation>
         </annotation>
       </element>
-      <!-- RdC: added minOccurs=0 to uri -->
-      <element name="uri" type="anyURI" minOccurs="0">
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
         </annotation>
@@ -2848,6 +2853,11 @@
           <documentation xml:lang="en-uk">Use when published electronically on the net (institutional repository, author’s homepage, preprint server, etc.) If the document is also published in a journal, book or report, the corresponding publication cases should be used in addition. All data is placed in the sub-elements: text and uri.</documentation>
         </annotation>
       </element>
+      <element name="digital_object" type="tns:_DigitalobjectType">
+        <annotation>
+          <documentation xml:lang="en-uk">Use when document is a fully digital object, typically a fulltext.</documentation>
+        </annotation>
+      </element>
       <element name="other" type="tns:_OtherType">
         <annotation>
           <documentation xml:lang="en-uk"/>
@@ -2883,7 +2893,11 @@
       </enumeration>
     </restriction>
   </simpleType>
-  <!-- RdC: added _LocalFieldCodeType -->
+  <simpleType name="_AccessType">
+    <restriction base="string">
+      <pattern value="[0-9a-zA-Z ]+"/>
+    </restriction>
+  </simpleType>
   <simpleType name="_LocalFieldCodeType">
     <restriction base="string">
       <pattern value="[0-9a-zA-Z]+"/>
@@ -2891,7 +2905,6 @@
   </simpleType>
   <simpleType name="_ISSNType">
     <restriction base="string">
-      <!-- RdC: allow x or X as last char of ISSN -->
       <pattern value="\d{7}[0-9Xx]"/>
     </restriction>
   </simpleType>
@@ -2942,7 +2955,7 @@
         </annotation>
       </element>
       <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="issn" type="tns:_ISSNType">
+        <element name="issn" type="tns:_ComplexISSNType">
           <annotation>
             <documentation xml:lang="en-uk">Journal ISSN no. without dashes</documentation>
           </annotation>
@@ -2978,7 +2991,7 @@
           <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
         </annotation>
       </element>
-      <element name="uri" type="anyURI" minOccurs="0">
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to article on the journal’s web site Information about availability at preprint servers, web sites belonging to author or author’s institution or similar should be recorded using the publication case “As an Internet publication"</documentation>
         </annotation>
@@ -2997,6 +3010,11 @@
           <documentation xml:lang="en-uk">Book title</documentation>
         </annotation>
       </element>
+      <element name="sub_title" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Subtitle</documentation>
+        </annotation>
+      </element>
       <element name="part" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Part designation of a multipart work ("Vol. 1", "Bind 4: Middelalderen" etc.)</documentation>
@@ -3013,7 +3031,7 @@
         </annotation>
       </element>
       <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="isbn" type="tns:_ISBNType">
+        <element name="isbn" type="tns:_ComplexISBNType">
           <annotation>
             <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
           </annotation>
@@ -3046,7 +3064,7 @@
           </annotation>
         </element>
       </sequence>
-      <element name="uri" type="anyURI" minOccurs="0">
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web site of book</documentation>
         </annotation>
@@ -3065,13 +3083,18 @@
           <documentation xml:lang="en-uk">Report title</documentation>
         </annotation>
       </element>
+      <element name="sub_title" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Subtitle</documentation>
+        </annotation>
+      </element>
       <element name="editor" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Name of the (first) editor of the report as a whole</documentation>
         </annotation>
       </element>
       <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="isbn" type="tns:_ISBNType">
+        <element name="isbn" type="tns:_ComplexISBNType">
           <annotation>
             <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
           </annotation>
@@ -3097,12 +3120,32 @@
           <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
         </annotation>
       </element>
-      <element name="pages" type="tns:_PagesType" minOccurs="0">
+      <element name="vol" type="string" minOccurs="0">
         <annotation>
-          <documentation xml:lang="en-uk">In the format Firstpage-Lastpage</documentation>
+          <documentation xml:lang="en-uk">Volume number</documentation>
         </annotation>
       </element>
-      <element name="uri" type="anyURI" minOccurs="0">
+      <element name="issue" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Issue number</documentation>
+        </annotation>
+      </element>
+      <element name="pages" type="tns:_PagesType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">In the format Firstpage-Lastpage (or in case of Paper ID, the number of pages)</documentation>
+        </annotation>
+      </element>
+      <element name="paperid" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Paper ID, an alternative to page numbers, typically used by e-journals</documentation>
+        </annotation>
+      </element>
+      <element name="doi" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web site of report</documentation>
         </annotation>
@@ -3122,7 +3165,7 @@
         </annotation>
       </element>
       <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="isbn" type="tns:_ISBNType">
+        <element name="isbn" type="tns:_ComplexISBNType">
           <annotation>
             <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
           </annotation>
@@ -3148,6 +3191,11 @@
           <documentation xml:lang="en-uk">Total no. of pages</documentation>
         </annotation>
       </element>
+      <element name="doi" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
+        </annotation>
+      </element>
       <sequence minOccurs="0" maxOccurs="unbounded">
         <element name="series" type="string">
           <annotation>
@@ -3155,7 +3203,7 @@
           </annotation>
         </element>
       </sequence>
-      <element name="uri" type="anyURI" minOccurs="0">
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web site of book</documentation>
         </annotation>
@@ -3170,7 +3218,7 @@
   <complexType name="_ReportType">
     <sequence>
       <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="isbn" type="tns:_ISBNType">
+        <element name="isbn" type="tns:_ComplexISBNType">
           <annotation>
             <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
           </annotation>
@@ -3201,7 +3249,7 @@
           <documentation xml:lang="en-uk">Total no. of pages</documentation>
         </annotation>
       </element>
-      <element name="uri" type="anyURI" minOccurs="0">
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web site of report</documentation>
         </annotation>
@@ -3235,7 +3283,7 @@
           <documentation xml:lang="en-uk">Date of status above in format yyyy-mm-dd</documentation>
         </annotation>
       </element>
-      <element name="uri" type="anyURI" minOccurs="0">
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web site of patent</documentation>
         </annotation>
@@ -3254,12 +3302,141 @@
           <documentation xml:lang="en-uk">Text describing the service/file behind the URI like "PDF on personal home page", "PDF in institutional repository", "LaTex at arXiv preprint server"</documentation>
         </annotation>
       </element>
-      <element name="uri" type="anyURI">
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">The URI (URL)</documentation>
         </annotation>
       </element>
     </sequence>
+  </complexType>
+  <complexType name="_DigitalobjectType">
+    <sequence>
+      <element name="description" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Description of the object</documentation>
+        </annotation>
+      </element>
+      <element name="file" type="tns:_FileType" minOccurs="1">
+        <annotation>
+          <documentation xml:lang="en-uk">System-generated description of the object</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">The URI (URL)</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="id" type="string" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Unique ID for the parent record</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="role" type="string">
+      <annotation>
+        <documentation xml:lang="en-uk">Use to state the role of the object in relation to the parent record, e.g. "preprint"</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="access" type="tns:_AccessType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Use for stating access rights to the object, e.g. "public"</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_FileType">
+    <sequence>
+      <element name="description" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Description of this specific file</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="lang" type="language">
+      <annotation>
+        <documentation xml:lang="en-uk">Language the file is in</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="size" type="positiveInteger" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">File size in bytes</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="mime_type" type="string">
+      <annotation>
+        <documentation xml:lang="en-uk">Mime type string of the file, like "application/pdf"</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="timestamp" type="dateTime" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">File date/timestamp in ISO-8601 dateTime format</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="filename" type="string" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Original name of the file</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_MxdUriType">
+    <simpleContent>
+      <extension base="anyURI">
+        <attribute use="optional" name="access" type="tns:_AccessType">
+          <annotation>
+            <documentation xml:lang="en-uk">Used to state the accessibility of the linked resource, e.g. "public"</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_ComplexISSNType">
+    <simpleContent>
+      <extension base="tns:_ISSNType">
+        <attribute use="optional" name="type">
+          <annotation>
+            <documentation xml:lang="en-uk">Electronic or print.</documentation>
+          </annotation>
+          <simpleType>
+            <restriction base="string">
+              <enumeration value="print">
+                <annotation>
+                  <documentation xml:lang="en-uk">Printed version</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="print">
+                <annotation>
+                  <documentation xml:lang="en-uk">Electronic version</documentation>
+                </annotation>
+              </enumeration>
+            </restriction>
+          </simpleType>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_ComplexISBNType">
+    <simpleContent>
+      <extension base="tns:_ISBNType">
+        <attribute use="optional" name="type">
+          <annotation>
+            <documentation xml:lang="en-uk">Electronic or print.</documentation>
+          </annotation>
+          <simpleType>
+            <restriction base="string">
+              <enumeration value="print">
+                <annotation>
+                  <documentation xml:lang="en-uk">Printed version</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="print">
+                <annotation>
+                  <documentation xml:lang="en-uk">Electronic version</documentation>
+                </annotation>
+              </enumeration>
+            </restriction>
+          </simpleType>
+        </attribute>
+      </extension>
+    </simpleContent>
   </complexType>
   <simpleType name="_OtherType">
     <restriction base="string"/>
