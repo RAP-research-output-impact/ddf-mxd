@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ddf_doc xmlns="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" format_version="1.2.0" doc_type="db" doc_lang="da" doc_year="2005" doc_review="und" doc_level="sci" rec_source="au" rec_id="2312480" rec_upd="2006-11-20" rec_status="c">
+  <title>
+    <original xml:lang="da">
+      <main>Politica Årg. 37, nr. 4</main>
+      <sub>Konflikt og samarbejde i dansk politik</sub>
+    </original>
+  </title>
+  <description>
+    <thesis>
+      <institution>Århus</institution>
+    </thesis>
+  </description>
+  <person pers_role="ped" aff_no="000">
+    <name>
+      <first>Christoffer</first>
+      <last>Green-Pedersen</last>
+    </name>
+    <id id_type="loc_per">cgp@ps.au.dk</id>
+    <title>professor, ph.d.</title>
+    <country>dk</country>
+    <email>cgp@ps.au.dk</email>
+    <uri>http://www.ps.au.dk/greenp</uri>
+  </person>
+  <person pers_role="ped" aff_no="000">
+    <name>
+      <first>Asbjørn</first>
+      <last>Skjæveland</last>
+    </name>
+    <id id_type="loc_per">skjaeveland@ps.au.dk</id>
+    <title>lektor, cand.scient.pol.</title>
+    <country>dk</country>
+    <email>skjaeveland@ps.au.dk</email>
+  </person>
+  <organisation org_role="oau" aff_no="000">
+    <name xml:lang="da">
+      <level1>Aarhus Universitet</level1>
+      <level2>Det Samfundsvidenskabelige Fakultet</level2>
+      <level3>Institut for Statskundskab</level3>
+      <acronym>Institut for Statskundskab</acronym>
+    </name>
+    <id id_type="loc_org">3400</id>
+    <uri>http://www.ps.au.dk</uri>
+  </organisation>
+  <publication>
+    <book pub_status="p">
+      <place>Århus</place>
+      <publisher>Tidsskriftet Politica</publisher>
+      <year>2005</year>
+      <pages>124</pages>
+    </book>
+  </publication>
+</ddf_doc>
