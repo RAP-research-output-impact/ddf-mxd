@@ -1506,6 +1506,11 @@
           <documentation xml:lang="en-uk">Serbia and Montenegro</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="rs">
+        <annotation>
+          <documentation xml:lang="en-uk">Republic of Serbia</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="sc">
         <annotation>
           <documentation xml:lang="en-uk">Seychelles</documentation>
