@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" elementFormDefault="qualified" xml:lang="EN">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.1" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.1" elementFormDefault="qualified" xml:lang="EN">
   <!-- 
        2005-11-16  1.0.0.0 initial release
 
@@ -20,8 +20,10 @@
                    of valid codes; In _PatentType, changed coutry to be of type 
                    _CountryType rather than language.
 
-       2007-11-07  1.2.0.0 New revision under Mikael Elbæks supervision. Added digital
+       2007-11-07  1.1.1.0 New revision under Mikael Elbæks supervision. Added digital
                    objects, report-issue field, access attributes, issn and isbn @type.
+                   Significant change in wording of version numbering. This version
+                   validates all previous 1.1.x format_versions.
                    
   -->
 
@@ -108,11 +110,19 @@
         </element>
       </sequence>
     </sequence>
-    <attribute name="format_version" use="required" fixed="1.2.0">
+
+    <attribute name="format_version" use="required">
       <annotation>
         <documentation xml:lang="en-uk">The particular version of the exchange format used, for the current version "1.2.0". Once subsequent versions have been issued, this will aid the schema validation and other applications parsing the XML.</documentation>
       </annotation>
+      <simpleType>
+        <restriction base="string">
+          <enumeration value="1.1.0" />
+          <enumeration value="1.1.1" />
+        </restriction>
+      </simpleType>
     </attribute>
+
     <attribute name="doc_type" type="tns:_DocTypeType" use="required">
       <annotation>
         <documentation xml:lang="en-uk">Code for type of document (like "dja" for "journal article") according to the DDF list of types and their codes (see note). Code is used for various retrieval and sorting purposes, see Annex 1.</documentation>
@@ -2860,7 +2870,7 @@
       </element>
       <element name="digital_object" type="tns:_DigitalobjectType">
         <annotation>
-          <documentation xml:lang="en-uk">Use when document is a fully digital object, typically a fulltext.</documentation>
+          <documentation xml:lang="en-uk">Use for digital objects, typically a fulltext.</documentation>
         </annotation>
       </element>
       <element name="other" type="tns:_OtherType">
@@ -2900,7 +2910,21 @@
   </simpleType>
   <simpleType name="_AccessType">
     <restriction base="string">
-      <pattern value="[0-9a-zA-Z ]+"/>
+      <enumeration value="oa">
+        <annotation>
+          <documentation xml:lang="en-uk">For use free and open access to resource</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ca">
+        <annotation>
+          <documentation xml:lang="en-uk">For use with campus only access</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="na">
+        <annotation>
+          <documentation xml:lang="en-uk">For use with non-public and owner-only access</documentation>
+        </annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   <simpleType name="_LocalFieldCodeType">
