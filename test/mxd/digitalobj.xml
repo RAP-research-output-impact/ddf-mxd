@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ddf_doc xmlns="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" format_version="1.2.0" doc_type="dja" doc_lang="en" doc_year="2005" doc_review="pr" doc_level="sci" rec_source="au" rec_id="3389758" rec_upd="2007-02-02" rec_status="c">
+<ddf_doc xmlns="http://mx.forskningsdatabasen.dk/ns/mxd/1.1" format_version="1.1.1" doc_type="dja" doc_lang="en" doc_year="2005" doc_review="pr" doc_level="sci" rec_source="au" rec_id="3389758" rec_upd="2007-02-02" rec_status="c">
   <title>
     <original xml:lang="en">
       <main>Conversion electron Mössbauer spectroscopy on random Fe-Ti alloy films prepared by pulsed laser deposition</main>
@@ -37,7 +37,7 @@
       <acronym>Institut for Fysik og Astronomi</acronym>
     </name>
     <id id_type="loc_org">5200</id>
-    <uri access="public">http://www.phys.au.dk/</uri>
+    <uri access="oa">http://www.phys.au.dk/</uri>
   </organisation>
   <organisation org_role="oau" aff_no="001">
     <name xml:lang="en">
@@ -45,7 +45,7 @@
     </name>
   </organisation>
   <publication>
-    <digital_object id="LOL!!!#!ONE.234" role="final" access="public">
+    <digital_object id="LOL!!!#!ONE.234" role="final" access="oa">
       <description>
         LaTeX edition of final printed version with graphs
       </description>
