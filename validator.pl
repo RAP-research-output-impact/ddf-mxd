@@ -61,7 +61,13 @@ while ($file = shift (@ARGV)) {
             }
         }
     } # if FIX
-    $doc = $parser->parse_string ($xml);
+    eval { $doc = $parser->parse_string ($xml) };
+    if ($@) {
+        my $str = $@;
+        $str =~ s/\n/ : /g;
+        print STDERR "--- $file: failed to parse:\n    $str\n";
+        next;
+    }
     eval { $schema->validate ($doc) };
     @err = ();
     foreach $err (split ("\n", $@)) {
