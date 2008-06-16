@@ -1,64 +1,70 @@
 <ddf_doc xmlns="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" format_version="1.2.0" doc_type="db" doc_lang="eng" doc_year="1996" doc_review="or" doc_level="sci" rec_source="dtu" rec_id="6652897" rec_created="1996-10-01" rec_upd="1996-10-11" rec_status="c">
-	<title><original ><main>Design Principles for Interactive Software</main></original></title>	
-	<description>		
-		<abstract xml:lang="eng">
-The book addresses the crucial intersection of Human-Computer Interaction (HCI) and software engineering. It examines quality from the perspectives of both HCI and Software Engineering, and then systematically develops and illustrates a framework for reasoning about the interaction between quality concerns from HCI and Software Engineering on the one hand, and critical 	aspects of software development such as the choice of software architecture and the deployment of software tools. The book presents a framework for future research and development, both in academia and industry, into specialised software architectures, methods and tools for high quality interactive systems. Likely developments over the next few years depend mostly on the development of better formal approaches to the definition of practical and relevant software properties, better ways of describing and comparing software architectures, and more rigorous and reflective approaches to requirements definition for software tools. The book develops key concepts for guiding the application of these developments to the production of high quality interactive software.
-		</abstract>
-		<note xml:lang="eng">Written by IFIP Working Group 2.7</note>
-		<subject>	
-			<keyword key_type="fre" xml:lang="eng">Human-computer interaction</keyword>
-			<keyword key_type="fre" xml:lang="eng">Software engineering</keyword>
-			<keyword key_type="fre" xml:lang="eng">Documentation, theory</keyword>
-			<class class_type="ddc">005.1</class>
-			<class class_type="udc">681.3.02</class>
-		</subject>
-	</description>
-	<person pers_role="ped" aff_no="001">		
-		<name><first>Cristian</first><last>Gram</last></name>
-		<id id_type="loc_per" id_source="dtu">v661</id>
-
-		<email>cg@imm.dtu.dk</email>		
-	</person>
-	<person pers_role="ped" aff_no="003">		
-		<name><first>Gilbert</first><last>Cockton</last></name>
-      	<country>gb</country>		
-	</person>		
-	<organisation org_role="oaf" aff_no="001">		
-		<name xml:lang="eng">	
-			<level1>Technical University of Denmark</level1>
-			<level2>Department of Information Technology</level2>
-			<acronym>DTU_IT</acronym>
-		</name>
-		<country>dk</country>	
-		<uri>http://www.imm.dtu.dk/</uri>	
-	</organisation>
-	<organisation org_role="oau" aff_no="002">		
-		<name xml:lang="eng">	
-			<level1>International Federation for Information Processing</level1>
-			<level2>Technical Committee 2: Software Theory and Practice</level2>
-			<level3>Working Group 2.7: User Interface Engineering</level3>
-			<acronym>IFIP_TC2_WG2.7</acronym>
-		</name>	
-		<uri>http://www.ifip.or.at/</uri>	
-	</organisation>
-	<organisation org_role="oaf" aff_no="003">		
-		<name xml:lang="eng">	
-			<level1>University of Glasgow</level1>
-		</name>
-		<country>gb</country>	
-		<uri>http://www.gla.ac.uk/</uri>	
-	</organisation>
-	<publication>		
-		<book pub_status="p">
-			<edition>1</edition>
-			<isbn>0412724707</isbn>
-			<place>London</place>
-			<publisher>Chapman and Hall</publisher>
-			<publisher_no>102</publisher_no>
-			<year>1996</year>
-			<pages>248</pages>
-			<uri>http://www.amazon.com/exec/obidos/ASIN/0412724707/104-9175344-3964725</uri>
-		</book>
-	</publication>
+  <title>
+    <original>
+      <main>Design Principles for Interactive Software</main>
+    </original>
+  </title>    
+  <description>           
+    <abstract xml:lang="eng">
+      The book addresses the crucial intersection of Human-Computer Interaction (HCI) and software engineering. It examines quality from the perspectives of both HCI and Software Engineering, and then systematically develops and illustrates a framework for reasoning about the interaction between quality concerns from HCI and Software Engineering on the one hand, and critical     aspects of software development such as the choice of software architecture and the deployment of software tools. The book presents a framework for future research and development, both in academia and industry, into specialised software architectures, methods and tools for high quality interactive systems. Likely developments over the next few years depend mostly on the development of better formal approaches to the definition of practical and relevant software properties, better ways of describing and comparing software architectures, and more rigorous and reflective approaches to requirements definition for software tools. The book develops key concepts for guiding the application of these developments to the production of high quality interactive software.
+    </abstract>
+    <note xml:lang="eng">Written by IFIP Working Group 2.7</note>
+    <subject>       
+      <keyword key_type="fre" xml:lang="eng">Human-computer interaction</keyword>
+      <keyword key_type="fre" xml:lang="eng">Software engineering</keyword>
+      <keyword key_type="fre" xml:lang="eng">Documentation, theory</keyword>
+      <class class_type="ddc">005.1</class>
+      <class class_type="udc">681.3.02</class>
+    </subject>
+  </description>
+  <person pers_role="ped" aff_no="001">           
+    <name>
+      <first>Cristian</first>
+      <last>Gram</last>
+    </name>
+    <id id_type="loc_per" id_source="dtu">661</id>
+    <email>cg@imm.dtu.dk</email>            
+  </person>
+  <person pers_role="ped" aff_no="003">           
+    <name><first>Gilbert</first><last>Cockton</last></name>
+    <country>gb</country>           
+  </person>               
+  <organisation org_role="oaf" aff_no="001">              
+    <name xml:lang="eng">   
+      <level1>Technical University of Denmark</level1>
+      <level2>Department of Information Technology</level2>
+      <acronym>DTU_IT</acronym>
+    </name>
+    <country>dk</country>   
+    <uri>http://www.imm.dtu.dk/</uri>       
+  </organisation>
+  <organisation org_role="oau" aff_no="002">              
+    <name xml:lang="eng">   
+      <level1>International Federation for Information Processing</level1>
+      <level2>Technical Committee 2: Software Theory and Practice</level2>
+      <level3>Working Group 2.7: User Interface Engineering</level3>
+      <acronym>IFIP_TC2_WG2.7</acronym>
+    </name> 
+    <uri>http://www.ifip.or.at/</uri>       
+  </organisation>
+  <organisation org_role="oaf" aff_no="003">              
+    <name xml:lang="eng">   
+      <level1>University of Glasgow</level1>
+    </name>
+    <country>gb</country>   
+    <uri>http://www.gla.ac.uk/</uri>        
+  </organisation>
+  <publication>           
+    <book pub_status="p">
+      <edition>1</edition>
+      <isbn>0412724707</isbn>
+      <place>London</place>
+      <publisher>Chapman and Hall</publisher>
+      <year>1996</year>
+      <pages>248</pages>
+      <publisher_no>102</publisher_no>
+      <uri>http://www.amazon.com/exec/obidos/ASIN/0412724707/104-9175344-3964725</uri>
+    </book>
+  </publication>
 
 </ddf_doc>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.1" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.1" elementFormDefault="qualified" xml:lang="EN">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" elementFormDefault="qualified" xml:lang="EN">
   <!-- 
        2005-11-16  1.0.0.0 initial release
 
@@ -20,10 +20,15 @@
                    of valid codes; In _PatentType, changed coutry to be of type 
                    _CountryType rather than language.
 
-       2007-11-07  1.1.1.0 New revision under Mikael Elbæks supervision. Added digital
-                   objects, report-issue field, access attributes, issn and isbn @type.
-                   Significant change in wording of version numbering. This version
-                   validates all previous 1.1.x format_versions.
+       2007-11-07  1.1.1.0 (unpublished) New revision under Mikael Elbæks
+                   supervision.  Added digital objects, report-issue
+                   field, access attributes, issn and isbn @type.
+                   Significant change in wording of version
+                   numbering. This version validates all previous
+                   1.1.x format_versions.
+
+       2008-05-29  1.2.0.0 Changes for the FI-project. This version will NOT
+                   validate older records, even if you cheat with its namespace.
                    
   -->
 
@@ -104,7 +109,7 @@
         <element name="publication" type="tns:PublicationType">
           <annotation>
             <documentation xml:lang="en-uk">
-              The mandatory publication element carries all the information about how the document was published in the widest sense of the word, including electronic availability via personal homepages, institutional repositories and similar web sites. The publication element is structured in 8 publication cases, each with its own repertoire of subelements: • In a journal (as an article or similar) • In a book (as a chapter or similar) • In a report (as a chapter or similar) • As a book (the book as a whole) • As a report (the report as a whole) • As a patent (or patent application) • As an Internet publication (institutional repository, preprint archive, home page etc.) • Any other form of publication These cases correspond to the sub-elements: in_journal, in_book, in_report, book, report, patent, inetpub and other. At least one of these cases must be applied, but often two or more cases may be applied concurrently. For example, a journal article may be published "In a journal" and at the same be available at the author’s institutional repository “As an Internet publication".
+              The mandatory publication element carries all the information about how the document was published in the widest sense of the word, including electronic availability via personal homepages, institutional repositories and similar web sites. The publication element is structured in 9 publication cases, each with its own repertoire of subelements: In a journal (as an article or similar); In a book (as a chapter or similar); In a report (as a chapter or similar); As a book (the book as a whole); As a report (the report as a whole); As a patent (or patent application); As an Internet publication (institutional repository, preprint archive, home page etc.); As a digital object (in a managed institutional repository, preprint archive etc.); Any other form of publication. These cases correspond to the sub-elements: in_journal, in_book, in_report, book, report, patent, inetpub and other. At least one of these cases must be applied, but often two or more cases may be applied concurrently. For example, a journal article may be published "In a journal" and at the same be available at the author's institutional repository as an "Internet publication" or "Digital object".
             </documentation>
           </annotation>
         </element>
@@ -119,6 +124,7 @@
         <restriction base="string">
           <enumeration value="1.1.0" />
           <enumeration value="1.1.1" />
+          <enumeration value="1.2.0" />
         </restriction>
       </simpleType>
     </attribute>
@@ -148,14 +154,19 @@
         <documentation xml:lang="en-uk">Code indicating literary scope or level of the document, like "scientific", "educational", "popular". See note for DDF list of levels and their codes. Code is used for various retrieval and sorting purposes, see Annex 1.</documentation>
       </annotation>
     </attribute>
-    <attribute name="rec_source" type="tns:_RecSourceType" use="required">
+    <attribute name="rec_source" type="tns:_InstituteCodeType" use="required">
       <annotation>
         <documentation xml:lang="en-uk">Code of exporting database/institution. Each organisation/database acting as a source and exporting records to DDF is registered with a unique code. See note for DDF list of source database codes.</documentation>
       </annotation>
     </attribute>
     <attribute name="rec_id" type="string" use="required">
       <annotation>
-        <documentation xml:lang="en-uk">The data supplier’s local/original ID of the record – must be unique per data supplier. In case supplier is exporting from more than one local database, which may use the same IDs, these must be prefixed (with database name or similar) to become unique within the supplier’s data.</documentation>
+        <documentation xml:lang="en-uk">The data supplier's local/original ID of the record – must be unique per data supplier. In case supplier is exporting from more than one local database, which may use the same IDs, these must be prefixed (with database name or similar) to become unique within the supplier's data.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="rec_created" type="date" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Date when the record was first created in the local database, in yyyy-mm-dd</documentation>
       </annotation>
     </attribute>
     <attribute name="rec_upd" type="date" use="required">
@@ -249,7 +260,7 @@
         </element>
       </sequence>
       <sequence>
-        <element name="place" minOccurs="0">
+        <element name="place" type="string" minOccurs="0">
           <annotation>
             <documentation xml:lang="en-uk">Place (city, country) of the event/conference</documentation>
           </annotation>
@@ -452,6 +463,11 @@
         <attribute use="required" name="id_type" type="tns:_IDTypeType">
           <annotation>
             <documentation xml:lang="en-uk">Type of ID, registered with DDF - like Danish CPR no.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="id_source" type="tns:_InstituteCodeType">
+          <annotation>
+            <documentation xml:lang="en-uk">Code of database/institution this personID originates from. See note for DDF list of source database codes.</documentation>
           </annotation>
         </attribute>
       </extension>
@@ -2233,8 +2249,20 @@
       </enumeration>
       <enumeration value="djl">
         <annotation>
-          <documentation xml:lang="en-uk">Journal comment/letter/rev.</documentation>
-          <documentation xml:lang="da-dk">Tidsskrift-kommentar</documentation>
+          <documentation xml:lang="en-uk">Journal letter to the editor</documentation>
+          <documentation xml:lang="da-dk">Tidsskrifts-brev til redaktøren</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="djc">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal comment</documentation>
+          <documentation xml:lang="da-dk">Tidsskrifts-kommentar</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="djr">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal review</documentation>
+          <documentation xml:lang="da-dk">Tidsskrifts-anmeldelse</documentation>
         </annotation>
       </enumeration>
       <enumeration value="dna">
@@ -2439,7 +2467,7 @@
       </enumeration>
     </restriction>
   </simpleType>
-  <simpleType name="_RecSourceType">
+  <simpleType name="_InstituteCodeType">
     <restriction base="string">
       <enumeration value="aaa">
         <annotation>
@@ -2531,6 +2559,13 @@
           <documentation xml:lang="da-dk">Center for Evaluering af Medicinsk Teknologivurering</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="cbs">
+        <!-- replaces hhk as of 1.2 -->
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Copenhagen Business School</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="cfb">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
@@ -2615,6 +2650,12 @@
           <documentation xml:lang="da-dk">Energistyrelsen</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="fak">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Forsvarsakademiet</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="far">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
@@ -2664,6 +2705,7 @@
         </annotation>
       </enumeration>
       <enumeration value="hhk">
+        <!-- deprecated as of 1.2; see cbs -->
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Copenhagen Business School</documentation>
@@ -2732,7 +2774,7 @@
       <enumeration value="kvl">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
-          <documentation xml:lang="da-dk">Den Kgl. Veterinær- og Landbohøjskole</documentation>
+          <documentation xml:lang="da-dk">Københavns Universitet/Det Biovidenskabelige Fakultet</documentation>
         </annotation>
       </enumeration>
       <enumeration value="mup">
@@ -2865,7 +2907,7 @@
       </element>
       <element name="inetpub" type="tns:_InetpubType">
         <annotation>
-          <documentation xml:lang="en-uk">Use when published electronically on the net (institutional repository, author’s homepage, preprint server, etc.) If the document is also published in a journal, book or report, the corresponding publication cases should be used in addition. All data is placed in the sub-elements: text and uri.</documentation>
+          <documentation xml:lang="en-uk">Use when published electronically on the net (institutional repository, author's homepage, preprint server, etc.) If the document is also published in a journal, book or report, the corresponding publication cases should be used in addition. All data is placed in the sub-elements: text and uri.</documentation>
         </annotation>
       </element>
       <element name="digital_object" type="tns:_DigitalobjectType">
@@ -2908,6 +2950,35 @@
       </enumeration>
     </restriction>
   </simpleType>
+  <simpleType name="_DigitalobjectRoleType">
+    <restriction base="string">
+      <enumeration value="pre">
+        <annotation>
+          <documentation xml:lang="en-UK">Preprint</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pos">
+        <annotation>
+          <documentation xml:lang="en-UK">Postprint</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pub">
+        <annotation>
+          <documentation xml:lang="en-UK">Publisher version</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="rev">
+        <annotation>
+          <documentation xml:lang="en-UK">Revised version</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="oth">
+        <annotation>
+          <documentation xml:lang="en-UK">Other or undefined</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
   <simpleType name="_AccessType">
     <restriction base="string">
       <enumeration value="oa">
@@ -2933,6 +3004,7 @@
     </restriction>
   </simpleType>
   <simpleType name="_ISSNType">
+    <!-- Deprecated. See _ComplexISSNType if you need a @type -->
     <restriction base="string">
       <pattern value="\d{7}[0-9Xx]"/>
     </restriction>
@@ -2953,32 +3025,42 @@
     </union>
   </simpleType>
 
-  <simpleType name="alternate_PagesType">
-    <!-- Some validators choke on parenthesised subexpressions - if
-         so, use this one -->
+  <simpleType name="_PagesType">
     <union>
       <simpleType>
         <restriction base="string">
-          <pattern value="\w?\d{1,6}-\w?\d{1,6}"/>
+          <pattern value="[A-Za-z]?\d{1,6}-[A-Za-z]?\d{1,6}"/>
         </restriction>
       </simpleType>
       <simpleType>
         <restriction base="string">
-          <pattern value="\w?\d{1,6}"/>
+          <pattern value="[A-Za-z]?\d{1,6}"/>
         </restriction>
       </simpleType>
     </union>
   </simpleType>
 
-  <simpleType name="_PagesType">
+  <simpleType name="original_PagesType">
+    <!-- 1.2 replaced by above because some validators choke on parenthesized subexp -->
     <restriction base="string">
       <pattern value="\w?\d{1,6}(-\w?\d{1,6})?"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="_MimetypeType">
+    <restriction base="string">
+      <pattern value="(application|audio|example|image|message|model|multipart|text|video)/[a-z0-9\-.]+"/>
     </restriction>
   </simpleType>
 
   <complexType name="_InJournalType">
     <sequence>
       <element name="title">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal title</documentation>
+        </annotation>
+      </element>
+      <element name="title_alternative" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">Journal title</documentation>
         </annotation>
@@ -3020,15 +3102,20 @@
           <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
         </annotation>
       </element>
+      <element name="journal_no" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Unique ID used to identify journal in the FI (Danish Agency for Science, Technology and Innovation) database</documentation>
+        </annotation>
+      </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
-          <documentation xml:lang="en-uk">URI (URL) link to article on the journal’s web site Information about availability at preprint servers, web sites belonging to author or author’s institution or similar should be recorded using the publication case “As an Internet publication"</documentation>
+          <documentation xml:lang="en-uk">URI (URL) link to article on the journal's web site Information about availability at preprint servers, web sites belonging to author or author's institution or similar should be recorded using the publication case "As an Internet publication"</documentation>
         </annotation>
       </element>
     </sequence>
     <attribute name="pub_status" type="tns:_PublishingStatusType" use="required">
       <annotation>
-        <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published" – see note. Is mandatory for in-journal publications because the time from “submitted" to “published" is often long and may cross year boundaries.</documentation>
+        <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published" – see note. Is mandatory for in-journal publications because the time from "submitted" to "published" is often long and may cross year boundaries.</documentation>
       </annotation>
     </attribute>
   </complexType>
@@ -3066,6 +3153,13 @@
           </annotation>
         </element>
       </sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="issn" type="tns:_ComplexISSNType">
+          <annotation>
+            <documentation xml:lang="en-uk">ISSN no. without dashes</documentation>
+          </annotation>
+        </element>
+      </sequence>
       <element name="place" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Place of publication</documentation>
@@ -3081,6 +3175,11 @@
           <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
         </annotation>
       </element>
+      <element name="doi" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
+        </annotation>
+      </element>
       <element name="pages" type="tns:_PagesType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">In the format Firstpage-Lastpage</documentation>
@@ -3089,10 +3188,15 @@
       <sequence minOccurs="0" maxOccurs="unbounded">
         <element name="series" type="string">
           <annotation>
-            <documentation xml:lang="en-uk">Book series information (like “Progress in Nanotechnology, vol. 14")</documentation>
+            <documentation xml:lang="en-uk">Book series information (like "Progress in Nanotechnology, vol. 14")</documentation>
           </annotation>
         </element>
       </sequence>
+      <element name="publisher_no" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Unique ID used to identify publisher in the FI (Danish Agency for Science, Technology and Innovation) database</documentation>
+        </annotation>
+      </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web site of book</documentation>
@@ -3101,7 +3205,7 @@
     </sequence>
     <attribute name="pub_status" type="tns:_PublishingStatusType" use="required">
       <annotation>
-        <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published" Is mandatory for in-book publications because the time from “submitted" to “published" is often long and may cross year boundaries.</documentation>
+        <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published" Is mandatory for in-book publications because the time from "submitted" to "published" is often long and may cross year boundaries.</documentation>
       </annotation>
     </attribute>
   </complexType>
@@ -3115,6 +3219,11 @@
       <element name="sub_title" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Subtitle</documentation>
+        </annotation>
+      </element>
+      <element name="part" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Part designation of a multipart work ("Vol. 1", "Bind 4: Middelalderen" etc.)</documentation>
         </annotation>
       </element>
       <element name="editor" type="string" minOccurs="0">
@@ -3228,10 +3337,15 @@
       <sequence minOccurs="0" maxOccurs="unbounded">
         <element name="series" type="string">
           <annotation>
-            <documentation xml:lang="en-uk">Book series information (like “Progress in Nanotechnology, vol. 14")</documentation>
+            <documentation xml:lang="en-uk">Book series information (like "Progress in Nanotechnology, vol. 14")</documentation>
           </annotation>
         </element>
       </sequence>
+      <element name="publisher_no" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Unique ID used to identify publisher in the FI (Danish Agency for Science, Technology and Innovation) database</documentation>
+        </annotation>
+      </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web site of book</documentation>
@@ -3345,7 +3459,7 @@
           <documentation xml:lang="en-uk">Description of the object</documentation>
         </annotation>
       </element>
-      <element name="file" type="tns:_FileType" minOccurs="1">
+      <element name="file" type="tns:_ObjectFileType" minOccurs="1">
         <annotation>
           <documentation xml:lang="en-uk">System-generated description of the object</documentation>
         </annotation>
@@ -3361,7 +3475,7 @@
         <documentation xml:lang="en-uk">Unique ID for the parent record</documentation>
       </annotation>
     </attribute>
-    <attribute name="role" type="string">
+    <attribute name="role" type="tns:_DigitalobjectRoleType">
       <annotation>
         <documentation xml:lang="en-uk">Use to state the role of the object in relation to the parent record, e.g. "preprint"</documentation>
       </annotation>
@@ -3372,7 +3486,7 @@
       </annotation>
     </attribute>
   </complexType>
-  <complexType name="_FileType">
+  <complexType name="_ObjectFileType">
     <sequence>
       <element name="description" type="string" minOccurs="0">
         <annotation>
@@ -3390,9 +3504,9 @@
         <documentation xml:lang="en-uk">File size in bytes</documentation>
       </annotation>
     </attribute>
-    <attribute name="mime_type" type="string">
+    <attribute name="mime_type" type="tns:_MimetypeType">
       <annotation>
-        <documentation xml:lang="en-uk">Mime type string of the file, like "application/pdf"</documentation>
+        <documentation xml:lang="en-uk">Mime type string of the file, like "application/pdf". Must conform to http://www.iana.org/assignments/media-types/</documentation>
       </annotation>
     </attribute>
     <attribute name="timestamp" type="dateTime" use="required">
@@ -3422,18 +3536,29 @@
       <extension base="tns:_ISSNType">
         <attribute use="optional" name="type">
           <annotation>
-            <documentation xml:lang="en-uk">Electronic or print.</documentation>
+            <documentation xml:lang="en-uk">Electronic or print</documentation>
           </annotation>
           <simpleType>
             <restriction base="string">
-              <enumeration value="print">
+              <enumeration value="pri">
                 <annotation>
                   <documentation xml:lang="en-uk">Printed version</documentation>
                 </annotation>
               </enumeration>
-              <enumeration value="print">
+              <enumeration value="ele">
                 <annotation>
                   <documentation xml:lang="en-uk">Electronic version</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="alt">
+                <annotation>
+                  <documentation xml:lang="en-uk">Alternative ISSN</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="und">
+                <!-- FIXME this seems bogus as ISSN/ISBN are not mandatory -->
+                <annotation>
+                  <documentation xml:lang="en-uk">Undefined ISSN</documentation>
                 </annotation>
               </enumeration>
             </restriction>
@@ -3451,14 +3576,25 @@
           </annotation>
           <simpleType>
             <restriction base="string">
-              <enumeration value="print">
+              <enumeration value="pri">
                 <annotation>
                   <documentation xml:lang="en-uk">Printed version</documentation>
                 </annotation>
               </enumeration>
-              <enumeration value="print">
+              <enumeration value="ele">
                 <annotation>
                   <documentation xml:lang="en-uk">Electronic version</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="alt">
+                <annotation>
+                  <documentation xml:lang="en-uk">Alternative ISBN</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="und">
+                <!-- FIXME this seems bogus as ISSN/ISBN are not mandatory -->
+                <annotation>
+                  <documentation xml:lang="en-uk">Undefined ISBN</documentation>
                 </annotation>
               </enumeration>
             </restriction>

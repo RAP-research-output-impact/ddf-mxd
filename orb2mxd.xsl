@@ -17,7 +17,7 @@
        Usage: sabcmd xsl2xsl.xsl records.xml result.xml
        where 
        xsl2xsl.xsl is the current stylesheet
-       records.xml contains the orbit records             
+       records.xml contains the orbit records (with /ddf as root and fit: authorities expanded)
        result.xml is the resulting xml in exchange format
 
        You can also use xsltproc, but 4xslt doesn't like me creating
@@ -37,10 +37,10 @@
   -->
 
   <!-- Version numbers -->
-  <xsl:variable name="schemaversion">1.1</xsl:variable>
-  <xsl:variable name="formatversion">1.1.0</xsl:variable>
-  <!-- if you want absolute includes, fill in a URL ending in a slash her, like
-       http://heth.cvt.dk/orbit2mxd/1.1.0-2/abs/ -->
+  <xsl:variable name="schemaversion">1.2</xsl:variable>
+  <xsl:variable name="formatversion">1.2.0</xsl:variable>
+  <!-- if you want absolute includes, fill in a URL ending in a slash here, like
+       http://urbit.cvt.dk/orbit2mxd/1.2.0-2/abs/ -->
   <xsl:variable name="baseurl"></xsl:variable>
 
   <!-- Mapping files for specific element -->
@@ -406,7 +406,7 @@
     <xsl:variable name="auxdoc" select="document/document[@object='aux']"/>
 
     <xsl:element name="publication">
-      <!-- <in_journal|in_book|in_report|book|report|patent|inetpub|other> -->
+      <!-- <in_journal|in_book|in_report|book|report|patent|inetpub|digital_object|other> -->
       <xsl:element name="{$mxdpubelm}">
         <xsl:variable name="pubstatus"> <!-- E.g. unpublished, published -->
           <xsl:value-of select="document/@status"/>
@@ -446,14 +446,13 @@
             <year><xsl:value-of select="$auxdoc/@year"/></year>
             <vol><xsl:value-of select="$auxdoc/@vol"/></vol>
             <issue><xsl:value-of select="$auxdoc/@issue"/></issue>
-            <!--pages><xsl:value-of select="$auxdoc/@pages"/></pages-->
             <pages><xsl:value-of select="my:cleanpages($auxdoc/@pages)"/></pages>
             <!-- TODO: what's this? <paperid></paperid> -->
             <!-- <doi></doi> -->
             <uri>
               <xsl:value-of select="document/www/url"/> <!-- NOT from aux doc! -->
             </uri>
-          </xsl:when>
+          </xsl:when>  <!-- in_journal -->
 
           <xsl:when test="$mxdpubelm = 'in_book'">
             <title>
@@ -511,14 +510,6 @@
             </xsl:if>
             
             <isbn>
-              <!--
-              <xsl:call-template name="subst">
-                <xsl:with-param name="in" select="$auxdoc/identifier[@type='ISBN']"/>
-                <xsl:with-param name="from" select="'-'"/>
-                <xsl:with-param name="to" select="''"/>
-              </xsl:call-template>
-              -->
-              <!-- FIXME ISBN must be fixed in Orbit -->
               <xsl:value-of select="my:replace($auxdoc/identifier[@type='ISBN'], '-', '')"/>
             </isbn>
             <place>
@@ -540,7 +531,7 @@
             <uri>
               <xsl:value-of select="document/www/url"/> <!-- NOT from aux doc! -->
             </uri>
-          </xsl:when>
+          </xsl:when>   <!-- in_book -->
 
           <xsl:when test="$mxdpubelm = 'in_report'">
             <!-- Orbit has no chapter- or paper-in-report -->
@@ -553,7 +544,7 @@
             <year></year>
             <pages></pages>
             <uri></uri>
-          </xsl:when>
+          </xsl:when>  <!-- in_report -->
 
           <xsl:when test="$mxdpubelm = 'book'">
             <!-- FIXME some records in Orbit seem to lack any of imprint or aux document,
@@ -583,7 +574,7 @@
             <uri>
               <xsl:value-of select="document/www/url"/>
             </uri>
-          </xsl:when>
+          </xsl:when> <!-- book -->
 
           <xsl:when test="$mxdpubelm = 'report'">
             <isbn>
@@ -610,7 +601,7 @@
             <uri>
               <xsl:value-of select="document/www/url"/>
             </uri>
-          </xsl:when>
+          </xsl:when>  <!-- report -->
 
           <xsl:when test="$mxdpubelm = 'patent'">
             <!--TODO -->
@@ -622,7 +613,7 @@
             <number>
               <xsl:value-of select="document/patent/number"/>
             </number>
-            <!-- 20605 there's either a date or a year here, think
+            <!-- 200605 there's either a date or a year here, think
                  date's most recent; its format is freeform :-( -->
             <date>
               <xsl:if test="document/patent/year">
@@ -633,13 +624,13 @@
               </xsl:if>
             </date>
             <uri></uri>
-          </xsl:when>
+          </xsl:when>  <!-- patent -->
 
           <xsl:when test="$mxdpubelm = 'inetpub'">
             <!--maybe TODO later -->
             <text></text>
             <uri></uri>
-          </xsl:when>
+          </xsl:when>  <!-- inetpub -->
 
           <xsl:when test="$mxdpubelm = 'other'">
             <!-- FIXME: This is to get rid of conference
@@ -654,11 +645,47 @@
               <xsl:text>; ddfauxtype=</xsl:text>
               <xsl:value-of select="/ddf/document/document/@type"/>
             -->
-          </xsl:when>
+          </xsl:when> <!-- other -->
         </xsl:choose>
-
       </xsl:element> <!-- doc-specific element -->
-    </xsl:element> <!-- </publication> -->
+
+      <xsl:for-each select="/ddf/document/object">
+        <xsl:variable name="ddfrole">
+          <xsl:choose>
+            <xsl:when test="version/description='preprint'">pre</xsl:when>
+            <xsl:when test="version/description='postprint'">pos</xsl:when>
+            <xsl:when test="version/description='published'">pub</xsl:when>
+            <xsl:otherwise>oth</xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="ddfaccess">
+          <xsl:choose>
+            <xsl:when test="version/@access='all'">oa</xsl:when>
+            <xsl:when test="version/@access='campus'">ca</xsl:when>
+            <xsl:when test="version/@access='owner'">na</xsl:when>
+          </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:element name="digital_object">
+          <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+          <xsl:attribute name="role"><xsl:value-of select="$ddfrole"/></xsl:attribute>
+          <xsl:attribute name="access"><xsl:value-of select="$ddfaccess"/></xsl:attribute>
+          <!--<xsl:element name="description"><xsl:value-of select="xxx"/></xsl:element>-->
+          <xsl:element name="file">
+            <!--<xsl:attribute name="lang"><xsl:value-of select=""/></xsl:attribute>-->
+            <xsl:attribute name="size"><xsl:value-of select="version/file/@size"/></xsl:attribute>
+            <xsl:attribute name="mime_type"><xsl:value-of select="version/file/@mime_type"/></xsl:attribute>
+            <xsl:attribute name="timestamp"><xsl:value-of select="FIXME"/></xsl:attribute>
+            <xsl:attribute name="filename"><xsl:value-of select="version/file/@filename"/></xsl:attribute>
+            <!--<xsl:element name="description"><xsl:value-of select="xxx"/></xsl:element>-->
+          </xsl:element>
+          <!-- http://orbit.dtu.dk/getResource?recordId=220328&objectId=1&versionId=1 -->
+          <uri><xsl:value-of select="concat('http://orbit.dtu.dk/getResource?recordId=',
+          /ddf/@id, '&amp;objectId=', @id, '&amp;versionId=', version/@id)"/></uri>
+        </xsl:element> 
+      </xsl:for-each> <!-- object -->
+
+    </xsl:element> <!-- publication -->
   </xsl:template> <!-- element-pubication -->
 
 
