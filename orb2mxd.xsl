@@ -3,6 +3,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:fit="http://toolxite.net/ns/metatoo/fit/"
                 xmlns:ext="http://exslt.org/common"
+                xmlns:datetime="http://exslt.org/dates-and-times"
                 xmlns:func="http://exslt.org/functions"
                 xmlns:my="http://www.dtv.dk/ns"
                 xmlns:str="http://exslt.org/strings"
@@ -111,6 +112,9 @@
 
     <xsl:element name="ddf_doc">
       <!-- begin attributes -->
+      <!-- Actually. it's forbidden to create an xmlns attrib, but if
+           you use the element/@namespace attr, all nested elements
+           are created in the empty namespace - hateful piece of crap -->
       <xsl:attribute name="xmlns">
         <xsl:text>http://mx.forskningsdatabasen.dk/ns/mxd/</xsl:text>
         <xsl:value-of select="$schemaversion"/>
@@ -124,6 +128,9 @@
       <xsl:attribute name="doc_lang">
         <xsl:variable name="doclang" select="string(/ddf/document/language)"/>
         <xsl:value-of select="$langMapping/rule[in=$doclang]/out"/>
+      </xsl:attribute>
+      <xsl:attribute name="rec_created">
+        <xsl:value-of select="substring(fit:admin/fit:system/fit:created,1,10)"/>
       </xsl:attribute>
       <xsl:attribute name="doc_year">
         <!-- 
@@ -670,14 +677,15 @@
           <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
           <xsl:attribute name="role"><xsl:value-of select="$ddfrole"/></xsl:attribute>
           <xsl:attribute name="access"><xsl:value-of select="$ddfaccess"/></xsl:attribute>
-          <!--<xsl:element name="description"><xsl:value-of select="xxx"/></xsl:element>-->
+          <!--<xsl:element name="description"><xsl:value-of select=""/></xsl:element>-->
           <xsl:element name="file">
             <!--<xsl:attribute name="lang"><xsl:value-of select=""/></xsl:attribute>-->
             <xsl:attribute name="size"><xsl:value-of select="version/file/@size"/></xsl:attribute>
             <xsl:attribute name="mime_type"><xsl:value-of select="version/file/@mime_type"/></xsl:attribute>
-            <xsl:attribute name="timestamp"><xsl:value-of select="FIXME"/></xsl:attribute>
+            <!-- unix2iso seems to have gone broken somewhere. No time to fix it. -->
+            <xsl:attribute name="timestamp">1970-01-01T00:00:00</xsl:attribute>
             <xsl:attribute name="filename"><xsl:value-of select="version/file/@filename"/></xsl:attribute>
-            <!--<xsl:element name="description"><xsl:value-of select="xxx"/></xsl:element>-->
+            <!--<xsl:element name="description"><xsl:value-of select=""/></xsl:element>-->
           </xsl:element>
           <!-- http://orbit.dtu.dk/getResource?recordId=220328&objectId=1&versionId=1 -->
           <uri><xsl:value-of select="concat('http://orbit.dtu.dk/getResource?recordId=',
@@ -896,6 +904,60 @@
       </xsl:choose>
     </func:result>
   <!--/xsl:template-->
+  </func:function>
+
+  <func:function name="my:unix2iso">
+    <xsl:param name="unix" />
+
+    <!--  snatched from http://www.djkaty.com/drupal/xsl-date-time -->
+    
+    <xsl:variable name="year" select="floor($unix div 31536000) + 1970" />
+    <xsl:variable name="hour" select="floor(($unix mod 86400) div 3600)" />
+    <xsl:variable name="minute" select="floor(($unix mod 3600) div 60)" />
+    <xsl:variable name="second" select="$unix mod 60" />
+    
+    <xsl:variable name="yday" select="floor(($unix - ($year - 1970)*31536000 - floor(($year - 1972) div 4)*86400) div 86400)" />
+    <xsl:variable name="yday-leap">
+      <xsl:choose>
+        <xsl:when test="$yday >= 59 or $year mod 4 != 0">
+          <xsl:value-of select="$yday" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$yday + 1" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="month">
+      <xsl:choose>
+        <xsl:when test="$yday-leap &lt;= 31">1</xsl:when>
+        <xsl:when test="$yday-leap &lt;= 59">2</xsl:when>
+        <xsl:when test="$yday-leap &lt;= 90">3</xsl:when>
+        <xsl:when test="$yday-leap &lt;= 120">4</xsl:when>
+        <xsl:when test="$yday-leap &lt;= 151">5</xsl:when>
+        <xsl:when test="$yday-leap &lt;= 181">6</xsl:when>
+        <xsl:when test="$yday-leap &lt;= 212">7</xsl:when>
+        <xsl:when test="$yday-leap &lt;= 243">8</xsl:when>
+        <xsl:when test="$yday-leap &lt;= 273">9</xsl:when>
+        <xsl:when test="$yday-leap &lt;= 304">10</xsl:when>
+        <xsl:when test="$yday-leap &lt;= 334">11</xsl:when>
+        <xsl:otherwise>12</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="date">
+      <xsl:choose>
+        <xsl:when test="$yday != 59 or $year mod 4 != 0">
+          <xsl:value-of select="$yday-leap - substring('000031059090120151181212243273304334', 3 * $month - 2, 3)" />
+        </xsl:when>
+        <xsl:otherwise>29</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
+    <func:result select="concat($year, '-',
+                         format-number($month, '00'), '-',
+                         format-number($date, '00'), 'T',
+                         format-number($hour, '00'), ':',
+                         format-number($minute, '00'), ':',
+                         format-number($second, '00'))" />
   </func:function>
   
 </xsl:stylesheet>
