@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ddf xmlns:fit="http://toolxite.net/ns/metatoo/fit/" id="220328" status="O3" type="lbralc" user_group="dtu_byg" user_id="35733" version="2.0">
+  <document fit:authority_object="ddf_object_type" fit:authority_object_dan="Main" fit:authority_object_eng="Main" fit:authority_status="ddf_document_status.dtu" fit:authority_status_dan="Udgivet" fit:authority_status_eng="Published" object="main" status="published" type="conference in book">
+    <abstract fit:authority_lang="language" fit:authority_lang_dan="Engelsk" fit:authority_lang_eng="English" lang="eng">Current models to predict heat, air and moisture (HAM) conditions in building components assume
+uniform boundary conditions, both for the temperature and relative humidity of the air in an indoor
+space as well as for the surface transfer coefficients. Such models cannot accurately predict the HAM
+conditions in the component and on the surface of the component with non-uniform air temperature or
+relative humidity distributions in an indoor space. Moreover, the heat and moisture surface transfer
+coefficients strongly depend on the local air velocity, local temperature, water-material interactions
+and water content at the material surface and surface texture of the material. The objective of the
+present paper is to analyze the influence of the non-uniform local air velocity near the surface of a
+building component on the HAM conditions in the component. A case study and sensitivity study have
+been used to investigate this influence. The research showed that the indoor environmental conditions
+and local airflow velocity have a relatively large influence on the predicted HAM conditions in a
+building component. The influence of the convective surface heat transfer coefficient on the HAM
+performance of the component is relatively large compared to the influence of the convective surface
+mass transfer coefficient. With respect to the analyzed building component, the investigations showed
+that assuming an average value for the surface mass transfer coefficient is acceptable, while assuming
+an average value is not acceptable for the convective surface heat transfer coefficient. The study
+showed that the influence on the surface relative humidity is limited.</abstract>
+    <document fit:authority_type="ddf_document_type" fit:authority_type_dan="Bog (som helhed)" fit:authority_type_eng="Book (as a whole)" object="aux" pages="1433-1440" role="part of" type="book">
+      <identifier fit:authority_type="ddf_document_identifier.dtu" fit:authority_type_dan="ISBN" fit:authority_type_eng="ISBN" type="ISBN">978-975-561-330-7</identifier>
+      <imprint>
+        <edition>1</edition>
+        <place>Istanbul</place>
+        <publisher>Istanbul Technical University</publisher>
+        <year>2008</year>
+      </imprint>
+      <title>
+        <main>Durability of Building Materials and Components</main>
+        <part>3</part>
+        <sub>Globality and Locality in Durability</sub>
+      </title>
+    </document>
+    <event fit:authority_type="ddf_event_type" fit:authority_type_dan="Konference" fit:authority_type_eng="Conference" object="aux" role="presented at" type="conference">
+      <dates>
+        <year>2008</year>
+      </dates>
+      <name>
+        <acronym>11 DBMC</acronym>
+        <full>11. International Conference on Durability of Building Materials and Components, , 11 DBMC</full>
+        <main>11. International Conference on Durability of Building Materials and Components</main>
+      </name>
+      <place>Istanbul, Turkey</place>
+    </event>
+    <identifier fit:authority_type="ddf_document_identifier.dtu" fit:authority_type_dan="Artikelnummer" fit:authority_type_eng="Paper id." type="paperid">T33-499</identifier>
+    <indicator>
+      <geo fit:authority="ddf_document_indicator_geo" fit:authority_dan="International" fit:authority_eng="International">international</geo>
+      <level fit:authority="dtu_document_indicator_level" fit:authority_dan="Videnskabelig" fit:authority_eng="Scientific">scientific</level>
+      <review fit:authority="ddf_document_indicator_review" fit:authority_dan="Peer reviewed" fit:authority_eng="Peer reviewed">peer reviewed</review>
+    </indicator>
+    <language fit:authority="dtu_languages" fit:authority_dan="Engelsk" fit:authority_eng="English">eng</language>
+    <local>
+      <field fit:authority="dtu_institut_local" fit:authority_dan="BYG*DTU" fit:authority_eng="BYG*DTU" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" tag="Institute owner" tagsea="instituteowner" type="4">BYG</field>
+    </local>
+    <local>
+      <field fit:authority="dtu_annual_report_year" fit:authority_dan="2008" fit:authority_eng="2008" fit:authority_type="ddf_local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" num="4" tag="Annual report year" tagsea="annualreportyear" type="4">2008</field>
+    </local>
+    <object fit:authority_role="fit_object_role" fit:authority_role_dan="Fulltext" fit:authority_role_eng="Fulltext" fit:object="1" fit:version="1" id="1" role="fulltext" filterempty_keepme="1">
+      <version access="all" fit:authority_access="fit_object_access" fit:authority_access_dan="Alle" fit:authority_access_eng="All" fit:closed="1" id="1">
+        <description fit:authority="orbit_document_file_version" fit:authority_dan="Forlagets version" fit:authority_eng="Publisher version">published</description>
+        <file cksum="7b8b7b58601b609d70dd85672072cb24" filename="Steskens - 11 DBMC Paper.pdf" mime_type="application/pdf" size="344957" timestamp="1210943157"/>
+      </version>
+    </object>
+    <person fit:authority_role="dtu_document_person_role" fit:authority_role_dan="Kontaktforfatter" fit:authority_role_eng="Corresponding author" id="192933" object="aux" role="corresponding author">
+      <contact>
+        <email>s061742@student.dtu.dk</email>
+      </contact>
+      <identifier type="cwisno">35733</identifier>
+      <name>
+        <first>Paul Wilhelmus Maria Hermanus</first>
+        <full>Steskens, Paul Wilhelmus Maria Hermanus</full>
+        <last>Steskens</last>
+      </name>
+      <organisation id="192933" object="aux" role="affiliation">
+        <name>
+          <full>Technical University of Denmark, Department of Civil Engineering, </full>
+          <main code="DTU">Technical University of Denmark</main>
+          <sub code="BYG">Department of Civil Engineering</sub>
+          <sub2 code="BYG_BI">Section for Building Physics and Services</sub2>
+        </name>
+      </organisation>
+    </person>
+    <title>
+      <main>Influences of the Indoor Environment on Heat, Air and Moisture Conditions in The Building Component: Boundary Conditions Modeling</main>
+    </title>
+  </document>
+  <fit:admin>
+    <fit:cataloguer>
+      <fit:form>ddf_record_lbralc</fit:form>
+      <fit:group>dtu_byg</fit:group>
+      <fit:id>35733</fit:id>
+      <fit:status>O3</fit:status>
+      <fit:timestamp>2008-05-26</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_lbralc</fit:form>
+      <fit:group>dtu_byg</fit:group>
+      <fit:id>35733</fit:id>
+      <fit:status>O1</fit:status>
+      <fit:timestamp>2008-05-16T15:07:16</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_lbralc</fit:form>
+      <fit:group>dtu_byg</fit:group>
+      <fit:id>35733</fit:id>
+      <fit:status>O1</fit:status>
+      <fit:timestamp>2008-05-16T15:13:44</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_lbralc</fit:form>
+      <fit:group>dtu_byg</fit:group>
+      <fit:id>35733</fit:id>
+      <fit:status>O2</fit:status>
+      <fit:timestamp>2008-05-16T15:13:53</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_lbralc</fit:form>
+      <fit:group>dtu_byg</fit:group>
+      <fit:id>35733</fit:id>
+      <fit:status>O2</fit:status>
+      <fit:timestamp>2008-05-16T15:16:34</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_lbralc</fit:form>
+      <fit:group>dtu_byg</fit:group>
+      <fit:id>6942</fit:id>
+      <fit:status>O2</fit:status>
+      <fit:timestamp>2008-05-26T11:27:31</fit:timestamp>
+    </fit:cataloguer>
+    <fit:cataloguer>
+      <fit:form>ddf_record_lbralc</fit:form>
+      <fit:group>dtu_byg</fit:group>
+      <fit:id>6942</fit:id>
+      <fit:status>O3</fit:status>
+      <fit:timestamp>2008-05-26T11:27:35</fit:timestamp>
+    </fit:cataloguer>
+    <fit:heading>Influences of the Indoor Environment on Heat, Air and Moisture Conditions in The Building Component: Boundary Conditions Modeling</fit:heading>
+    <fit:object>1</fit:object>
+    <fit:released fit:status="O1">2008-05-16T15:07:16</fit:released>
+    <fit:released fit:status="O2">2008-05-16T15:13:53</fit:released>
+    <fit:released fit:status="O3">2008-05-26T11:27:35</fit:released>
+    <fit:sortkey>2008</fit:sortkey>
+    <fit:system>
+      <fit:created>2008-05-16 15:07:16</fit:created>
+      <fit:id>220328</fit:id>
+      <fit:supplier fit:type="dtu_byg">
+        <fit:code>dtu_byg</fit:code>
+        <fit:name fit:lang="eng">dtu_byg</fit:name>
+      </fit:supplier>
+      <fit:updated>2008-05-26 11:27:35</fit:updated>
+    </fit:system>
+    <fit:type fit:lang="eng">11.  Full conference paper publ. in proceedings/book (DTU record)</fit:type>
+    <fit:type fit:lang="dan">11.  Fuldt konference paper publ. i proceedings/bog (DTU post)</fit:type>
+  </fit:admin>
+  <derived>
+    <type>
+      <eng>book</eng>
+      <dan>bog</dan>
+    </type>
+  </derived>
+  <indexing>
+    <annualreportyear>2008</annualreportyear>
+    <instituteowner>
+      <subcode>BYG</subcode>
+    </instituteowner>
+    <instituteowner>
+      <subcode>BYG</subcode>
+      <sub2code>BYG_BI</sub2code>
+    </instituteowner>
+    <persons>
+      <correspondingauthor>
+        <name>
+          <first>Paul Wilhelmus Maria Hermanus</first>
+          <full>Steskens, Paul Wilhelmus Maria Hermanus</full>
+          <last>Steskens</last>
+        </name>
+        <cwisno>35733</cwisno>
+        <organisation id="192933" role="affiliation">
+          <subcode>BYG</subcode>
+          <sub2code>BYG_BI</sub2code>
+        </organisation>
+      </correspondingauthor>
+    </persons>
+    <cwisno>35733</cwisno>
+    <firstauthor>Steskens, Paul Wilhelmus Maria Hermanus</firstauthor>
+    <sorttitle>Influences of the Indoor Environment on Heat, Air and Moisture Conditions in The Building Component: Boundary Conditions Modeling </sorttitle>
+    <ownerclass>dtu</ownerclass>
+    <released>NaN-12-NaNTNaN:NaN:NaN</released>
+  </indexing>
+</ddf>

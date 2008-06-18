@@ -1,0 +1,42 @@
+Change:
+
+The namespace remains http://mx.forskningsdatabasen.dk/ns/mxd/1.1
+whereas the format_version becomes 1.1.1.
+
+Preface:
+
+The version number definition has been changed, such that adding
+backward-compatible changes (like new non-mandatory elements) does not
+require a new namespace definition in the document. The current
+schema, 1.1.1, will therefore also validate 1.1.0 documents.
+
+
+Formulation:
+
+1. represents a major version - an increment would require a thorough
+   study of the new version and subsequent changes of style sheets and
+   other programs.
+
+   Changes in major version always imply both a new release of the
+   schema, AND a change in the namespace declaration. The new version
+   of the schema will therefore NOT validate older documents.
+
+2. represents a revision, which modifies some definitions of the
+   previous version in a way that is not backward compatible with
+   older version. An increment of the revision number would most
+   likely require the update of XSLT style sheets for presentation or
+   similar purposes.
+
+   Changes in revision always imply both a new release of the schema,
+   AND a change in the namespace declaration. The new version of the
+   schema will therefore NOT validate older documents.
+
+3. represents a minor revision, which either only contains changes in
+   wording or clarifications, OR expands the vocabulary of certain
+   elements, OR which adds new non-mandatory data elements in a way
+   which still validates older documents with the same version and
+   revision.
+
+   An increment in minor revision number may require updates of XSLT
+   style sheets and similar in order to reflect newly-added
+   elements.
