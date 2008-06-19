@@ -1825,12 +1825,33 @@
           </annotation>
         </element>
       </sequence>
+      <sequence minOccurs="0">
+        <element name="research_area" type="tns:_ResearchAreaType">
+          <annotation>
+            <documentation xml:lang="en-uk">Special national research area, used by DASTI</documentation>
+          </annotation>
+        </element>
+      </sequence>
     </sequence>
+    <!-- 200806 huh? this must be a rogue attrib:
     <attribute ref="xml:lang" use="optional">
       <annotation>
         <documentation xml:lang="en-uk">Language of note</documentation>
       </annotation>
     </attribute>
+    -->
+  </complexType>
+  <complexType name="_ResearchAreaType">
+    <simpleContent>
+      <extension base="string">
+        <attribute ref="xml:lang" use="optional"/>
+        <attribute name="area_code" type="tns:_ResearchAreaCodeType">
+          <annotation>
+            <documentation xml:lang="en-uk">One of the national research areas</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
   </complexType>
   <complexType name="_SubjectType">
     <sequence>
@@ -3558,7 +3579,7 @@
               <enumeration value="und">
                 <!-- FIXME this seems bogus as ISSN/ISBN are not mandatory -->
                 <annotation>
-                  <documentation xml:lang="en-uk">Undefined ISSN</documentation>
+                  <documentation xml:lang="en-uk">Undefined or unknown ISSN type</documentation>
                 </annotation>
               </enumeration>
             </restriction>
@@ -3594,7 +3615,7 @@
               <enumeration value="und">
                 <!-- FIXME this seems bogus as ISSN/ISBN are not mandatory -->
                 <annotation>
-                  <documentation xml:lang="en-uk">Undefined ISBN</documentation>
+                  <documentation xml:lang="en-uk">Undefined or unknown ISBN type</documentation>
                 </annotation>
               </enumeration>
             </restriction>
@@ -3603,6 +3624,30 @@
       </extension>
     </simpleContent>
   </complexType>
+  <simpleType name="_ResearchAreaCodeType">
+    <restriction base="string">
+      <enumeration value="sci">
+        <annotation>
+          <documentation xml:lang="en-uk">Science/technology</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="soc">
+        <annotation>
+          <documentation xml:lang="en-uk">Social science</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hum">
+        <annotation>
+          <documentation xml:lang="en-uk">Humanities</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="med">
+        <annotation>
+          <documentation xml:lang="en-uk">Medical science</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
   <simpleType name="_OtherType">
     <restriction base="string"/>
   </simpleType>
