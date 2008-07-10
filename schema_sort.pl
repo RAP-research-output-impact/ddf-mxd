@@ -97,6 +97,9 @@ sub stylesheet_start
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
+    <!-- This stylesheet was generated with schema_sort.pl $xsd.
+         Do not edit (other than indentation perhaps). -->
+
     <xsl:strip-space elements="*"/>
     <xsl:output method="xml" indent="no" encoding="UTF-8"/>
 
