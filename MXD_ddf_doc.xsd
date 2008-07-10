@@ -279,6 +279,11 @@
         <documentation xml:lang="en-uk">Role of the event in relation to the document (see note for authorised values)</documentation>
       </annotation>
     </attribute>
+    <attribute name="dasti_conference_no" type="positiveInteger">
+      <annotation>
+        <documentation xml:lang="en-uk">Conference number from the DASTI conference databse</documentation>
+      </annotation>
+    </attribute>
   </complexType>
   <complexType name="_EventTitleType">
     <sequence>
@@ -2270,8 +2275,8 @@
       </enumeration>
       <enumeration value="djl">
         <annotation>
-          <documentation xml:lang="en-uk">Journal letter to the editor</documentation>
-          <documentation xml:lang="da-dk">Tidsskrifts-brev til redaktøren</documentation>
+          <documentation xml:lang="en-uk">Letter to the editor</documentation>
+          <documentation xml:lang="da-dk">Tidsskrifts-letter</documentation>
         </annotation>
       </enumeration>
       <enumeration value="djc">
@@ -2282,7 +2287,13 @@
       </enumeration>
       <enumeration value="djr">
         <annotation>
-          <documentation xml:lang="en-uk">Journal review</documentation>
+          <documentation xml:lang="en-uk">Journal review article</documentation>
+          <documentation xml:lang="da-dk">Tidsskrifts-review artikel</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="djb">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal book review</documentation>
           <documentation xml:lang="da-dk">Tidsskrifts-anmeldelse</documentation>
         </annotation>
       </enumeration>
@@ -2550,7 +2561,7 @@
           <documentation xml:lang="da-dk">Aarhus Universitet</documentation>
         </annotation>
       </enumeration>
-      <enumeration value="auc">
+      <enumeration value="aau">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Aalborg Universitet</documentation>
@@ -2754,6 +2765,12 @@
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Institut for Forskning i Idræt og Folkelig Oplysning</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="itu">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">IT-universitetet i København</documentation>
         </annotation>
       </enumeration>
       <enumeration value="jpsem">

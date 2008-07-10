@@ -79,6 +79,7 @@
   <xsl:template match="/ddf_doc/event">
     <xsl:copy>
       <xsl:apply-templates select="@event_role"/>
+      <xsl:apply-templates select="@dasti_conference_no"/>
       <xsl:apply-templates select="title"/>
       <xsl:apply-templates select="dates"/>
       <xsl:apply-templates select="place"/>
