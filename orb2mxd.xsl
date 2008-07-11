@@ -685,7 +685,8 @@
             <!-- unix2iso seems to have gone broken somewhere. No time to fix it. -->
             <xsl:attribute name="timestamp">1970-01-01T00:00:00</xsl:attribute>
             <xsl:attribute name="filename"><xsl:value-of select="version/file/@filename"/></xsl:attribute>
-            <!--<xsl:element name="description"><xsl:value-of select=""/></xsl:element>-->
+            <!-- 1.2.0.1 forge description or filterempty will eat the whole file element -->
+            <xsl:element name="description"><xsl:value-of select="version/file/@filename"/></xsl:element>
           </xsl:element>
           <!-- http://orbit.dtu.dk/getResource?recordId=220328&objectId=1&versionId=1 -->
           <uri><xsl:value-of select="concat('http://orbit.dtu.dk/getResource?recordId=',
