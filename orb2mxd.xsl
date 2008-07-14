@@ -661,7 +661,16 @@
         </xsl:choose>
       </xsl:element> <!-- doc-specific element -->
 
-      <xsl:for-each select="/ddf/document/object">
+      <!--
+          <object> in Orbit-ddf is always present even if it
+          contains no sensible data. It can contain empty
+          subelements (like <file>) which nonetheless can hold
+          significant attributes. Therefore it causes all sorts of
+          problems with filterempty.xsl, so we test it explicitly
+          here.
+      -->
+
+      <xsl:for-each select="/ddf/document/object[file]">
         <xsl:variable name="ddfrole">
           <xsl:choose>
             <xsl:when test="version/description='preprint'">pre</xsl:when>
@@ -677,7 +686,7 @@
             <xsl:when test="version/@access='owner'">na</xsl:when>
           </xsl:choose>
         </xsl:variable>
-        
+
         <xsl:element name="digital_object">
           <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
           <xsl:attribute name="role"><xsl:value-of select="$ddfrole"/></xsl:attribute>
