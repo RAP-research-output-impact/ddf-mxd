@@ -670,7 +670,7 @@
           here.
       -->
 
-      <xsl:for-each select="/ddf/document/object[file]">
+      <xsl:for-each select="/ddf/document/object[version/file]">
         <xsl:variable name="ddfrole">
           <xsl:choose>
             <xsl:when test="version/description='preprint'">pre</xsl:when>
