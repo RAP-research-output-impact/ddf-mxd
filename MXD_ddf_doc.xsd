@@ -3042,7 +3042,7 @@
     </restriction>
   </simpleType>
   <simpleType name="_ISSNType">
-    <!-- Deprecated. See _ComplexISSNType if you need a @type -->
+    <!-- Do not use by itself; use _ComplexISSNType if you need a @type -->
     <restriction base="string">
       <pattern value="\d{7}[0-9Xx]"/>
     </restriction>

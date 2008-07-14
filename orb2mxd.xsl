@@ -164,7 +164,12 @@
         <xsl:variable name="lev" select="string(document/indicator/level)"/>
         <xsl:value-of select="$indicatorMapping/rule[in=$lev]/out"/>
       </xsl:attribute>
-      <xsl:attribute name="rec_source">dtu</xsl:attribute>
+      <xsl:attribute name="rec_source">
+        <xsl:choose>
+          <xsl:when test="starts-with(/ddf/@user_group, 'fak')">fak</xsl:when>
+          <xsl:otherwise>dtu</xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
       <xsl:attribute name="rec_id"><xsl:value-of select="@id"/></xsl:attribute>
       <!-- rec_upd holds a fix for MySQL's date format change in 4.1 -->
       <xsl:attribute name="rec_upd">
