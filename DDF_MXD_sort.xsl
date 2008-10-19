@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns="http://mx.forskningsdatabasen.dk/ns/mxd/1.2">
 
   <!-- This stylesheet was generated with schema_sort.pl MXD_ddf_doc.xsd.
        Do not edit (other than indentation perhaps). -->
