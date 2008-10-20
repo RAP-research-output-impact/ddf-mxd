@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+our $indent1 = " " x 4;
+our $indent2 = " " x 8;
+our $indent3 = " " x 12;
+
 $xsd = $ARGV[0];
 if (!-e $xsd) {
     die ("usage: $0 <schema-file>\n");
@@ -9,7 +13,9 @@ if (!open (FIN, $xsd)) {
 }
 $xml = join ('', <FIN>);
 close (FIN);
-&stylesheet_start ();
+if (&stylesheet_start ($xml)) {
+    $UseNS = 1;
+}
 $templates = {};
 &get_elements ([], $templates, $xml, $xml);
 foreach $tn (sort (keys (%{$templates}))) {
@@ -54,9 +60,15 @@ sub get_elements
             $name = $1;
             push (@{$path}, $name);
             if ($tn eq '/') {
-                $templates->{$tn} .= "<xsl:apply-templates select=\"*\"/>\n";
+                $templates->{$tn} .= "$indent3<xsl:apply-templates select=\"*\"/>\n";
             } else {
-                $templates->{$tn} .= "<xsl:apply-templates select=\"$name\"/>\n";
+                if ($UseNS) {
+                    if ($name =~ m/^[0-9A-Za-z]/) {
+                        $name = 'mx:' . $name;
+                    }
+                    $name =~ s/\/([0-9A-Za-z])/\/mx:$1/g;
+                }
+                $templates->{$tn} .= "$indent3<xsl:apply-templates select=\"$name\"/>\n";
             }
         }
         if ($x =~ /type="([^"]+)"/) {
@@ -85,25 +97,31 @@ sub get_attributes
     while ($xml =~ s/<attribute([^>]*)>//s) {
         $x = $1;
         if ($x =~ /name="([^"]+)"/) {
-            $templates->{$tn} .=  "<xsl:apply-templates select=\"\@$1\"/>\n";
+            $templates->{$tn} .=  "$indent3<xsl:apply-templates select=\"\@$1\"/>\n";
         }
     }
+    $templates->{$tn} .=  "$indent3<xsl:apply-templates select=\"\@xml:lang\"/>\n";
+    $templates->{$tn} .=  "$indent3<xsl:apply-templates select=\"text()\"/>\n";
 }
 
 sub stylesheet_start
 {
+    my ($xml) = @_;
+    my ($ns);
+
+    if ($xml =~ m/<schema [^>]*targetNamespace="([^"]+)"/) {
+        $ns = " xmlns:mx=\"$1\"";
+    }
     print <<EOT; 
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-
-    <!-- This stylesheet was generated with schema_sort.pl $xsd.
-         Do not edit (other than indentation perhaps). -->
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"$ns version="1.0">
 
     <xsl:strip-space elements="*"/>
     <xsl:output method="xml" indent="no" encoding="UTF-8"/>
 
 EOT
+    return ($ns);
 }
 
 sub stylesheet_end
@@ -111,7 +129,7 @@ sub stylesheet_end
     print <<EOT; 
     <xsl:template match="@* | node()">
         <xsl:copy>
-            <xsl:apply-templates select="@* | node()"/>
+            <xsl:apply-templates select="@* | text()"/>
         </xsl:copy>
     </xsl:template>
 </xsl:stylesheet>
@@ -122,6 +140,12 @@ sub template_start
 {
     my ($match) = @_;
 
+    if ($UseNS) {
+        if ($match =~ m/^[0-9A-Za-z]/) {
+            $match = 'mx:' . $match;
+        }
+        $match =~ s/\/([0-9A-Za-z])/\/mx:$1/g;
+    }
     print <<EOT; 
     <xsl:template match="$match">
         <xsl:copy>
