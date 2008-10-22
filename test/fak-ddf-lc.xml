@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ddf xmlns:fit="http://toolxite.net/ns/metatoo/fit/" id="456" status="O3" type="lc" user_group="fak_fsmo" user_id="210072" version="2.0">
+<document fit:authority_object="ddf_object_type" fit:authority_object_dan="Main" fit:authority_object_eng="Main" fit:authority_status="document_status" fit:authority_status_dan="[Indsendt]" fit:authority_status_eng="[Submitted]" fit:authority_type="document_type_lc" fit:authority_type_dan="Slide show præsentation" fit:authority_type_eng="Slide show presentation" object="main" status="submitted" type="slide show">
+<abstract fit:authority_lang="language" fit:authority_lang_dan="Engelsk" fit:authority_lang_eng="English" lang="eng">This paper will discuss the United States security policy towards Africa based on the National Security Strategy from 2006 and the founding of US Africa Command, the new military combatant command that is supposed to unify US military efforts on the African continent.
+The paper will discuss whether AFRICOM and US actions in Africa could be seen as a true (newfound) American interest in Africa or whether actions that are considered low-key and low-budget in Washington are to be regarded as a true asymmetry because African states regard US action as important and significant.
+The paper will explain the US role in Africa using geopolitical theories derived from Zbigniew Brzezinski, Mahan and Thomas P.M. Barnett. The paper will explore the possible roles of AFRICOM as instrument of US foreign policy and the implications thereof for Danish policy on the African continent.</abstract>
+<event fit:authority_object="ddf_object_type" fit:authority_object_dan="Auxiliary" fit:authority_object_eng="Auxiliary" fit:authority_type="event_type_aux" fit:authority_type_dan="Konference [inviteret]" fit:authority_type_eng="Conference [invited]" object="aux" role="presented at" type="conference invited">
+<dates>
+<year>2008</year>
+</dates>
+<name>
+<full>Nordic Africa Days, , </full>
+<main>Nordic Africa Days</main>
+</name>
+<place>Copenhagen</place>
+</event>
+<indicator>
+<geo fit:authority="document_indicator_geo" fit:authority_dan="International" fit:authority_eng="International">international</geo>
+<level fit:authority="document_indicator_level" fit:authority_dan="Videnskabelig" fit:authority_eng="Scientific">scientific</level>
+<review fit:authority="document_indicator_review" fit:authority_dan="Ikke reviewed" fit:authority_eng="Not reviewed">not reviewed</review>
+</indicator>
+<keyword>
+<eng>USA</eng>
+</keyword>
+<keyword>
+<eng>Africa</eng>
+</keyword>
+<keyword>
+<eng>AFRICOM</eng>
+</keyword>
+<keyword>
+<eng>Geostrategy</eng>
+</keyword>
+<language fit:authority="document_languages" fit:authority_dan="Engelsk" fit:authority_eng="English">eng</language>
+<local>
+<field fit:authority="department_local" fit:authority_dan="FSMO" fit:authority_eng="FSMO" fit:authority_type="local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" tag="Institute owner" tagsea="instituteowner" type="4">FSMO</field>
+</local>
+<local>
+<field fit:authority="annual_report_year" fit:authority_dan="2008" fit:authority_eng="2008" fit:authority_type="local_type" fit:authority_type_dan="Index and display in search module" fit:authority_type_eng="Index and display in search module" num="4" tag="Annual report year" tagsea="annualreportyear" type="4">2008</field>
+</local>
+<object fit:authority_role="document_file_role" fit:authority_role_dan="Fuldtekst" fit:authority_role_eng="Full text" fit:object="1" fit:version="1" id="1" role="fulltext" filterempty_keepme="1">
+<version access="campus" fit:authority_access="fit_object_access" fit:authority_access_dan="Campus" fit:authority_access_eng="Campus" fit:closed="1" id="1">
+<description fit:authority="document_file_version" fit:authority_dan="Fuldtekst: Forlagets version" fit:authority_eng="Full text: Publisher version">published</description>
+<file cksum="b618af2af2333fe058a7baa4208beccb" filename="Oplæg nordiske afrika dage.ppt" mime_type="application/vnd.ms-powerpoint" size="1329664" timestamp="1223292435"/>
+</version>
+</object>
+<person fit:authority_object="ddf_object_type" fit:authority_object_dan="Auxiliary" fit:authority_object_eng="Auxiliary" fit:authority_role="document_person_role" fit:authority_role_dan="Forfatter" fit:authority_role_eng="Author" id="185" object="aux" role="author">
+<contact>
+<email>ifs-21@fak.dk</email>
+</contact>
+<identifier type="id">210072</identifier>
+<name>
+<first>Nicolai Stahlfest</first>
+<full>Møller, Nicolai Stahlfest</full>
+<last>Møller</last>
+</name>
+<organisation fit:authority_object="ddf_object_type" fit:authority_object_dan="Auxiliary" fit:authority_object_eng="Auxiliary" id="185" object="aux" role="affiliation">
+<name>
+<full>Forsvarsakademiet, Fakultet for Strategi og Militære Operationer, </full>
+<main>Forsvarsakademiet</main>
+<sub>Fakultet for Strategi og Militære Operationer</sub>
+<sub2>Institut for Strategi</sub2>
+</name>
+</organisation>
+</person>
+<title>
+<main>US-Africa Security Policy - True Asymmetry or a new found Geopolitical Interest?</main>
+</title>
+<type lang="eng">slide show</type>
+</document>
+<fit:admin>
+<fit:cataloguer>
+<fit:form>ddf_record_lc</fit:form>
+<fit:group>fak_fsmo</fit:group>
+<fit:id>210072</fit:id>
+<fit:status>O3</fit:status>
+<fit:timestamp>2008-10-06</fit:timestamp>
+</fit:cataloguer>
+<fit:cataloguer>
+<fit:form>ddf_record_lc</fit:form>
+<fit:group>fak_fsmo</fit:group>
+<fit:id>210072</fit:id>
+<fit:status>O1</fit:status>
+<fit:timestamp>2008-10-06T13:27:53</fit:timestamp>
+</fit:cataloguer>
+<fit:cataloguer>
+<fit:form>ddf_record_lc</fit:form>
+<fit:group>fak_fsmo</fit:group>
+<fit:id>210072</fit:id>
+<fit:status>O1</fit:status>
+<fit:timestamp>2008-10-06T13:28:38</fit:timestamp>
+</fit:cataloguer>
+<fit:cataloguer>
+<fit:form>ddf_record_lc</fit:form>
+<fit:group>fak_fsmo</fit:group>
+<fit:id>210072</fit:id>
+<fit:status>O1</fit:status>
+<fit:timestamp>2008-10-06T13:29:04</fit:timestamp>
+</fit:cataloguer>
+<fit:cataloguer>
+<fit:form>ddf_record_lc</fit:form>
+<fit:group>fak_fsmo</fit:group>
+<fit:id>210072</fit:id>
+<fit:status>O3</fit:status>
+<fit:timestamp>2008-10-06T13:29:11</fit:timestamp>
+</fit:cataloguer>
+<fit:heading>US-Africa Security Policy - True Asymmetry or a new found Geopolitical Interest?</fit:heading>
+<fit:object>1</fit:object>
+<fit:released fit:status="O1">2008-10-06T13:27:53</fit:released>
+<fit:released fit:status="O3">2008-10-06T13:29:11</fit:released>
+<fit:sortkey>2008</fit:sortkey>
+<fit:system>
+<fit:created>2008-10-06 13:27:53</fit:created>
+<fit:id>456</fit:id>
+<fit:supplier fit:type="fak_fsmo">
+<fit:code>fak_fsmo</fit:code>
+<fit:name fit:lang="eng">fak_fsmo</fit:name>
+</fit:supplier>
+<fit:updated>2008-10-06 13:29:11</fit:updated>
+</fit:system>
+<fit:type fit:lang="eng">Conference contribution</fit:type>
+<fit:type fit:lang="dan">Konferencebidrag</fit:type>
+</fit:admin>
+<derived>
+<type>
+<eng>conference slide show</eng>
+<dan>konference slide show</dan>
+</type>
+</derived>
+<indexing>
+<annualreportyear>2008</annualreportyear>
+<instituteowner>
+<subcode>FSMO</subcode>
+</instituteowner>
+<persons>
+<author>
+<name>
+<first>Nicolai Stahlfest</first>
+<full>Møller, Nicolai Stahlfest</full>
+<last>Møller</last>
+</name>
+<cwisno>210072</cwisno>
+<organisation id="185" role="affiliation">
+<sub2code>_none</sub2code>
+</organisation>
+</author>
+</persons>
+<cwisno>210072</cwisno>
+<firstauthor>Møller, Nicolai Stahlfest</firstauthor>
+<sorttitle>US-Africa Security Policy - True Asymmetry or a new found Geopolitical Interest? </sorttitle>
+<ownerclass>department</ownerclass>
+<released>NaN-12-NaNTNaN:NaN:NaN</released>
+</indexing>
+</ddf>
+
