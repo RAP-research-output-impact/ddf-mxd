@@ -67,18 +67,17 @@
 
   <xsl:output method="xml" indent="yes" encoding="utf-8"/>
 
-<!--
-  <xsl:template match="/*">
-    <xsl:element name="records">
-      <xsl:apply-templates/>
-    </xsl:element>
-  </xsl:template>
--->
+  <xsl:variable name="datasource">
+    <xsl:choose>
+      <xsl:when test="starts-with(/ddf/@user_group, 'fak')">fak</xsl:when>
+      <xsl:otherwise>dtu</xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
 
   <xsl:template match="/ddf">
     <!-- optionally cast out non-DTU; personal records are already
          omitted in SQL -->
-    <xsl:if test="$config/include-department-records = 0">
+    <xsl:if test="$datasource='orbit' and $config/include-department-records = 0">
       <xsl:if test="(/ddf/document/@status and /ddf/document/@status != 'published')
                     or $ddfdoctype='master thesis' or $ddfdoctype='bachelor thesis'
                     or $ddfdoctype='slide show' or $ddfdoctype='unpublished papers'
@@ -91,13 +90,6 @@
     <xsl:variable name="whichmap" 
                   select="$docTypeMapping/rule[in = $ddftype and 
                           (type = '' or type = $ddfdoctype)]"/>
-
-    <xsl:variable name="datasource">
-      <xsl:choose>
-        <xsl:when test="starts-with(/ddf/@user_group, 'fak')">fak</xsl:when>
-        <xsl:otherwise>dtu</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
 
     <!-- for ddf_doc/@doc_type -->
     <xsl:variable name="mxdtype" select="$whichmap/out/text()"/>
@@ -714,8 +706,7 @@
               <xsl:otherwise>http://forskningsdatabasen.fak.dk/insight_fak/getResource?</xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
-          <xsl:element name="boo">xxx</xsl:element>
-          <uri><xsl:value-of select="concat($objuri, 'recordId=', /ddf/@id, '&amp;objectId=', @id, '&amp;versionId=', version/@id)"/></uri>
+          <xsl:element name="uri"><xsl:value-of select="concat($objuri, 'recordId=', /ddf/@id, '&amp;objectId=', @id, '&amp;versionId=', version/@id)"/></xsl:element>
         </xsl:element> 
       </xsl:for-each> <!-- object -->
 
