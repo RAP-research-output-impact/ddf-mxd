@@ -92,6 +92,13 @@
                   select="$docTypeMapping/rule[in = $ddftype and 
                           (type = '' or type = $ddfdoctype)]"/>
 
+    <xsl:variable name="datasource">
+      <xsl:choose>
+        <xsl:when test="starts-with(/ddf/@user_group, 'fak')">fak</xsl:when>
+        <xsl:otherwise>dtu</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
     <!-- for ddf_doc/@doc_type -->
     <xsl:variable name="mxdtype" select="$whichmap/out/text()"/>
 
@@ -165,10 +172,7 @@
         <xsl:value-of select="$indicatorMapping/rule[in=$lev]/out"/>
       </xsl:attribute>
       <xsl:attribute name="rec_source">
-        <xsl:choose>
-          <xsl:when test="starts-with(/ddf/@user_group, 'fak')">fak</xsl:when>
-          <xsl:otherwise>dtu</xsl:otherwise>
-        </xsl:choose>
+        <xsl:value-of select="$datasource"/>
       </xsl:attribute>
       <xsl:attribute name="rec_id"><xsl:value-of select="@id"/></xsl:attribute>
       <!-- rec_upd holds a fix for MySQL's date format change in 4.1 -->
@@ -703,8 +707,15 @@
             <xsl:element name="description"><xsl:value-of select="version/file/@filename"/></xsl:element>
           </xsl:element>
           <!-- http://orbit.dtu.dk/getResource?recordId=220328&objectId=1&versionId=1 -->
-          <uri><xsl:value-of select="concat('http://orbit.dtu.dk/getResource?recordId=',
-          /ddf/@id, '&amp;objectId=', @id, '&amp;versionId=', version/@id)"/></uri>
+          <!-- http://forskningsdatabasen.fak.dk/insight_fak/getResource?recordId=456&objectId=1&versionId=1 -->
+          <xsl:variable name="objuri">
+            <xsl:choose>
+              <xsl:when test="$datasource='orbit'">http://orbit.dtu.dk/getResource?</xsl:when>
+              <xsl:otherwise>http://forskningsdatabasen.fak.dk/insight_fak/getResource?</xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          <xsl:element name="boo">xxx</xsl:element>
+          <uri><xsl:value-of select="concat($objuri, 'recordId=', /ddf/@id, '&amp;objectId=', @id, '&amp;versionId=', version/@id)"/></uri>
         </xsl:element> 
       </xsl:for-each> <!-- object -->
 
