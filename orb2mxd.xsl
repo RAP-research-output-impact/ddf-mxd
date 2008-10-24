@@ -77,7 +77,7 @@
   <xsl:template match="/ddf">
     <!-- optionally cast out non-DTU; personal records are already
          omitted in SQL -->
-    <xsl:if test="$datasource='orbit' and $config/include-department-records = 0">
+    <xsl:if test="$datasource='dtu' and $config/include-department-records = 0">
       <xsl:if test="(/ddf/document/@status and /ddf/document/@status != 'published')
                     or $ddfdoctype='master thesis' or $ddfdoctype='bachelor thesis'
                     or $ddfdoctype='slide show' or $ddfdoctype='unpublished papers'
@@ -702,7 +702,7 @@
           <!-- http://forskningsdatabasen.fak.dk/insight_fak/getResource?recordId=456&objectId=1&versionId=1 -->
           <xsl:variable name="objuri">
             <xsl:choose>
-              <xsl:when test="$datasource='orbit'">http://orbit.dtu.dk/getResource?</xsl:when>
+              <xsl:when test="$datasource='dtu'">http://orbit.dtu.dk/getResource?</xsl:when>
               <xsl:otherwise>http://forskningsdatabasen.fak.dk/insight_fak/getResource?</xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
