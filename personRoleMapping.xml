@@ -4,9 +4,6 @@
   <description>
     This transformation map is describing the mapping between
     person/@role applied in ORBIT and the DDF/MXD format.
-
-    BUGS
-    Orbit's @role="inventor" and "supervisor" should be added to MXD.
   </description>
  
   <rule>
@@ -23,14 +20,14 @@
   </rule>
   <rule>
     <in>supervisor</in>
-    <out>pau</out> <!-- FIXME missing fit in MXD format -->
+    <out>sup</out>
   </rule>
   <rule>
     <in>inventor</in>
-    <out>pau</out> <!-- FIXME missing fit in MXD format -->
+    <out>inv</out>
   </rule>
   <rule>
-    <in></in>      <!-- FIXME to be corrected in Orbit -->
+    <in></in>
     <out>pau</out>
   </rule>
 </mapping>
