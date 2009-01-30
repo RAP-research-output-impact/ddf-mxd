@@ -455,8 +455,12 @@
             <vol><xsl:value-of select="$auxdoc/@vol"/></vol>
             <issue><xsl:value-of select="$auxdoc/@issue"/></issue>
             <pages><xsl:value-of select="my:cleanpages($auxdoc/@pages)"/></pages>
-            <!-- TODO: what's this? <paperid></paperid> -->
+            <!-- <paperid></paperid> -->
             <!-- <doi></doi> -->
+            <journal_no>
+              <!-- BFI journal number -->
+              <xsl:value-of select="document/document/@journal_no"/>
+            </journal_no>
             <uri>
               <xsl:value-of select="document/www/url"/> <!-- NOT from aux doc! -->
             </uri>
@@ -536,6 +540,10 @@
             <series>
               <xsl:value-of select="$auxdoc/document[@role='in series']/title/main"/>
             </series>
+            <publisher_no>
+              <!-- BFI publisher number -->
+              <xsl:value-of select="$auxdoc/imprint/publisher_no"/>
+            </publisher_no>
             <uri>
               <xsl:value-of select="document/www/url"/> <!-- NOT from aux doc! -->
             </uri>
@@ -579,6 +587,10 @@
             <series>
               <xsl:value-of select="$auxdoc[@role='in series']/title/main"/>
             </series>
+            <publisher_no>
+              <!-- BFI publisher number -->
+              <xsl:value-of select="document/imprint/publisher_no"/>
+            </publisher_no>
             <uri>
               <xsl:value-of select="document/www/url"/>
             </uri>

@@ -29,6 +29,9 @@
 
        2008-05-29  1.2.0.0 Changes for the FI-project. This version will NOT
                    validate older records, even if you cheat with its namespace.
+
+       2009-01-30  1.2.0.1 Corrected enumeration of idTypeType to include fi_nfdb.
+
                    
   -->
 
@@ -2171,6 +2174,12 @@
         <annotation>
           <documentation xml:lang="en-uk">Local organisation ID (Local (data supplier) organisation ID)</documentation>
           <documentation xml:lang="da-dk">Lokal organisations-ID</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fi_nfdb">
+        <annotation>
+          <documentation xml:lang="en-uk">FI national Danish researcher database</documentation>
+          <documentation xml:lang="da-dk">FI national dansk forskerdatabase</documentation>
         </annotation>
       </enumeration>
     </restriction>
