@@ -32,7 +32,10 @@
 
        2009-01-30  1.2.0.1 Corrected enumeration of idTypeType to include fi_nfdb.
 
-                   
+       2009-02-16 1.2.0.2 Stretched _PagesType to allow 8 positions. Added country
+                  code ME for Montenegro. How many more countries can they split into,
+                  I wonder.
+
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -1213,6 +1216,11 @@
       <enumeration value="lu">
         <annotation>
           <documentation xml:lang="en-uk">Luxembourg</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="me">
+        <annotation>
+          <documentation xml:lang="en-uk">Montenegro</documentation>
         </annotation>
       </enumeration>
       <enumeration value="mo">
@@ -3076,12 +3084,12 @@
     <union>
       <simpleType>
         <restriction base="string">
-          <pattern value="[A-Za-z]?\d{1,6}-[A-Za-z]?\d{1,6}"/>
+          <pattern value="[A-Za-z]?\d{1,8}-[A-Za-z]?\d{1,8}"/>
         </restriction>
       </simpleType>
       <simpleType>
         <restriction base="string">
-          <pattern value="[A-Za-z]?\d{1,6}"/>
+          <pattern value="[A-Za-z]?\d{1,8}"/>
         </restriction>
       </simpleType>
     </union>

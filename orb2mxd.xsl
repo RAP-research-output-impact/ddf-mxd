@@ -296,6 +296,11 @@
         </xsl:for-each>
       </xsl:element>
 
+      <xsl:element name="research_area">
+        <xsl:attribute name="area_code">sci</xsl:attribute>
+        <xsl:text>Science/technology</xsl:text>
+      </xsl:element>
+
     </xsl:element> <!-- </description> -->
   </xsl:template>
 
