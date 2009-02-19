@@ -8,7 +8,7 @@
                 xmlns:my="http://www.dtv.dk/ns"
                 xmlns:str="http://exslt.org/strings"
                 xmlns:re="http://exslt.org/regular-expressions"
-                extension-element-prefixes="ext func str my re">
+                extension-element-prefixes="ext func str my re datetime">
 
   <!-- Description:
 
@@ -91,6 +91,49 @@
                   select="$docTypeMapping/rule[in = $ddftype and 
                           (type = '' or type = $ddfdoctype)]"/>
 
+    <xsl:variable name="ary">
+      <xsl:choose>
+        <xsl:when test="document/local/field[@tag='Annual report year']">
+          <xsl:value-of select="normalize-space(document/local/field[@tag='Annual report year'])"/>
+        </xsl:when>
+        <xsl:when test="/ddf/document/event/dates/year">
+          <!-- FIXME records without annual report year must be fixed in Orbit -->
+          <!-- this workaround works fairly well for conference types -->
+          <xsl:value-of select="normalize-space(/ddf/document/event/dates/year)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>1900</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="rawpubyear">
+      <xsl:choose>
+        <xsl:when test="document/imprint/year">
+          <xsl:value-of select="document/imprint/year"/>
+        </xsl:when>
+        <xsl:when test="document/document/@year">
+          <xsl:value-of select="document/document/@year"/>
+        </xsl:when>
+        <xsl:when test="document/document/imprint/year">
+          <xsl:value-of select="document/document/imprint/year"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$ary"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="pubyear">
+      <xsl:variable name="py" select="substring($rawpubyear, 1, 4)"/>
+      <xsl:choose>
+        <xsl:when test="number($py) &lt; 2099 and number($py) &gt; 1900">
+          <xsl:value-of select="$py"/>
+        </xsl:when>
+        <xsl:otherwise>1900</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
     <!-- for ddf_doc/@doc_type -->
     <xsl:variable name="mxdtype" select="$whichmap/out/text()"/>
 
@@ -132,28 +175,7 @@
         <xsl:value-of select="substring(fit:admin/fit:system/fit:created,1,10)"/>
       </xsl:attribute>
       <xsl:attribute name="doc_year">
-        <!-- 
-             maybe FIXME: Orbit/ddf uses local, local2, local4 etc. in
-             the cataloguing record, but (Zebra) export formats have
-             the more sensible <local num="3"> construct. I'll presume
-             the sensible one.
-
-             Any which way, Metatoo tends to export them even without
-             sensible text content.
-        -->
-        <xsl:choose>
-          <xsl:when test="document/local/field[@tag='Annual report year']">
-            <xsl:value-of select="normalize-space(document/local/field[@tag='Annual report year'])"/>
-          </xsl:when>
-          <xsl:when test="/ddf/document/event/dates/year">
-            <!-- FIXME records without annual report year must be fixed in Orbit -->
-            <!-- this workaround works fairly well for conference types -->
-            <xsl:value-of select="normalize-space(/ddf/document/event/dates/year)"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>1900</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:value-of select="$ary"/>
       </xsl:attribute>
       <xsl:attribute name="doc_review">
         <xsl:variable name="rev" select="string(document/indicator/review)"/>
@@ -209,6 +231,7 @@
       <xsl:call-template name="element-publication">
         <xsl:with-param name="mxdpubelm" select="$mxdpubelm"/>
         <xsl:with-param name="mxdtype" select="$mxdtype"/>
+        <xsl:with-param name="pubyear" select="$pubyear"/>
       </xsl:call-template>
 
     </xsl:element> <!-- </ddf_doc> -->
@@ -415,6 +438,7 @@
   <xsl:template name="element-publication">
     <xsl:param name="mxdpubelm"/>
     <xsl:param name="mxdtype"/>
+    <xsl:param name="pubyear"/>
 
     <xsl:variable name="auxdoc" select="document/document[@object='aux']"/>
 
@@ -456,7 +480,7 @@
             <issn>
               <xsl:value-of select="my:replace($auxdoc/identifier[@type='ISSN'], '-', '')"/>
             </issn>
-            <year><xsl:value-of select="$auxdoc/@year"/></year>
+            <year><xsl:value-of select="$pubyear"/></year>
             <vol><xsl:value-of select="$auxdoc/@vol"/></vol>
             <issue><xsl:value-of select="$auxdoc/@issue"/></issue>
             <pages><xsl:value-of select="my:cleanpages($auxdoc/@pages)"/></pages>
@@ -519,7 +543,7 @@
                   <xsl:value-of select="name/first"/>
                   <xsl:text> </xsl:text>
                   <xsl:value-of select="name/last"/>
-                  <xsl:if test="not(last())">
+                  <xsl:if test="not(position() = last())">
                     <xsl:text>; </xsl:text>
                   </xsl:if>
                 </xsl:for-each>
@@ -536,7 +560,7 @@
               <xsl:value-of select="$auxdoc/imprint/publisher"/>
             </publisher>
             <year>
-              <xsl:value-of select="$auxdoc/imprint/year"/>
+              <xsl:value-of select="$pubyear"/>
             </year>
             <pages>
               <xsl:value-of select="my:cleanpages($auxdoc/@pages)"/>
@@ -584,7 +608,7 @@
               <xsl:value-of select="document/imprint/publisher"/>
             </publisher>
             <year>
-              <xsl:value-of select="document/imprint/year"/>
+              <xsl:value-of select="$pubyear"/>
             </year>
             <pages>
                <xsl:value-of select="document/imprint/pages"/>
@@ -618,7 +642,7 @@
               <xsl:value-of select="document/imprint/publisher"/>
             </publisher>
             <year>
-              <xsl:value-of select="document/imprint/year"/>
+              <xsl:value-of select="$pubyear"/>
             </year>
             <pages>
                <xsl:value-of select="document/imprint/pages"/>
