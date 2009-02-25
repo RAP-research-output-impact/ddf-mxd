@@ -138,9 +138,11 @@
     <xsl:variable name="mxdtype" select="$whichmap/out/text()"/>
 
     <!-- for ddf_doc/publication/thingy: in_journal, in_book etc. -->
+    <!-- 20090225 FIXME hack for BFI to force reports into a <book> - see later comment -->
     <xsl:variable name="premxdpubelm" select="$whichmap/name/text()"/>
     <xsl:variable name="mxdpubelm">
       <xsl:choose>
+        <xsl:when test="$premxdpubelm and $mxdtype = 'dr'">book</xsl:when>
         <xsl:when test="$premxdpubelm"><xsl:value-of select="$premxdpubelm"/></xsl:when>
         <xsl:otherwise>
           <xsl:message terminate="yes">Record <xsl:value-of select="/ddf/@id"/>: could not establish pubelm</xsl:message>
@@ -626,6 +628,10 @@
           </xsl:when> <!-- book -->
 
           <xsl:when test="$mxdpubelm = 'report'">
+            <!-- 20090225 ouch! The BFI pipeline only counts reports if they have
+                 a <book> element, little sense though that may make. Also, report
+                 has no publisher_no in the 1.2.0.2 schema. use book instead.
+            -->
             <isbn>
               <xsl:call-template name="subst">
                 <xsl:with-param name="in" select="document/identifier[@type='ISBN']"/>
@@ -647,6 +653,11 @@
             <pages>
                <xsl:value-of select="document/imprint/pages"/>
             </pages>
+<!-- wish you were here
+            <publisher_no>
+              <xsl:value-of select="document/imprint/publisher_no"/>
+            </publisher_no>
+-->
             <uri>
               <xsl:value-of select="document/www/url"/>
             </uri>
