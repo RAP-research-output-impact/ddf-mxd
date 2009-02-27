@@ -15,6 +15,10 @@
     <out>pau</out>
   </rule>
   <rule>
+    <in>author-anonymous</in>
+    <out>pa2</out>
+  </rule>
+  <rule>
     <in>editor</in> 
     <out>ped</out>
   </rule>
