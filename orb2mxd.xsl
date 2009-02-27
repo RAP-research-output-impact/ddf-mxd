@@ -613,7 +613,7 @@
               <xsl:value-of select="$pubyear"/>
             </year>
             <pages>
-               <xsl:value-of select="document/imprint/pages"/>
+               <xsl:value-of select="my:cleanpages(document/imprint/pages)"/>
             </pages>
             <series>
               <xsl:value-of select="$auxdoc[@role='in series']/title/main"/>
@@ -651,7 +651,7 @@
               <xsl:value-of select="$pubyear"/>
             </year>
             <pages>
-               <xsl:value-of select="document/imprint/pages"/>
+               <xsl:value-of select="my:cleanpages(document/imprint/pages)"/>
             </pages>
 <!-- wish you were here
             <publisher_no>
@@ -966,6 +966,9 @@
         </xsl:when>
         <xsl:when test="re:test($pp,' - ', 'i')">
           <xsl:value-of select="re:replace($pp, ' - ', 'i', '-')"/>
+        </xsl:when>
+        <xsl:when test="re:test($pp,' pages', 'i')">
+          <xsl:value-of select="re:replace($pp, ' pages', 'i', '')"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$pp"/>
