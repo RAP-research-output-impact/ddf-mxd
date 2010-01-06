@@ -39,7 +39,7 @@
 
   <!-- Version numbers -->
   <xsl:variable name="schemaversion">1.2</xsl:variable>
-  <xsl:variable name="formatversion">1.2.0</xsl:variable>
+  <xsl:variable name="formatversion">1.2.1</xsl:variable>
   <!-- if you want absolute includes, fill in a URL ending in a slash here, like
        http://urbit.cvt.dk/orbit2mxd/1.2.0-2/abs/ -->
   <xsl:variable name="baseurl"></xsl:variable>
@@ -138,7 +138,10 @@
     <xsl:variable name="mxdtype" select="$whichmap/out/text()"/>
 
     <!-- for ddf_doc/publication/thingy: in_journal, in_book etc. -->
+    <xsl:variable name="mxdpubelm" select="$whichmap/name/text()"/>
+
     <!-- 20090225 FIXME hack for BFI to force reports into a <book> - see later comment -->
+    <!-- 201001 deprecated (remove next time)
     <xsl:variable name="premxdpubelm" select="$whichmap/name/text()"/>
     <xsl:variable name="mxdpubelm">
       <xsl:choose>
@@ -149,6 +152,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    -->
     <!-- handy note: xsltproc sends message to STDERR and sets return
          code != 0 when terminated like this -->
 
@@ -629,8 +633,8 @@
 
           <xsl:when test="$mxdpubelm = 'report'">
             <!-- 20090225 ouch! The BFI pipeline only counts reports if they have
-                 a <book> element, little sense though that may make. Also, report
-                 has no publisher_no in the 1.2.0.2 schema. use book instead.
+                 a <book> element, little sense though that may make. 201001 should
+                 hopefully be fixed now.
             -->
             <isbn>
               <xsl:call-template name="subst">
@@ -653,11 +657,10 @@
             <pages>
                <xsl:value-of select="my:cleanpages(document/imprint/pages)"/>
             </pages>
-<!-- wish you were here
             <publisher_no>
+              <!-- BFI publisher number -->
               <xsl:value-of select="document/imprint/publisher_no"/>
             </publisher_no>
--->
             <uri>
               <xsl:value-of select="document/www/url"/>
             </uri>

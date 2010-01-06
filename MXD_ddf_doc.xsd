@@ -32,10 +32,10 @@
 
        2009-01-30  1.2.0.1 Corrected enumeration of idTypeType to include fi_nfdb.
 
-       2009-02-16 1.2.0.2 Stretched _PagesType to allow 8 positions. Added country
-                  code ME for Montenegro. How many more countries can they split into,
-                  I wonder.
+       2009-02-16  1.2.0.2 Stretched _PagesType to allow 8 positions. Added country
+                   code ME for Montenegro.
 
+       2010-01-06  1.2.1.0 Added publisher_no to report and in_report.
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -124,13 +124,14 @@
 
     <attribute name="format_version" use="required">
       <annotation>
-        <documentation xml:lang="en-uk">The particular version of the exchange format used, for the current version "1.2.0". Once subsequent versions have been issued, this will aid the schema validation and other applications parsing the XML.</documentation>
+        <documentation xml:lang="en-uk">The particular version of the exchange format used, for the current version "1.2.1". Once subsequent versions have been issued, this will aid the schema validation and other applications parsing the XML.</documentation>
       </annotation>
       <simpleType>
         <restriction base="string">
           <enumeration value="1.1.0" />
           <enumeration value="1.1.1" />
           <enumeration value="1.2.0" />
+          <enumeration value="1.2.1" />
         </restriction>
       </simpleType>
     </attribute>
@@ -3338,6 +3339,11 @@
           <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
         </annotation>
       </element>
+      <element name="publisher_no" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Unique ID used to identify publisher in the FI (Danish Agency for Science, Technology and Innovation) database</documentation>
+        </annotation>
+      </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web site of report</documentation>
@@ -3445,6 +3451,11 @@
       <element name="pages" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Total no. of pages</documentation>
+        </annotation>
+      </element>
+      <element name="publisher_no" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Unique ID used to identify publisher in the FI (Danish Agency for Science, Technology and Innovation) database</documentation>
         </annotation>
       </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
