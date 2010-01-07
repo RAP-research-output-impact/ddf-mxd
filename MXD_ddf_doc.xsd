@@ -2573,6 +2573,12 @@
           <documentation xml:lang="da-dk">Arbejdsmiljørådets Service Center</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="ark">
+        <annotation>
+          <documentation xml:lang="en-uk">Research in Architecture and Design</documentation>
+          <documentation xml:lang="da-dk">Research in Architecture and Design</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="au">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
