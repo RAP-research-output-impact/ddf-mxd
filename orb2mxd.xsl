@@ -74,6 +74,23 @@
     </xsl:choose>
   </xsl:variable>
 
+  <xsl:variable name="ary">
+    <xsl:choose>
+      <xsl:when test="/ddf/document/local/field[@tag='Annual report year']">
+        <xsl:value-of select="normalize-space(/ddf/document/local/field[@tag='Annual report year'])"/>
+      </xsl:when>
+      <xsl:when test="/ddf/document/event/dates/year">
+        <!-- FIXME records without annual report year must be fixed in Orbit -->
+        <!-- this workaround works fairly well for conference types -->
+        <xsl:value-of select="normalize-space(/ddf/document/event/dates/year)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>1900</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+
   <xsl:template match="/ddf">
     <!-- optionally cast out non-DTU; personal records are already
          omitted in SQL -->
@@ -91,14 +108,13 @@
                   select="$docTypeMapping/rule[in = $ddftype and 
                           (type = '' or type = $ddfdoctype)]"/>
 
+<!-- this is now a global
     <xsl:variable name="ary">
       <xsl:choose>
         <xsl:when test="document/local/field[@tag='Annual report year']">
           <xsl:value-of select="normalize-space(document/local/field[@tag='Annual report year'])"/>
         </xsl:when>
         <xsl:when test="/ddf/document/event/dates/year">
-          <!-- FIXME records without annual report year must be fixed in Orbit -->
-          <!-- this workaround works fairly well for conference types -->
           <xsl:value-of select="normalize-space(/ddf/document/event/dates/year)"/>
         </xsl:when>
         <xsl:otherwise>
@@ -106,6 +122,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+-->
 
     <xsl:variable name="rawpubyear">
       <xsl:choose>
@@ -697,8 +714,8 @@
 
           <xsl:when test="$mxdpubelm = 'other'">
             <!-- FIXME: This is to get rid of conference
-                 abstracts/posters for now. -->
-            <xsl:text>&#160;</xsl:text>
+                 abstracts/posters for now. The BFI pipeline expects a year here... -->
+            <xsl:text>FIXME-other</xsl:text>
             <!--
               <xsl:text>Origin: </xsl:text>
               <xsl:text>ddftype=</xsl:text>
@@ -744,7 +761,20 @@
           <xsl:attribute name="access"><xsl:value-of select="$ddfaccess"/></xsl:attribute>
           <!--<xsl:element name="description"><xsl:value-of select=""/></xsl:element>-->
           <xsl:element name="file">
-            <!--<xsl:attribute name="lang"><xsl:value-of select=""/></xsl:attribute>-->
+            <!-- FIX for bizarre mimetypes; I don't know who sets them, M2 or the browser -->
+            <xsl:variable name="mimetype">
+              <xsl:choose>
+                <xsl:when test="version/file/@mime_type = 'application/*'">
+                  <xsl:text>application/pdf</xsl:text>
+                </xsl:when>
+                <xsl:when test="version/file/@mime_type = 'binary/octet-stream'">
+                  <xsl:text>application/pdf</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="version/file/@mime_type"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
             <xsl:attribute name="size"><xsl:value-of select="version/file/@size"/></xsl:attribute>
             <xsl:attribute name="mime_type"><xsl:value-of select="version/file/@mime_type"/></xsl:attribute>
             <!-- unix2iso seems to have gone broken somewhere. No time to fix it. -->
