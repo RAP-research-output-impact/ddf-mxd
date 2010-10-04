@@ -463,6 +463,7 @@
     <xsl:param name="mxdtype"/>
     <xsl:param name="pubyear"/>
 
+    <!-- our context node is /ddf -->
     <xsl:variable name="auxdoc" select="document/document[@object='aux']"/>
 
     <xsl:element name="publication">
@@ -507,8 +508,8 @@
             <vol><xsl:value-of select="$auxdoc/@vol"/></vol>
             <issue><xsl:value-of select="$auxdoc/@issue"/></issue>
             <pages><xsl:value-of select="my:cleanpages($auxdoc/@pages)"/></pages>
-            <!-- <paperid></paperid> -->
-            <!-- <doi></doi> -->
+            <paperid><xsl:value-of select="identifier[@type='paperid']"/></paperid>
+            <doi><xsl:value-of select="identifier[@type='doi']"/></doi>
             <journal_no>
               <!-- BFI journal number -->
               <xsl:value-of select="document/document/@journal_no"/>
@@ -611,6 +612,8 @@
             <publisher></publisher>
             <year></year>
             <pages></pages>
+            <paperid><xsl:value-of select="identifier[@type='paperid']"/></paperid>
+            <doi><xsl:value-of select="identifier[@type='doi']"/></doi>
             <uri></uri>
           </xsl:when>  <!-- in_report -->
 
@@ -716,6 +719,7 @@
             <!-- FIXME: This is to get rid of conference
                  abstracts/posters for now. The BFI pipeline expects a year here... -->
             <xsl:text>FIXME-other</xsl:text>
+            <xsl:value-of select="concat($ddftype, '|', $doctype)"/>
             <!--
               <xsl:text>Origin: </xsl:text>
               <xsl:text>ddftype=</xsl:text>
