@@ -509,7 +509,7 @@
             <issue><xsl:value-of select="$auxdoc/@issue"/></issue>
             <pages><xsl:value-of select="my:cleanpages($auxdoc/@pages)"/></pages>
             <paperid><xsl:value-of select="document/identifier[@type='paperid']"/></paperid>
-            <doi><xsl:value-of select="document/identifier[@type='doi']"/></doi>
+            <doi><xsl:value-of select="document/identifier[@type='DOI']"/></doi>
             <journal_no>
               <!-- BFI journal number -->
               <xsl:value-of select="document/document/@journal_no"/>
