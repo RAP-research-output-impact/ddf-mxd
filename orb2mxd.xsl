@@ -508,8 +508,8 @@
             <vol><xsl:value-of select="$auxdoc/@vol"/></vol>
             <issue><xsl:value-of select="$auxdoc/@issue"/></issue>
             <pages><xsl:value-of select="my:cleanpages($auxdoc/@pages)"/></pages>
-            <paperid><xsl:value-of select="identifier[@type='paperid']"/></paperid>
-            <doi><xsl:value-of select="identifier[@type='doi']"/></doi>
+            <paperid><xsl:value-of select="document/identifier[@type='paperid']"/></paperid>
+            <doi><xsl:value-of select="document/identifier[@type='doi']"/></doi>
             <journal_no>
               <!-- BFI journal number -->
               <xsl:value-of select="document/document/@journal_no"/>
@@ -612,8 +612,8 @@
             <publisher></publisher>
             <year></year>
             <pages></pages>
-            <paperid><xsl:value-of select="identifier[@type='paperid']"/></paperid>
-            <doi><xsl:value-of select="identifier[@type='doi']"/></doi>
+            <paperid></paperid>
+            <doi></doi>
             <uri></uri>
           </xsl:when>  <!-- in_report -->
 
