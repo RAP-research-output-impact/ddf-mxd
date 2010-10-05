@@ -719,7 +719,7 @@
             <!-- FIXME: This is to get rid of conference
                  abstracts/posters for now. The BFI pipeline expects a year here... -->
             <xsl:text>FIXME-other</xsl:text>
-            <xsl:value-of select="concat($ddftype, '|', $doctype)"/>
+            <xsl:value-of select="concat($ddftype, '|', $ddfdoctype)"/>
             <!--
               <xsl:text>Origin: </xsl:text>
               <xsl:text>ddftype=</xsl:text>

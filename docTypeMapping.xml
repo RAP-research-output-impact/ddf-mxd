@@ -176,6 +176,13 @@
 
   <rule>
     <in>ld</in>
+    <type>diplom thesis</type>
+    <out>dts</out>
+    <name>book</name>
+  </rule>
+
+  <rule>
+    <in>ld</in>
     <type>ph.d.-thesis</type>
     <out>dtp</out>
     <name>book</name>
