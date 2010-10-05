@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+my $hostname = 'localhost';  # FIXME!
+
 use Cwd;
 use File::Basename;
 
@@ -8,7 +10,7 @@ open(OUT, '>abs/orb2mxd.xsl') or die "$!";
 
 my $here = getcwd();
 $here =~ s|^/var/www/||;
-my $absurl = "http://urbit.cvt.dk/$here/abs/";
+my $absurl = "http://$hostname/$here/abs/";
 print STDERR "set absurl=$absurl\n";
 
 while(<IN>) {

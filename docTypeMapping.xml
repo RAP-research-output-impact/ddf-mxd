@@ -147,6 +147,15 @@
   </rule>
 
   <rule>
+    <!-- 20101005 FIXME: this is to somehow get this weird publication
+         type through. BK searches for a sustainable solution. -->
+    <in>lc</in>
+    <type>unpublished papers</type>
+    <out>dct</out>
+    <name>other</name>
+  </rule>
+
+  <rule>
     <in>lp</in>
     <type></type>
     <out>dp</out>
