@@ -7,7 +7,6 @@
   </description>
 
   <rule>
-    <!-- 201010 Forgive me for making up 'u' until it enters the schema. -->
     <in>unpublished</in>
     <out>u</out>
   </rule>
@@ -25,7 +24,7 @@
   </rule>
   <rule>
     <in>epublished</in>
-    <out>p</out>
+    <out>e</out>
   </rule>
   <rule>
     <in>in-press-is-not-used-in-orbit</in>

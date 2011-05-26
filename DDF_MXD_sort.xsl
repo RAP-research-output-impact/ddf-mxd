@@ -314,6 +314,7 @@
             <xsl:apply-templates select="@xml:lang"/>
             <xsl:apply-templates select="text()"/>
             <xsl:apply-templates select="mx:description"/>
+            <xsl:apply-templates select="mx:embargo_end"/>
             <xsl:apply-templates select="mx:file"/>
             <xsl:apply-templates select="mx:uri"/>
         </xsl:copy>
@@ -422,6 +423,7 @@
             <xsl:apply-templates select="mx:part"/>
             <xsl:apply-templates select="mx:editor"/>
             <xsl:apply-templates select="mx:isbn"/>
+            <xsl:apply-templates select="mx:series"/>
             <xsl:apply-templates select="mx:rep_no"/>
             <xsl:apply-templates select="mx:place"/>
             <xsl:apply-templates select="mx:publisher"/>
@@ -489,6 +491,7 @@
             <xsl:apply-templates select="@xml:lang"/>
             <xsl:apply-templates select="text()"/>
             <xsl:apply-templates select="mx:isbn"/>
+            <xsl:apply-templates select="mx:series"/>
             <xsl:apply-templates select="mx:rep_no"/>
             <xsl:apply-templates select="mx:place"/>
             <xsl:apply-templates select="mx:publisher"/>

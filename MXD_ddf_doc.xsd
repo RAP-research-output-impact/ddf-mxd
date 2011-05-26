@@ -36,6 +36,9 @@
                    code ME for Montenegro.
 
        2010-01-06  1.2.1.0 Added publisher_no to report and in_report.
+
+       2011-05-24  1.2.2.0 Added authorities in _PublishingStatusType, _IdTypeType,
+                   and _AccessType. Added series, year under in_report and report.
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -124,7 +127,7 @@
 
     <attribute name="format_version" use="required">
       <annotation>
-        <documentation xml:lang="en-uk">The particular version of the exchange format used, for the current version "1.2.1". Once subsequent versions have been issued, this will aid the schema validation and other applications parsing the XML.</documentation>
+        <documentation xml:lang="en-uk">The particular version of the exchange format used, for the current version "1.2.2". Once subsequent versions have been issued, this will aid the schema validation and other applications parsing the XML.</documentation>
       </annotation>
       <simpleType>
         <restriction base="string">
@@ -132,6 +135,7 @@
           <enumeration value="1.1.1" />
           <enumeration value="1.2.0" />
           <enumeration value="1.2.1" />
+          <enumeration value="1.2.2" />
         </restriction>
       </simpleType>
     </attribute>
@@ -2191,6 +2195,12 @@
           <documentation xml:lang="da-dk">FI national dansk forskerdatabase</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="ec_ga_fp7">
+        <annotation>
+          <documentation xml:lang="en-uk">EC FP7 Grant Agreement Number</documentation>
+          <documentation xml:lang="da-dk">EU FP7 Bevillingsaftalenummer</documentation>
+        </annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   <simpleType name="_OrganisationRoleType">
@@ -3010,6 +3020,18 @@
           <documentation xml:lang="da-dk">Publiceret</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="e">
+        <annotation>
+          <documentation xml:lang="en-uk">E-published (ahead of print)</documentation>
+          <documentation xml:lang="da-dk">E-publiceret (før tryk)</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="u">
+        <annotation>
+          <documentation xml:lang="en-uk">Unpublished</documentation>
+          <documentation xml:lang="da-dk">Upubliceret</documentation>
+        </annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   <simpleType name="_DigitalobjectRoleType">
@@ -3045,17 +3067,26 @@
     <restriction base="string">
       <enumeration value="oa">
         <annotation>
-          <documentation xml:lang="en-uk">For use free and open access to resource</documentation>
+          <documentation xml:lang="en-uk">Open access</documentation>
+          <documentation xml:lang="da-dk">Open access</documentation>
         </annotation>
       </enumeration>
       <enumeration value="ca">
         <annotation>
-          <documentation xml:lang="en-uk">For use with campus only access</documentation>
+          <documentation xml:lang="en-uk">Campus access</documentation>
+          <documentation xml:lang="da-dk">Campusadgang</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ea">
+        <annotation>
+          <documentation xml:lang="en-uk">Embargoed access</documentation>
+          <documentation xml:lang="da-dk">Foreløbig lukket adgang</documentation>
         </annotation>
       </enumeration>
       <enumeration value="na">
         <annotation>
-          <documentation xml:lang="en-uk">For use with non-public and owner-only access</documentation>
+          <documentation xml:lang="en-uk">No public access</documentation>
+          <documentation xml:lang="da-dk">Ingen offentlig adgang</documentation>
         </annotation>
       </enumeration>
     </restriction>
@@ -3300,11 +3331,20 @@
           </annotation>
         </element>
       </sequence>
-      <element name="rep_no" type="string" minOccurs="0">
-        <annotation>
-          <documentation xml:lang="en-uk">Report series and number</documentation>
-        </annotation>
-      </element>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="series" type="string">
+          <annotation>
+            <documentation xml:lang="en-uk">Report series title</documentation>
+          </annotation>
+        </element>
+      </sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="rep_no" type="string">
+          <annotation>
+            <documentation xml:lang="en-uk">Report number</documentation>
+          </annotation>
+        </element>
+      </sequence>
       <element name="place" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Place of publication</documentation>
@@ -3434,11 +3474,20 @@
           </annotation>
         </element>
       </sequence>
-      <element name="rep_no" type="string" minOccurs="0">
-        <annotation>
-          <documentation xml:lang="en-uk">Report series and number</documentation>
-        </annotation>
-      </element>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="series" type="string">
+          <annotation>
+            <documentation xml:lang="en-uk">Report series title</documentation>
+          </annotation>
+        </element>
+      </sequence>
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <element name="rep_no" type="string">
+          <annotation>
+            <documentation xml:lang="en-uk">Report number</documentation>
+          </annotation>
+        </element>
+      </sequence>
       <element name="place" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Place of publication</documentation>
@@ -3529,6 +3578,11 @@
       <element name="description" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Description of the object</documentation>
+        </annotation>
+      </element>
+      <element name="embargo_end" type="date" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Embargo enddate in yyyy-mm-dd</documentation>
         </annotation>
       </element>
       <element name="file" type="tns:_ObjectFileType" minOccurs="1">

@@ -39,7 +39,7 @@
 
   <!-- Version numbers -->
   <xsl:variable name="schemaversion">1.2</xsl:variable>
-  <xsl:variable name="formatversion">1.2.1</xsl:variable>
+  <xsl:variable name="formatversion">1.2.2</xsl:variable>
   <!-- if you want absolute includes, fill in a URL ending in a slash here, like
        http://urbit.cvt.dk/orbit2mxd/1.2.0-2/abs/ -->
   <xsl:variable name="baseurl"></xsl:variable>
@@ -157,23 +157,8 @@
     <!-- for ddf_doc/publication/thingy: in_journal, in_book etc. -->
     <xsl:variable name="mxdpubelm" select="$whichmap/name/text()"/>
 
-    <!-- 20090225 FIXME hack for BFI to force reports into a <book> - see later comment -->
-    <!-- 201001 deprecated (remove next time)
-    <xsl:variable name="premxdpubelm" select="$whichmap/name/text()"/>
-    <xsl:variable name="mxdpubelm">
-      <xsl:choose>
-        <xsl:when test="$premxdpubelm and $mxdtype = 'dr'">book</xsl:when>
-        <xsl:when test="$premxdpubelm"><xsl:value-of select="$premxdpubelm"/></xsl:when>
-        <xsl:otherwise>
-          <xsl:message terminate="yes">Record <xsl:value-of select="/ddf/@id"/>: could not establish pubelm</xsl:message>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    -->
     <!-- handy note: xsltproc sends message to STDERR and sets return
          code != 0 when terminated like this -->
-
-    <!-- <ddf_doc> -->
 
     <xsl:element name="ddf_doc">
       <!-- begin attributes -->
@@ -351,6 +336,7 @@
   </xsl:template>
 
 
+  <!-- FIXME 1.2.2 add document/identifier/@type=eu_grant_agreement somewhere -->
   <xsl:template name="element-project">
     <xsl:if test="//project">  <!-- or so -->
       <xsl:element name="project">
@@ -586,6 +572,7 @@
             <year>
               <xsl:value-of select="$pubyear"/>
             </year>
+            <doi><xsl:value-of select="document/identifier[@type='DOI']"/></doi>
             <pages>
               <xsl:value-of select="my:cleanpages($auxdoc/@pages)"/>
               <!--xsl:value-of select="$auxdoc/imprint/pages"/-->
@@ -652,10 +639,6 @@
           </xsl:when> <!-- book -->
 
           <xsl:when test="$mxdpubelm = 'report'">
-            <!-- 20090225 ouch! The BFI pipeline only counts reports if they have
-                 a <book> element, little sense though that may make. 201001 should
-                 hopefully be fixed now.
-            -->
             <isbn>
               <xsl:call-template name="subst">
                 <xsl:with-param name="in" select="document/identifier[@type='ISBN']"/>
@@ -663,8 +646,16 @@
                 <xsl:with-param name="to" select="''"/>
               </xsl:call-template>
             </isbn>
-            <rep_no>
-            </rep_no>
+
+            <xsl:for-each select="document/document[@type='series']">
+              <!-- there's only 1 hopefully -->
+              <series>
+                <xsl:value-of select="title/main"/>
+              </series>
+              <rep_no>
+                <xsl:value-of select="title/part"/>
+              </rep_no>
+            </xsl:for-each>
             <place>
               <xsl:value-of select="document/imprint/place"/>
             </place>
@@ -753,6 +744,10 @@
         </xsl:variable>
         <xsl:variable name="ddfaccess">
           <xsl:choose>
+            <!-- orbit does not use access=embargoed; embargo is
+                 implicit from emabargo_enddate. Therefore to simulate
+                 'ea' this test must come first. -->
+            <xsl:when test="string-length(version/@embargo_enddate)">ea</xsl:when>
             <xsl:when test="version/@access='all'">oa</xsl:when>
             <xsl:when test="version/@access='campus'">ca</xsl:when>
             <xsl:when test="version/@access='owner'">na</xsl:when>
@@ -764,6 +759,15 @@
           <xsl:attribute name="role"><xsl:value-of select="$ddfrole"/></xsl:attribute>
           <xsl:attribute name="access"><xsl:value-of select="$ddfaccess"/></xsl:attribute>
           <!--<xsl:element name="description"><xsl:value-of select=""/></xsl:element>-->
+          <xsl:if test="string-length(version/@embargo_enddate)">
+            <xsl:element name="embargo_end">
+              <xsl:value-of select="substring(version/@embargo_enddate, 1, 4)"/>
+              <xsl:text>-</xsl:text>
+              <xsl:value-of select="substring(version/@embargo_enddate, 5, 2)"/>
+              <xsl:text>-</xsl:text>
+              <xsl:value-of select="substring(version/@embargo_enddate, 7, 2)"/>
+            </xsl:element>
+          </xsl:if>
           <xsl:element name="file">
             <!-- FIX for bizarre mimetypes; I don't know who sets them, M2 or the browser -->
             <xsl:variable name="mimetype">
