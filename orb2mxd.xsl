@@ -336,11 +336,17 @@
   </xsl:template>
 
 
-  <!-- FIXME 1.2.2 add document/identifier/@type=eu_grant_agreement somewhere -->
   <xsl:template name="element-project">
-    <xsl:if test="//project">  <!-- or so -->
+    <!-- No projects are used in Orbit literature, but we need to frob
+         EU Grant Agreement Numbers somewhere. -->
+    <xsl:if test="document/identifier[@type='eu_grant_agreement']">
       <xsl:element name="project">
-        <!-- maybe TODO: no projects are used in Orbit literature -->
+        <!-- we'll assume this is a deliverable -->
+        <xsl:attribute name="proj_role">pd</xsl:attribute>
+        <title>
+          <main>[project name could not be established]</main>
+        </title>
+        <id id_type="ec_ga_fp7"><xsl:value-of select="document/identifier[@type='eu_grant_agreement']"/></id>
       </xsl:element> <!-- </project> -->
     </xsl:if>
   </xsl:template>
