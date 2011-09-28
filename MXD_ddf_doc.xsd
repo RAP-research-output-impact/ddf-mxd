@@ -39,6 +39,8 @@
 
        2011-05-24  1.2.2.0 Added authorities in _PublishingStatusType, _IdTypeType,
                    and _AccessType. Added series, year under in_report and report.
+
+       2011-09-28  1.2.2.1 Made digital_object repeatable as per the documentation.
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -2982,7 +2984,7 @@
           <documentation xml:lang="en-uk">Use when published electronically on the net (institutional repository, author's homepage, preprint server, etc.) If the document is also published in a journal, book or report, the corresponding publication cases should be used in addition. All data is placed in the sub-elements: text and uri.</documentation>
         </annotation>
       </element>
-      <element name="digital_object" type="tns:_DigitalobjectType">
+      <element name="digital_object" type="tns:_DigitalobjectType" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">Use for digital objects, typically a fulltext.</documentation>
         </annotation>
