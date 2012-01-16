@@ -772,8 +772,18 @@
             <!-- FIX for bizarre mimetypes; I don't know who sets them, M2 or the browser -->
             <xsl:variable name="mimetype">
               <xsl:choose>
+                <xsl:when test="version/file/@mime_type = '' and contains(version/file/filename, '.pdf')">
+                  <xsl:text>application/pdf</xsl:text>
+                </xsl:when>
+                <xsl:when test="version/file/@mime_type = '' and contains(version/file/filename, '.ps')">
+                  <xsl:text>application/postscript</xsl:text>
+                </xsl:when>
                 <xsl:when test="version/file/@mime_type = 'application/*'">
                   <xsl:text>application/pdf</xsl:text>
+                </xsl:when>
+                <!-- desperate... -->
+                <xsl:when test="version/file/@mime_type = ''">
+                  <xsl:text>application/octet-stream</xsl:text>
                 </xsl:when>
                 <xsl:when test="version/file/@mime_type = 'binary/octet-stream'">
                   <xsl:text>application/pdf</xsl:text>
