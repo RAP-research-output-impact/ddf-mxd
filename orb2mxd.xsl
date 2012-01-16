@@ -794,7 +794,7 @@
               </xsl:choose>
             </xsl:variable>
             <xsl:attribute name="size"><xsl:value-of select="version/file/@size"/></xsl:attribute>
-            <xsl:attribute name="mime_type"><xsl:value-of select="version/file/@mime_type"/></xsl:attribute>
+            <xsl:attribute name="mime_type"><xsl:value-of select="$mimetype"/></xsl:attribute>
             <!-- unix2iso seems to have gone broken somewhere. No time to fix it. -->
             <xsl:attribute name="timestamp">1970-01-01T00:00:00</xsl:attribute>
             <xsl:attribute name="filename"><xsl:value-of select="version/file/@filename"/></xsl:attribute>
