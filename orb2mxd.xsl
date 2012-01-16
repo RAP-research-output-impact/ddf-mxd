@@ -108,22 +108,6 @@
                   select="$docTypeMapping/rule[in = $ddftype and 
                           (type = '' or type = $ddfdoctype)]"/>
 
-<!-- this is now a global
-    <xsl:variable name="ary">
-      <xsl:choose>
-        <xsl:when test="document/local/field[@tag='Annual report year']">
-          <xsl:value-of select="normalize-space(document/local/field[@tag='Annual report year'])"/>
-        </xsl:when>
-        <xsl:when test="/ddf/document/event/dates/year">
-          <xsl:value-of select="normalize-space(/ddf/document/event/dates/year)"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:text>1900</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
--->
-
     <xsl:variable name="rawpubyear">
       <xsl:choose>
         <xsl:when test="document/imprint/year">
@@ -233,7 +217,9 @@
       <xsl:call-template name="element-event"/>
 
       <!-- <local_field> repeats -->
-      <xsl:call-template name="element-local_field"/>
+      <xsl:call-template name="element-local_field">
+        <xsl:with-param name="mxdtype" select="$mxdtype"/>
+      </xsl:call-template>
 
       <!-- <publication> -->
       <xsl:call-template name="element-publication">
@@ -447,6 +433,14 @@
         </xsl:element>
       </xsl:if>
     </xsl:for-each>
+    <xsl:if test="$ddftype='ld'">
+      <!-- We've been fumbling mxdtype to force-fit Orbit's student
+           types into MXD, but Dlib needs the original type -->
+      <local_field tag_type="4">
+        <code>OriginalOrbitDoctype</code>
+        <data><xsl:value-of select="$ddfdoctype"/></data>
+      </local_field>
+    </xsl:if>
   </xsl:template>
 
 
