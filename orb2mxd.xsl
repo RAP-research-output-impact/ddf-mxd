@@ -772,24 +772,24 @@
             <!-- FIX for bizarre mimetypes; I don't know who sets them, M2 or the browser -->
             <xsl:variable name="mimetype">
               <xsl:choose>
-                <xsl:when test="version/file/@mime_type = '' and contains(version/file/filename, '.pdf')">
+                <xsl:when test="version/file/@type = '' and contains(version/file/filename, '.pdf')">
                   <xsl:text>application/pdf</xsl:text>
                 </xsl:when>
-                <xsl:when test="version/file/@mime_type = '' and contains(version/file/filename, '.ps')">
+                <xsl:when test="version/file/@type = '' and contains(version/file/filename, '.ps')">
                   <xsl:text>application/postscript</xsl:text>
                 </xsl:when>
-                <xsl:when test="version/file/@mime_type = 'application/*'">
+                <xsl:when test="version/file/@type = 'application/*'">
                   <xsl:text>application/pdf</xsl:text>
                 </xsl:when>
                 <!-- desperate... -->
-                <xsl:when test="version/file/@mime_type = ''">
+                <xsl:when test="version/file/@type = ''">
                   <xsl:text>application/octet-stream</xsl:text>
                 </xsl:when>
-                <xsl:when test="version/file/@mime_type = 'binary/octet-stream'">
+                <xsl:when test="version/file/@type = 'binary/octet-stream'">
                   <xsl:text>application/pdf</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="version/file/@mime_type"/>
+                  <xsl:value-of select="version/file/@type"/>
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:variable>
