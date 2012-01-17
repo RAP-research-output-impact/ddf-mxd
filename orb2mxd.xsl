@@ -771,27 +771,35 @@
             </xsl:element>
           </xsl:if>
           <xsl:element name="file">
-            <!-- FIX for bizarre mimetypes; I don't know who sets them, M2 or the browser -->
+            <!-- FIX for bizarre mimetypes and an obvous error in Orbit's form definition -->
             <xsl:variable name="mimetype">
+              <xsl:variable name="somemime">
+                <xsl:choose>
+                  <xsl:when test="version/file/@mime_type"><xsl:value-of select="version/file/@mime_type"/></xsl:when>
+                  <xsl:otherwise><xsl:value-of select="version/file/@mime_type"/></xsl:otherwise>
+                </xsl:choose>
+              </xsl:variable>
+              <!-- It *might* still be empty for all I know -->
               <xsl:choose>
-                <xsl:when test="version/file/@type = '' and contains(version/file/filename, '.pdf')">
+                <xsl:when test="$somemime = '' and contains(version/file/filename, '.pdf')">
                   <xsl:text>application/pdf</xsl:text>
                 </xsl:when>
-                <xsl:when test="version/file/@type = '' and contains(version/file/filename, '.ps')">
+                <xsl:when test="$somemime = '' and contains(version/file/filename, '.ps')">
                   <xsl:text>application/postscript</xsl:text>
                 </xsl:when>
-                <xsl:when test="version/file/@type = 'application/*'">
-                  <xsl:text>application/pdf</xsl:text>
-                </xsl:when>
-                <!-- desperate... -->
-                <xsl:when test="version/file/@type = ''">
+                <!-- final resort if it's empty... -->
+                <xsl:when test="$somemime = ''">
                   <xsl:text>application/octet-stream</xsl:text>
                 </xsl:when>
-                <xsl:when test="version/file/@type = 'binary/octet-stream'">
+                <!-- catch a few rogue mimetypes -->
+                <xsl:when test="$somemime = 'application/*'">
+                  <xsl:text>application/pdf</xsl:text>
+                </xsl:when>
+                <xsl:when test="$somemime = 'binary/octet-stream'">
                   <xsl:text>application/pdf</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="version/file/@type"/>
+                  <xsl:value-of select="$somemime"/>
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:variable>
@@ -878,9 +886,14 @@
   <xsl:template name="handle-organisation">
     <!-- must be called from a for-each loop -->
     <xsl:variable name="orgcode">
-      <xsl:if test="string-length(name/main/@code) or name/main='Technical University of Denmark' or name/main='Danmarks Tekniske Universitet'">
+      <!-- Remember dat sub2/@code already contains sub/@code -->
+      <xsl:if test="string-length(name/main/@code)
+                    or name/sub/@code
+                    or name/sub2/@code
+                    or name/main='Technical University of Denmark'
+                    or name/main='Danmarks Tekniske Universitet'">
         <xsl:text>DTU</xsl:text>
-        <xsl:if test="name/sub/@code">_<xsl:value-of select="name/sub/@code"/></xsl:if>
+        <xsl:if test="name/sub/@code and not(name/sub2/@code)">_<xsl:value-of select="name/sub/@code"/></xsl:if>
         <xsl:if test="name/sub2/@code">_<xsl:value-of select="name/sub2/@code"/></xsl:if>
       </xsl:if>
     </xsl:variable>
