@@ -408,7 +408,9 @@
 
          Metatoo tends to export <local> even without sensible text
          content.
-
+         
+         201201: for archiving purposes, we now also insert some
+         information on ddf doctype.
     -->
     <xsl:for-each select="document/local/field">
       <xsl:if test="normalize-space(./text())">
@@ -836,13 +838,14 @@
   <xsl:template name="element-person-organisation">
 
     <!-- I do not expect more than 1 org per person... -->
+    <!-- XXX -->
     <xsl:variable name="preorgs-rtf">
       <xsl:for-each select="document/person/organisation">
         <organisation>
           <xsl:attribute name="hash">
             <xsl:value-of select="normalize-space(concat(name/main, name/sub, name/sub2))"/>
           </xsl:attribute>
-          <xsl:copy-of select="./*"/>
+          <xsl:copy-of select="@*|./*"/>
         </organisation>
       </xsl:for-each>
       <!-- see if there's anyone without org -->
@@ -874,6 +877,14 @@
 
   <xsl:template name="handle-organisation">
     <!-- must be called from a for-each loop -->
+    <xsl:variable name="orgcode">
+      <xsl:if test="string-length(name/main/@code) or name/main='Technical University of Denmark' or name/main='Danmarks Tekniske Universitet'">
+        <xsl:text>DTU</xsl:text>
+        <xsl:if test="name/sub/@code">_<xsl:value-of select="name/sub/@code"/></xsl:if>
+        <xsl:if test="name/sub2/@code">_<xsl:value-of select="name/sub2/@code"/></xsl:if>
+      </xsl:if>
+    </xsl:variable>
+
     <xsl:element name="organisation">
       <xsl:attribute name="org_role">oaf</xsl:attribute>
       <xsl:attribute name="aff_no">
@@ -902,10 +913,9 @@
           <xsl:value-of select="./name/FIXME"/>
         </acronym>
       </name>
-      <xsl:if test="./@id">
-        <!-- TODO: check this: maybe we should us the sub2code instead? -->
+      <xsl:if test="$orgcode">
         <id id_type="loc_org">
-          DTU-<xsl:value-of select="./@id"/>
+          <xsl:value-of select="$orgcode"/>
         </id>
       </xsl:if>
     </xsl:element>
