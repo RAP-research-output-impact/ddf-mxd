@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" elementFormDefault="qualified" xml:lang="EN">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.3" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.3" elementFormDefault="qualified" xml:lang="EN">
   <!-- 
        2005-11-16  1.0.0.0 initial release
 
@@ -41,6 +41,15 @@
                    and _AccessType. Added series, year under in_report and report.
 
        2011-09-28  1.2.2.1 Made digital_object repeatable as per the documentation.
+       
+       2012-02-27  1.3.0   Added publication/@bfi_serial_no to replace 
+                   publication/*/journal_no. Added publication/@bfi_publisher_no to
+                   replace publication/*/publisher_no. Added sub_event to event.
+                   Added event/@bfi_conference_no to replace dasti_conference_no.
+                   Cleanup of schema eliminating misguided use of sequences for
+                   setting minOccurs and maxOccurs when these could be set on element
+                   instead. Cleanup removing explicit use of default values in 
+                   attributes (e.g. minOccurs="1", maxOccurs="1", use="optional").
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -74,70 +83,52 @@
           <documentation xml:lang="en-uk">Title of the work in focus. Other titles such as conference titles and titles of host publications (journals, books) are recorded in other elements, ddf_doc/event and ddf_doc/publication respectively. The element is organised in the following 2 sub-elements: title/original (mandatory) title/translated (optional and repeatable)</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="1">
-        <element name="description" type="tns:_DescriptionType">
-          <annotation>
-            <documentation xml:lang="en-uk">The description element is the common container for a variety of descriptive data types that deal with the content of the document, such as notes, abstracts, subject classifications and keywords etc. The description element is not mandatory but should be used whenever such data is available. The element is organised in the following sub-elements: description/abstract (summary of the content), description/thesis (special structured note for academic thesis), description/note (other descriptive notes), description/subject/keyword (free or controlled keywords), description/subject/class (classification system codes).</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="person" type="tns:_PersonType">
-          <annotation>
-            <documentation xml:lang="en-uk">This repeatable element is used to record information about any person related to the creation of the document (like authors, editors, composers, publishers, illustrators etc.). Each person and the corresponding role are recorded in a separate instance of the element and the sequence should follow that of the document title page. The correct attribution of persons to documents is essential for any statistical purposes. The element is organised in the following sub-elements of which most are optional: person/name (split in first and last name), person/id (various forms of identification numbers - optional), person/title (personal title - optional), person/birthdate (optional), person/country (of citizenship - recommended), person/address (postal - optional), person/email (optional), person/uri (link to web page - optional)</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence maxOccurs="unbounded">
-        <element name="organisation" type="tns:_OrganisationType">
-          <annotation>
-            <documentation xml:lang="en-uk">This repeatable element is used to record information about any organisation related to the document, whether it be as the affiliation of an author, as a corporative author or in any other capacity of importance for the document. Each organisation and the corresponding role is recorded in a separate instance of the element. The correct attribution of organisations to documents is essential for any statistical purposes. The element is organised in the following sub-elements: organisation/name (split in up to 4 hierarchical levels and acronym), organisation/id (optional), organisation/country (recommended), organisation/uri (link to web page - optional)</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="project" type="tns:_ProjectType">
-          <annotation>
-            <documentation xml:lang="en-uk">This repeatable element is used to record information about any project related to the document. Each project and the corresponding role are recorded in a separate instance of the element. The attribution of projects to documents will allow users to jump easily between projects and their documents. The element is organised in the following sub-elements: project/title (split in main and sub and acronym), project/id (optional) project/uri (link to web page - optional)</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="event" type="tns:_EventType">
-          <annotation>
-            <documentation xml:lang="en-uk">This repeatable element is used to record information about any event (conference, seminar, workshop, meeting, course, etc.) related to the document. Each event and its corresponding role are recorded in a separate instance of the element. The element is organised in the following sub-elements: event/title (split in full, acronym and number), event/dates (split in start and end), event/place (split in start and end), event/uri (link to web page - optional)</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="local_field" type="tns:_LocalFieldType">
-          <annotation>
-            <documentation xml:lang="en-uk">This repeatable and optional element is used to handle additional information using a locally defined two-level field structure, where a local field may have one or more parallel subfields. The local_field/@tag_type attribute is used to pass instructions on how to index and display the field and its subfields in the receiving system. The element is organised in the following sub-elements: local_field/code (field code), local_field/data (field data), local_field/subfield (subfield likewise split in code and data)</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="1" maxOccurs="1">
-        <element name="publication" type="tns:PublicationType">
-          <annotation>
-            <documentation xml:lang="en-uk">
-              The mandatory publication element carries all the information about how the document was published in the widest sense of the word, including electronic availability via personal homepages, institutional repositories and similar web sites. The publication element is structured in 9 publication cases, each with its own repertoire of subelements: In a journal (as an article or similar); In a book (as a chapter or similar); In a report (as a chapter or similar); As a book (the book as a whole); As a report (the report as a whole); As a patent (or patent application); As an Internet publication (institutional repository, preprint archive, home page etc.); As a digital object (in a managed institutional repository, preprint archive etc.); Any other form of publication. These cases correspond to the sub-elements: in_journal, in_book, in_report, book, report, patent, inetpub and other. At least one of these cases must be applied, but often two or more cases may be applied concurrently. For example, a journal article may be published "In a journal" and at the same be available at the author's institutional repository as an "Internet publication" or "Digital object".
-            </documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="description" type="tns:_DescriptionType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">The description element is the common container for a variety of descriptive data types that deal with the content of the document, such as notes, abstracts, subject classifications and keywords etc. The description element is not mandatory but should be used whenever such data is available. The element is organised in the following sub-elements: description/abstract (summary of the content), description/thesis (special structured note for academic thesis), description/note (other descriptive notes), description/subject/keyword (free or controlled keywords), description/subject/class (classification system codes).</documentation>
+        </annotation>
+      </element>
+      <element name="person" type="tns:_PersonType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">This repeatable element is used to record information about any person related to the creation of the document (like authors, editors, composers, publishers, illustrators etc.). Each person and the corresponding role are recorded in a separate instance of the element and the sequence should follow that of the document title page. The correct attribution of persons to documents is essential for any statistical purposes. The element is organised in the following sub-elements of which most are optional: person/name (split in first and last name), person/id (various forms of identification numbers - optional), person/title (personal title - optional), person/birthdate (optional), person/country (of citizenship - recommended), person/address (postal - optional), person/email (optional), person/uri (link to web page - optional)</documentation>
+        </annotation>
+      </element>
+      <element name="organisation" type="tns:_OrganisationType" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">This repeatable element is used to record information about any organisation related to the document, whether it be as the affiliation of an author, as a corporative author or in any other capacity of importance for the document. Each organisation and the corresponding role is recorded in a separate instance of the element. The correct attribution of organisations to documents is essential for any statistical purposes. The element is organised in the following sub-elements: organisation/name (split in up to 4 hierarchical levels and acronym), organisation/id (optional), organisation/country (recommended), organisation/uri (link to web page - optional)</documentation>
+        </annotation>
+      </element>
+      <element name="project" type="tns:_ProjectType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">This repeatable element is used to record information about any project related to the document. Each project and the corresponding role are recorded in a separate instance of the element. The attribution of projects to documents will allow users to jump easily between projects and their documents. The element is organised in the following sub-elements: project/title (split in main and sub and acronym), project/id (optional) project/uri (link to web page - optional)</documentation>
+        </annotation>
+      </element>
+      <element name="event" type="tns:_EventType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">This repeatable element is used to record information about any event (conference, seminar, workshop, meeting, course, etc.) related to the document. Each event and its corresponding role are recorded in a separate instance of the element. The element is organised in the following sub-elements: event/title (split in full, acronym and number), event/dates (split in start and end), event/place (split in start and end), event/uri (link to web page - optional)</documentation>
+        </annotation>
+      </element>
+      <element name="local_field" type="tns:_LocalFieldType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">This repeatable and optional element is used to handle additional information using a locally defined two-level field structure, where a local field may have one or more parallel subfields. The local_field/@tag_type attribute is used to pass instructions on how to index and display the field and its subfields in the receiving system. The element is organised in the following sub-elements: local_field/code (field code), local_field/data (field data), local_field/subfield (subfield likewise split in code and data)</documentation>
+        </annotation>
+      </element>
+      <element name="publication" type="tns:PublicationType">
+        <annotation>
+          <documentation xml:lang="en-uk">
+            The mandatory publication element carries all the information about how the document was published in the widest sense of the word, including electronic availability via personal homepages, institutional repositories and similar web sites. The publication element is structured in 9 publication cases, each with its own repertoire of subelements: In a journal (as an article or similar); In a book (as a chapter or similar); In a report (as a chapter or similar); As a book (the book as a whole); As a report (the report as a whole); As a patent (or patent application); As an Internet publication (institutional repository, preprint archive, home page etc.); As a digital object (in a managed institutional repository, preprint archive etc.); Any other form of publication. These cases correspond to the sub-elements: in_journal, in_book, in_report, book, report, patent, inetpub and other. At least one of these cases must be applied, but often two or more cases may be applied concurrently. For example, a journal article may be published "In a journal" and at the same be available at the author's institutional repository as an "Internet publication" or "Digital object".
+          </documentation>
+        </annotation>
+      </element>
     </sequence>
 
     <attribute name="format_version" use="required">
       <annotation>
-        <documentation xml:lang="en-uk">The particular version of the exchange format used, for the current version "1.2.2". Once subsequent versions have been issued, this will aid the schema validation and other applications parsing the XML.</documentation>
+        <documentation xml:lang="en-uk">The particular version of the exchange format used.</documentation>
       </annotation>
       <simpleType>
         <restriction base="string">
-          <enumeration value="1.1.0" />
-          <enumeration value="1.1.1" />
-          <enumeration value="1.2.0" />
-          <enumeration value="1.2.1" />
-          <enumeration value="1.2.2" />
+          <enumeration value="1.3.0" />
         </restriction>
       </simpleType>
     </attribute>
@@ -200,13 +191,11 @@
           <documentation xml:lang="en-uk">The title in the original language – use sub-elements below</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="translated" type="tns:_TitleTranslatedType">
-          <annotation>
-            <documentation xml:lang="en-uk">The title translated to another language – use sub-elements below</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="translated" type="tns:_TitleTranslatedType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">The title translated to another language – use sub-elements below</documentation>
+        </annotation>
+      </element>
     </sequence>
   </complexType>
   <complexType name="_LocalFieldType">
@@ -222,20 +211,18 @@
           <documentation xml:lang="en-uk">Field data</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="subfield" type="tns:_LocalFieldCodeDataType">
-          <annotation>
-            <documentation xml:lang="en-uk">Repeatable subfield likewise split in code and data</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="subfield" type="tns:_LocalFieldCodeDataType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Repeatable subfield likewise split in code and data</documentation>
+        </annotation>
+      </element>
     </sequence>
     <attribute name="tag_type" type="tns:_LocalFieldTagType" use="required">
       <annotation>
         <documentation xml:lang="en-uk">Defining if/how field and should be indexed and displayed, see note</documentation>
       </annotation>
     </attribute>
-    <attribute ref="xml:lang" use="optional">
+    <attribute ref="xml:lang">
       <annotation>
         <documentation xml:lang="en-uk">Language of field</documentation>
       </annotation>
@@ -258,43 +245,40 @@
   </complexType>
   <complexType name="_EventType">
     <sequence>
-      <sequence minOccurs="1" maxOccurs="unbounded">
-        <element name="title" type="tns:_EventTitleType">
-          <annotation>
-            <documentation xml:lang="en-uk">Title - only repeatable in case of language variants – use sub-elements below</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence>
-        <element name="dates" minOccurs="0" maxOccurs="1" type="tns:_EventDatesType">
-          <annotation>
-            <documentation xml:lang="en-uk">Start and end dates of event – use sub-elements below:</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence>
-        <element name="place" type="string" minOccurs="0">
-          <annotation>
-            <documentation xml:lang="en-uk">Place (city, country) of the event/conference</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="uri" type="tns:_MxdUriType" minOccurs="0">
-          <annotation>
-            <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="title" type="tns:_EventTitleType" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Title - only repeatable in case of language variants – use sub-elements below</documentation>
+        </annotation>
+      </element>
+      <element name="dates" minOccurs="0" type="tns:_EventDatesType">
+        <annotation>
+          <documentation xml:lang="en-uk">Start and end dates of event – use sub-elements below:</documentation>
+        </annotation>
+      </element>
+      <element name="place" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Place (city, country) of the event/conference</documentation>
+        </annotation>
+      </element>
+      <element name="sub_event" minOccurs="0" maxOccurs="unbounded" type="tns:_SubEventType">
+        <annotation>
+          <documentation xml:lang="en-uk">Sub event (like track or lecture) related to the main event and the document</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
+        </annotation>
+      </element>
     </sequence>
     <attribute name="event_role" type="tns:_EventRoleType" use="required">
       <annotation>
         <documentation xml:lang="en-uk">Role of the event in relation to the document (see note for authorised values)</documentation>
       </annotation>
     </attribute>
-    <attribute name="dasti_conference_no" type="positiveInteger">
+    <attribute name="bfi_conference_no" type="string">
       <annotation>
-        <documentation xml:lang="en-uk">Conference number from the DASTI conference databse</documentation>
+        <documentation xml:lang="en-uk">BFI conference no from the BFI conference database</documentation>
       </annotation>
     </attribute>
   </complexType>
@@ -339,29 +323,84 @@
   <simpleType name="_EventDateType">
     <union memberTypes="gYear date gYearMonth"/>
   </simpleType>
+  <complexType name="_SubEventType">
+    <sequence>
+      <element name="title" maxOccurs="unbounded">
+        <complexType>
+          <sequence>
+            <element name="full" type="string">
+              <annotation>
+                <documentation xml:lang="en-uk">Full name of the sub event</documentation>
+              </annotation>
+            </element>
+            <element name="acronym" type="string" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation xml:lang="en-uk">Acronym for the sub event title</documentation>
+              </annotation>
+            </element>
+          </sequence>
+          <attribute ref="xml:lang">
+            <annotation>
+              <documentation xml:lang="en-uk">Language of the sub event title</documentation>
+            </annotation>
+          </attribute>
+        </complexType>
+      </element>
+    </sequence>
+    <attribute name="event_type" use="required">
+      <simpleType>
+        <restriction base="string">
+          <enumeration value="lec">
+            <annotation>
+              <documentation xml:lang="en-uk">Lecture</documentation>
+              <documentation xml:lang="da-dk">Forelæsning</documentation>
+            </annotation>
+          </enumeration>
+          <enumeration value="cla">
+            <annotation>
+              <documentation xml:lang="en-uk">Class</documentation>
+              <documentation xml:lang="da-dk">Undervisningstime</documentation>
+            </annotation>
+          </enumeration>
+          <enumeration value="ses">
+            <annotation>
+              <documentation xml:lang="en-uk">Session</documentation>
+              <documentation xml:lang="da-dk">Session</documentation>
+            </annotation>
+          </enumeration>
+          <enumeration value="tra">
+            <annotation>
+              <documentation xml:lang="en-uk">Conference track</documentation>
+              <documentation xml:lang="da-dk">Konferencespor</documentation>
+            </annotation>
+          </enumeration>
+          <enumeration value="wor">
+            <annotation>
+              <documentation xml:lang="en-uk">Workshop</documentation>
+              <documentation xml:lang="da-dk">Workshop</documentation>
+            </annotation>
+          </enumeration>
+        </restriction>
+      </simpleType>
+    </attribute>
+  </complexType>
   <complexType name="_ProjectType">
     <sequence>
-      <sequence minOccurs="1" maxOccurs="unbounded">
-        <element name="title" type="tns:_ProjectTitleType">
-          <annotation>
-            <documentation xml:lang="en-uk">Title - only repeatable in case of language variants – use sub-elements below</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="id" type="tns:_ProjectIDType">
-          <annotation>
-            <documentation xml:lang="en-uk">Identification number or code</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="uri" type="tns:_MxdUriType" minOccurs="0">
-          <annotation>
-            <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="title" type="tns:_ProjectTitleType" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Title - only repeatable in case of language variants – use sub-elements below</documentation>
+        </annotation>
+      </element>
+      <element name="id" type="tns:_ProjectIDType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Identification number or code</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
+        </annotation>
+      </element>
     </sequence>
     <attribute name="proj_role" type="tns:_ProjectRoleType" use="required">
       <annotation>
@@ -371,7 +410,7 @@
   </complexType>
   <complexType name="_ProjectTitleType">
     <sequence minOccurs="0" maxOccurs="unbounded">
-      <element name="main" type="string" minOccurs="1">
+      <element name="main" type="string">
         <annotation>
           <documentation xml:lang="en-uk">Main title</documentation>
         </annotation>
@@ -400,55 +439,41 @@
           <documentation xml:lang="en-uk">Pesonal name – use sub-elements below</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="id" type="tns:_PersonIDType">
-          <annotation>
-            <documentation xml:lang="en-uk">Identification number or code</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="title" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Personal title related to academic degree and/or job function.</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="birthdate" type="date">
-          <annotation>
-            <documentation xml:lang="en-uk">In format yyyy-mm-dd</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="country" type="tns:_CountryType" minOccurs="0">
-          <annotation>
-            <documentation xml:lang="en-uk">Country of citizenship using ISO country codes</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="address" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Postal address</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="email" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Email address</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="uri" type="tns:_MxdUriType" minOccurs="0">
-          <annotation>
-            <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="id" type="tns:_PersonIDType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Identification number or code</documentation>
+        </annotation>
+      </element>
+      <element name="title" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Personal title related to academic degree and/or job function.</documentation>
+        </annotation>
+      </element>
+      <element name="birthdate" type="date" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">In format yyyy-mm-dd</documentation>
+        </annotation>
+      </element>
+      <element name="country" type="tns:_CountryType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Country of citizenship using ISO country codes</documentation>
+        </annotation>
+      </element>
+      <element name="address" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Postal address</documentation>
+        </annotation>
+      </element>
+      <element name="email" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Email address</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
+        </annotation>
+      </element>
     </sequence>
     <attribute name="pers_role" type="tns:_PersonRoleType" use="required">
       <annotation>
@@ -509,13 +534,11 @@
           <documentation xml:lang="en-uk">Name - only repeatable in case of language variants - use sub-elements below</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="id" type="tns:_OrganisationIDType">
-          <annotation>
-            <documentation xml:lang="en-uk">Identification number or code</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="id" type="tns:_OrganisationIDType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Identification number or code</documentation>
+        </annotation>
+      </element>
       <element name="country" type="tns:_CountryType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Country of legal residence using ISO country codes</documentation>
@@ -1820,54 +1843,37 @@
   </simpleType>
   <complexType name="_DescriptionType">
     <sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="abstract" type="tns:_StringWithLanguageType">
-          <annotation>
-            <documentation xml:lang="en-uk">Summary of content</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="note" type="tns:_StringWithLanguageType">
-          <annotation>
-            <documentation xml:lang="en-uk">Any descriptive note</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="thesis" type="tns:_ThesisType">
-          <annotation>
-            <documentation xml:lang="en-uk">Special thesis note – use sub-elements below. The attribute ddf_doc/@doc_type is used to differentiate between different types/levels of thesis</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="subject" type="tns:_SubjectType">
-          <annotation>
-            <documentation xml:lang="en-uk">Subject description – use sub-elements below.</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0">
-        <element name="research_area" type="tns:_ResearchAreaType">
-          <annotation>
-            <documentation xml:lang="en-uk">Special national research area, used by DASTI</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="abstract" type="tns:_StringWithLanguageType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Summary of content</documentation>
+        </annotation>
+      </element>
+      <element name="note" type="tns:_StringWithLanguageType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Any descriptive note</documentation>
+        </annotation>
+      </element>
+      <element name="thesis" type="tns:_ThesisType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Special thesis note – use sub-elements below. The attribute ddf_doc/@doc_type is used to differentiate between different types/levels of thesis</documentation>
+        </annotation>
+      </element>
+      <element name="subject" type="tns:_SubjectType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Subject description – use sub-elements below.</documentation>
+        </annotation>
+      </element>
+      <element name="research_area" type="tns:_ResearchAreaType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Special national research area, used by DASTI</documentation>
+        </annotation>
+      </element>
     </sequence>
-    <!-- 200806 huh? this must be a rogue attrib:
-    <attribute ref="xml:lang" use="optional">
-      <annotation>
-        <documentation xml:lang="en-uk">Language of note</documentation>
-      </annotation>
-    </attribute>
-    -->
   </complexType>
   <complexType name="_ResearchAreaType">
     <simpleContent>
       <extension base="string">
-        <attribute ref="xml:lang" use="optional"/>
+        <attribute ref="xml:lang" />
         <attribute name="area_code" type="tns:_ResearchAreaCodeType">
           <annotation>
             <documentation xml:lang="en-uk">One of the national research areas</documentation>
@@ -1878,26 +1884,22 @@
   </complexType>
   <complexType name="_SubjectType">
     <sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="keyword" type="tns:_KeywordType">
-          <annotation>
-            <documentation xml:lang="en-uk">Keywords – whether free or controlled.</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="class" type="tns:_ClassType">
-          <annotation>
-            <documentation xml:lang="en-uk">Classification codes according to the system declared in the attribute below.</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="keyword" type="tns:_KeywordType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Keywords – whether free or controlled.</documentation>
+        </annotation>
+      </element>
+      <element name="class" type="tns:_ClassType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Classification codes according to the system declared in the attribute below.</documentation>
+        </annotation>
+      </element>
     </sequence>
   </complexType>
   <complexType name="_StringWithLanguageType">
     <simpleContent>
       <extension base="string">
-        <attribute ref="xml:lang" use="optional"/>
+        <attribute ref="xml:lang" />
       </extension>
     </simpleContent>
   </complexType>
@@ -1909,7 +1911,7 @@
             <documentation xml:lang="en-uk">Classification system used, like "DDC", "UDC", "DEF", "DK5"</documentation>
           </annotation>
         </attribute>
-        <attribute ref="xml:lang" use="optional">
+        <attribute ref="xml:lang">
           <annotation>
             <documentation xml:lang="en-uk">Language of classification</documentation>
           </annotation>
@@ -1925,7 +1927,7 @@
             <documentation xml:lang="en-uk">Vocabulary/theasurus used, like "EUDISED", "INSPEC" or "free".</documentation>
           </annotation>
         </attribute>
-        <attribute ref="xml:lang" use="optional">
+        <attribute ref="xml:lang">
           <annotation>
             <documentation xml:lang="en-uk">Language of keyword</documentation>
           </annotation>
@@ -1969,13 +1971,11 @@
           <documentation xml:lang="en-uk">Main title</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="sub" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Sub title</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="sub" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Sub title</documentation>
+        </annotation>
+      </element>
       <element name="part" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Part designation of a multipart work ("Vol. 1", "Bind 1" etc)</documentation>
@@ -1987,7 +1987,7 @@
         </annotation>
       </element>
     </sequence>
-    <attribute ref="xml:lang" use="optional">
+    <attribute ref="xml:lang">
       <annotation>
         <documentation xml:lang="en-uk">Language of title</documentation>
       </annotation>
@@ -2005,13 +2005,11 @@
           <documentation xml:lang="en-uk">Main title</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="sub" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Sub title</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="sub" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Sub title</documentation>
+        </annotation>
+      </element>
       <element name="part" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Part designation of a multipart work ("Vol. 1", "Bind 1" etc)</documentation>
@@ -2164,7 +2162,7 @@
       <enumeration value="ddf_rec">
         <annotation>
           <documentation xml:lang="en-uk">DDF record ID (Danish Research Database record ID)</documentation>
-          <documentation xml:lang="da-dk">DDF post ID</documentation>
+          <documentation xml:lang="da-dk">DDF post-id</documentation>
         </annotation>
       </enumeration>
       <enumeration value="loc_rec">
@@ -2176,19 +2174,25 @@
       <enumeration value="loc_per">
         <annotation>
           <documentation xml:lang="en-uk">Local person ID (Local (data supplier) person ID)</documentation>
-          <documentation xml:lang="da-dk">Lokal person-ID</documentation>
+          <documentation xml:lang="da-dk">Lokal person-id</documentation>
         </annotation>
       </enumeration>
       <enumeration value="loc_pro">
         <annotation>
           <documentation xml:lang="en-uk">Local project ID (Local (data supplier) project ID)</documentation>
-          <documentation xml:lang="da-dk">Lokal project-ID</documentation>
+          <documentation xml:lang="da-dk">Lokal project-id</documentation>
         </annotation>
       </enumeration>
       <enumeration value="loc_org">
         <annotation>
           <documentation xml:lang="en-uk">Local organisation ID (Local (data supplier) organisation ID)</documentation>
-          <documentation xml:lang="da-dk">Lokal organisations-ID</documentation>
+          <documentation xml:lang="da-dk">Lokal organisations-id</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="loc_eve">
+        <annotation>
+          <documentation xml:lang="en-uk">Local event ID (Local (data supplier) organisation ID)</documentation>
+          <documentation xml:lang="da-dk">Lokal event-id</documentation>
         </annotation>
       </enumeration>
       <enumeration value="fi_nfdb">
@@ -2995,6 +2999,18 @@
         </annotation>
       </element>
     </choice>
+    <attribute name="bfi_serial_no" type="string">
+      <annotation>
+        <documentation xml:lang="en-uk">BFI serials database identifier</documentation>
+        <documentation xml:lang="da-dk">BFI serie-id</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="bfi_publisher_no" type="string">
+      <annotation>
+        <documentation xml:lang="en-uk">BFI publisher database identifier</documentation>
+        <documentation xml:lang="da-dk">BFI udgiver-id</documentation>
+      </annotation>
+    </attribute>
   </complexType>
   <simpleType name="_PublishingStatusType">
     <restriction base="string">
@@ -3031,7 +3047,7 @@
       <enumeration value="u">
         <annotation>
           <documentation xml:lang="en-uk">Unpublished</documentation>
-          <documentation xml:lang="da-dk">Upubliceret</documentation>
+          <documentation xml:lang="da-dk">Ikke publiceret</documentation>
         </annotation>
       </enumeration>
     </restriction>
@@ -3160,13 +3176,11 @@
           <documentation xml:lang="en-uk">Journal title</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="issn" type="tns:_ComplexISSNType">
-          <annotation>
-            <documentation xml:lang="en-uk">Journal ISSN no. without dashes</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="issn" type="tns:_ComplexISSNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal ISSN no. without dashes</documentation>
+        </annotation>
+      </element>
       <element name="year" type="gYear" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
@@ -3195,11 +3209,6 @@
       <element name="doi" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
-        </annotation>
-      </element>
-      <element name="journal_no" minOccurs="0">
-        <annotation>
-          <documentation xml:lang="en-uk">Unique ID used to identify journal in the FI (Danish Agency for Science, Technology and Innovation) database</documentation>
         </annotation>
       </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
@@ -3241,20 +3250,16 @@
           <documentation xml:lang="en-uk">Name of the (first) editor of the book</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="isbn" type="tns:_ComplexISBNType">
-          <annotation>
-            <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="issn" type="tns:_ComplexISSNType">
-          <annotation>
-            <documentation xml:lang="en-uk">ISSN no. without dashes</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="isbn" type="tns:_ComplexISBNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="issn" type="tns:_ComplexISSNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISSN no. without dashes</documentation>
+        </annotation>
+      </element>
       <element name="place" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Place of publication</documentation>
@@ -3280,16 +3285,9 @@
           <documentation xml:lang="en-uk">In the format Firstpage-Lastpage</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="series" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Book series information (like "Progress in Nanotechnology, vol. 14")</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <element name="publisher_no" minOccurs="0">
+      <element name="series" type="string" minOccurs="0" maxOccurs="unbounded">
         <annotation>
-          <documentation xml:lang="en-uk">Unique ID used to identify publisher in the FI (Danish Agency for Science, Technology and Innovation) database</documentation>
+          <documentation xml:lang="en-uk">Book series information (like "Progress in Nanotechnology, vol. 14")</documentation>
         </annotation>
       </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
@@ -3326,27 +3324,21 @@
           <documentation xml:lang="en-uk">Name of the (first) editor of the report as a whole</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="isbn" type="tns:_ComplexISBNType">
-          <annotation>
-            <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="series" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Report series title</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="rep_no" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Report number</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="isbn" type="tns:_ComplexISBNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="series" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Report series title</documentation>
+        </annotation>
+      </element>
+      <element name="rep_no" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Report number</documentation>
+        </annotation>
+      </element>
       <element name="place" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Place of publication</documentation>
@@ -3387,11 +3379,6 @@
           <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
         </annotation>
       </element>
-      <element name="publisher_no" minOccurs="0">
-        <annotation>
-          <documentation xml:lang="en-uk">Unique ID used to identify publisher in the FI (Danish Agency for Science, Technology and Innovation) database</documentation>
-        </annotation>
-      </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web site of report</documentation>
@@ -3411,13 +3398,11 @@
           <documentation xml:lang="en-uk">Book edition, like "2nd rev. ed."</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="isbn" type="tns:_ComplexISBNType">
-          <annotation>
-            <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="isbn" type="tns:_ComplexISBNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
+        </annotation>
+      </element>
       <element name="place" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Place of publication</documentation>
@@ -3443,16 +3428,9 @@
           <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
         </annotation>
       </element>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="series" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Book series information (like "Progress in Nanotechnology, vol. 14")</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <element name="publisher_no" minOccurs="0">
+      <element name="series" type="string" minOccurs="0" maxOccurs="unbounded">
         <annotation>
-          <documentation xml:lang="en-uk">Unique ID used to identify publisher in the FI (Danish Agency for Science, Technology and Innovation) database</documentation>
+          <documentation xml:lang="en-uk">Book series information (like "Progress in Nanotechnology, vol. 14")</documentation>
         </annotation>
       </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
@@ -3469,27 +3447,21 @@
   </complexType>
   <complexType name="_ReportType">
     <sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="isbn" type="tns:_ComplexISBNType">
-          <annotation>
-            <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="series" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Report series title</documentation>
-          </annotation>
-        </element>
-      </sequence>
-      <sequence minOccurs="0" maxOccurs="unbounded">
-        <element name="rep_no" type="string">
-          <annotation>
-            <documentation xml:lang="en-uk">Report number</documentation>
-          </annotation>
-        </element>
-      </sequence>
+      <element name="isbn" type="tns:_ComplexISBNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="series" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Report series title</documentation>
+        </annotation>
+      </element>
+      <element name="rep_no" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Report number</documentation>
+        </annotation>
+      </element>
       <element name="place" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Place of publication</documentation>
@@ -3508,11 +3480,6 @@
       <element name="pages" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Total no. of pages</documentation>
-        </annotation>
-      </element>
-      <element name="publisher_no" minOccurs="0">
-        <annotation>
-          <documentation xml:lang="en-uk">Unique ID used to identify publisher in the FI (Danish Agency for Science, Technology and Innovation) database</documentation>
         </annotation>
       </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
@@ -3587,7 +3554,7 @@
           <documentation xml:lang="en-uk">Embargo enddate in yyyy-mm-dd</documentation>
         </annotation>
       </element>
-      <element name="file" type="tns:_ObjectFileType" minOccurs="1">
+      <element name="file" type="tns:_ObjectFileType">
         <annotation>
           <documentation xml:lang="en-uk">System-generated description of the object</documentation>
         </annotation>
@@ -3651,7 +3618,7 @@
   <complexType name="_MxdUriType">
     <simpleContent>
       <extension base="anyURI">
-        <attribute use="optional" name="access" type="tns:_AccessType">
+        <attribute name="access" type="tns:_AccessType">
           <annotation>
             <documentation xml:lang="en-uk">Used to state the accessibility of the linked resource, e.g. "public"</documentation>
           </annotation>
@@ -3662,7 +3629,7 @@
   <complexType name="_ComplexISSNType">
     <simpleContent>
       <extension base="tns:_ISSNType">
-        <attribute use="optional" name="type">
+        <attribute name="type">
           <annotation>
             <documentation xml:lang="en-uk">Electronic or print</documentation>
           </annotation>
@@ -3698,7 +3665,7 @@
   <complexType name="_ComplexISBNType">
     <simpleContent>
       <extension base="tns:_ISBNType">
-        <attribute use="optional" name="type">
+        <attribute name="type">
           <annotation>
             <documentation xml:lang="en-uk">Electronic or print.</documentation>
           </annotation>
