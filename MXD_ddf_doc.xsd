@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/mxd/1.3" targetNamespace="http://mx.forskningsdatabasen.dk/ns/mxd/1.3" elementFormDefault="qualified" xml:lang="EN">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/documents/1.3" targetNamespace="http://mx.forskningsdatabasen.dk/ns/documents/1.3" elementFormDefault="qualified" xml:lang="EN">
   <!-- 
        2005-11-16  1.0.0.0 initial release
 
@@ -50,6 +50,8 @@
                    setting minOccurs and maxOccurs when these could be set on element
                    instead. Cleanup removing explicit use of default values in 
                    attributes (e.g. minOccurs="1", maxOccurs="1", use="optional").
+                   Changed namespace to use "documents" instead of "mxd" and to
+                   use new version 1.3
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -265,6 +267,11 @@
           <documentation xml:lang="en-uk">Sub event (like track or lecture) related to the main event and the document</documentation>
         </annotation>
       </element>
+      <element name="id" minOccurs="0" maxOccurs="unbounded" type="tns:_IDTypeType">
+        <annotation>
+          <documentation xml:lang="en-uk">ID of the main event</documentation>
+        </annotation>
+      </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
@@ -325,26 +332,15 @@
   </simpleType>
   <complexType name="_SubEventType">
     <sequence>
-      <element name="title" maxOccurs="unbounded">
-        <complexType>
-          <sequence>
-            <element name="full" type="string">
-              <annotation>
-                <documentation xml:lang="en-uk">Full name of the sub event</documentation>
-              </annotation>
-            </element>
-            <element name="acronym" type="string" minOccurs="0" maxOccurs="unbounded">
-              <annotation>
-                <documentation xml:lang="en-uk">Acronym for the sub event title</documentation>
-              </annotation>
-            </element>
-          </sequence>
-          <attribute ref="xml:lang">
-            <annotation>
-              <documentation xml:lang="en-uk">Language of the sub event title</documentation>
-            </annotation>
-          </attribute>
-        </complexType>
+      <element name="title" maxOccurs="unbounded" type="tns:_StringWithLanguageType">
+        <annotation>
+          <documentation xml:lang="en-uk">Title of the sub event</documentation>
+        </annotation>
+      </element>
+      <element name="acronym" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Acronym of the sub event tile</documentation>
+        </annotation>
       </element>
     </sequence>
     <attribute name="event_type" use="required">
