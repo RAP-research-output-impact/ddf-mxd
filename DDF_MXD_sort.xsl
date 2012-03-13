@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mx="http://mx.forskningsdatabasen.dk/ns/mxd/1.2" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mx="http://mx.forskningsdatabasen.dk/ns/documents/1.3" version="1.0">
 
     <xsl:strip-space elements="*"/>
     <xsl:output method="xml" indent="no" encoding="UTF-8"/>
 
     <xsl:template match="/">
         <xsl:copy>
+            <xsl:apply-templates select="*"/>
             <xsl:apply-templates select="*"/>
         </xsl:copy>
     </xsl:template>
@@ -99,14 +100,14 @@
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:event">
         <xsl:copy>
-            <xsl:apply-templates select="@event_role"/>
-            <xsl:apply-templates select="@dasti_conference_no"/>
+            <xsl:apply-templates select="@id_type"/>
             <xsl:apply-templates select="@xml:lang"/>
             <xsl:apply-templates select="text()"/>
             <xsl:apply-templates select="mx:title"/>
             <xsl:apply-templates select="mx:dates"/>
             <xsl:apply-templates select="mx:place"/>
-            <xsl:apply-templates select="mx:uri"/>
+            <xsl:apply-templates select="mx:sub_event"/>
+            <xsl:apply-templates select="mx:id"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:event/mx:dates">
@@ -117,6 +118,21 @@
             <xsl:apply-templates select="mx:end"/>
         </xsl:copy>
     </xsl:template>
+    <xsl:template match="/mx:ddf_doc/mx:event/mx:sub_event">
+        <xsl:copy>
+            <xsl:apply-templates select="@event_type"/>
+            <xsl:apply-templates select="@xml:lang"/>
+            <xsl:apply-templates select="text()"/>
+            <xsl:apply-templates select="mx:title"/>
+            <xsl:apply-templates select="mx:acronym"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="/mx:ddf_doc/mx:event/mx:sub_event/mx:title">
+        <xsl:copy>
+            <xsl:apply-templates select="@xml:lang"/>
+            <xsl:apply-templates select="text()"/>
+        </xsl:copy>
+    </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:event/mx:title">
         <xsl:copy>
             <xsl:apply-templates select="@xml:lang"/>
@@ -124,13 +140,6 @@
             <xsl:apply-templates select="mx:full"/>
             <xsl:apply-templates select="mx:acronym"/>
             <xsl:apply-templates select="mx:number"/>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="/mx:ddf_doc/mx:event/mx:uri">
-        <xsl:copy>
-            <xsl:apply-templates select="@access"/>
-            <xsl:apply-templates select="@xml:lang"/>
-            <xsl:apply-templates select="text()"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:local_field">
@@ -262,6 +271,8 @@
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:publication">
         <xsl:copy>
+            <xsl:apply-templates select="@bfi_serial_no"/>
+            <xsl:apply-templates select="@bfi_publisher_no"/>
             <xsl:apply-templates select="@xml:lang"/>
             <xsl:apply-templates select="text()"/>
             <xsl:apply-templates select="mx:in_journal"/>
@@ -288,7 +299,6 @@
             <xsl:apply-templates select="mx:pages"/>
             <xsl:apply-templates select="mx:doi"/>
             <xsl:apply-templates select="mx:series"/>
-            <xsl:apply-templates select="mx:publisher_no"/>
             <xsl:apply-templates select="mx:uri"/>
         </xsl:copy>
     </xsl:template>
@@ -356,7 +366,6 @@
             <xsl:apply-templates select="mx:doi"/>
             <xsl:apply-templates select="mx:pages"/>
             <xsl:apply-templates select="mx:series"/>
-            <xsl:apply-templates select="mx:publisher_no"/>
             <xsl:apply-templates select="mx:uri"/>
         </xsl:copy>
     </xsl:template>
@@ -395,7 +404,6 @@
             <xsl:apply-templates select="mx:pages"/>
             <xsl:apply-templates select="mx:paperid"/>
             <xsl:apply-templates select="mx:doi"/>
-            <xsl:apply-templates select="mx:journal_no"/>
             <xsl:apply-templates select="mx:uri"/>
         </xsl:copy>
     </xsl:template>
@@ -433,7 +441,6 @@
             <xsl:apply-templates select="mx:pages"/>
             <xsl:apply-templates select="mx:paperid"/>
             <xsl:apply-templates select="mx:doi"/>
-            <xsl:apply-templates select="mx:publisher_no"/>
             <xsl:apply-templates select="mx:uri"/>
         </xsl:copy>
     </xsl:template>
@@ -497,7 +504,6 @@
             <xsl:apply-templates select="mx:publisher"/>
             <xsl:apply-templates select="mx:year"/>
             <xsl:apply-templates select="mx:pages"/>
-            <xsl:apply-templates select="mx:publisher_no"/>
             <xsl:apply-templates select="mx:uri"/>
         </xsl:copy>
     </xsl:template>
@@ -541,6 +547,13 @@
             <xsl:apply-templates select="mx:sub"/>
             <xsl:apply-templates select="mx:part"/>
             <xsl:apply-templates select="mx:other"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="/mx:uri">
+        <xsl:copy>
+            <xsl:apply-templates select="@access"/>
+            <xsl:apply-templates select="@xml:lang"/>
+            <xsl:apply-templates select="text()"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="@* | node()">
