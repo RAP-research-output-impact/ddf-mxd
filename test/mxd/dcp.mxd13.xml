@@ -30,7 +30,7 @@
     <country>dk</country>   
     <uri>http://aarch.dk/institutter/institut_for_design/</uri>     
   </organisation>
-  <event event_role="ep">         
+  <event event_role="ep" bfi_conference_no="101">         
     <title xml:lang="eng">  
       <full>Architecture in the Network Society. Association for Education in CAAD in 
       Europe Conference</full>
