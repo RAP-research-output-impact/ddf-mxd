@@ -267,21 +267,10 @@
           <documentation xml:lang="en-uk">Sub event (like track or lecture) related to the main event and the document</documentation>
         </annotation>
       </element>
-      <element name="id" minOccurs="0" maxOccurs="unbounded">
+      <element name="id" type="_EventIdType" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">ID of the main event</documentation>
         </annotation>
-        <complexType>
-          <simpleContent>
-            <extension base="string">
-              <attribute name="id_type" type="tns:_IDTypeType" use="required">
-                <annotation>
-                  <documentation xml:lang="en-uk">Type of ID, registered with DDF - like local event identifier</documentation>
-                </annotation>
-              </attribute>
-            </extension>
-          </simpleContent>
-        </complexType>
       </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
         <annotation>
@@ -299,6 +288,17 @@
         <documentation xml:lang="en-uk">BFI conference no from the BFI conference database</documentation>
       </annotation>
     </attribute>
+  </complexType>
+  <complexType name="_EventIdType">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="id_type" type="tns:_IDTypeType" use="required">
+          <annotation>
+            <documentation xml:lang="en-uk">Type of ID, registered with DDF - like local event identifier</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
   </complexType>
   <complexType name="_EventTitleType">
     <sequence>
