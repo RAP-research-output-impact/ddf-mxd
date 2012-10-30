@@ -8,7 +8,6 @@
     <xsl:template match="/">
         <xsl:copy>
             <xsl:apply-templates select="*"/>
-            <xsl:apply-templates select="*"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="/mx:ddf_doc">
@@ -100,7 +99,8 @@
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:event">
         <xsl:copy>
-            <xsl:apply-templates select="@id_type"/>
+            <xsl:apply-templates select="@event_role"/>
+            <xsl:apply-templates select="@bfi_conference_no"/>
             <xsl:apply-templates select="@xml:lang"/>
             <xsl:apply-templates select="text()"/>
             <xsl:apply-templates select="mx:title"/>
@@ -108,6 +108,7 @@
             <xsl:apply-templates select="mx:place"/>
             <xsl:apply-templates select="mx:sub_event"/>
             <xsl:apply-templates select="mx:id"/>
+            <xsl:apply-templates select="mx:uri"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:event/mx:dates">
@@ -116,6 +117,13 @@
             <xsl:apply-templates select="text()"/>
             <xsl:apply-templates select="mx:start"/>
             <xsl:apply-templates select="mx:end"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="/mx:ddf_doc/mx:event/mx:id">
+        <xsl:copy>
+            <xsl:apply-templates select="@id_type"/>
+            <xsl:apply-templates select="@xml:lang"/>
+            <xsl:apply-templates select="text()"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:event/mx:sub_event">
@@ -140,6 +148,13 @@
             <xsl:apply-templates select="mx:full"/>
             <xsl:apply-templates select="mx:acronym"/>
             <xsl:apply-templates select="mx:number"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="/mx:ddf_doc/mx:event/mx:uri">
+        <xsl:copy>
+            <xsl:apply-templates select="@access"/>
+            <xsl:apply-templates select="@xml:lang"/>
+            <xsl:apply-templates select="text()"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:local_field">
@@ -547,13 +562,6 @@
             <xsl:apply-templates select="mx:sub"/>
             <xsl:apply-templates select="mx:part"/>
             <xsl:apply-templates select="mx:other"/>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="/mx:uri">
-        <xsl:copy>
-            <xsl:apply-templates select="@access"/>
-            <xsl:apply-templates select="@xml:lang"/>
-            <xsl:apply-templates select="text()"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="@* | node()">
