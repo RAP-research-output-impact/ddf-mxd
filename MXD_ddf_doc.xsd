@@ -267,7 +267,7 @@
           <documentation xml:lang="en-uk">Sub event (like track or lecture) related to the main event and the document</documentation>
         </annotation>
       </element>
-      <element name="id" type="_EventIdType" minOccurs="0" maxOccurs="unbounded">
+      <element name="id" type="tns:_EventIdType" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">ID of the main event</documentation>
         </annotation>
