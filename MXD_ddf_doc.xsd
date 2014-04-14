@@ -54,6 +54,8 @@
                    use new version 1.3
 
        2012-10-30  1.3.0.1 Extracted event id type to a named type  
+
+       2014-04-14  1.3.0.2 Added IHK organisation
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -2814,6 +2816,12 @@
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Institut for Forskning i Idræt og Folkelig Oplysning</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ihk">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Ingeniørhøjskolen i København</documentation>
         </annotation>
       </enumeration>
       <enumeration value="itu">
