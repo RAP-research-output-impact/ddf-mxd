@@ -3667,7 +3667,7 @@
         <documentation xml:lang="en-uk"></documentation>
       </annotation>
     </attribute>
-    <attribute name="version" type="tns:OalinkVersionType" use="required">
+    <attribute name="version" type="tns:_OalinkVersionType" use="required">
       <annotation>
         <documentation xml:lang="en-uk"></documentation>
       </annotation>
@@ -3692,7 +3692,7 @@
         <documentation xml:lang="en-uk"></documentation> 
       </annotation>
     </attribute>
-    <attribute name="url" type="tns:_MxdUriType" use="required">
+    <attribute name="url" type="anyURI" use="required">
       <annotation>
         <documentation xml:lang="en-uk"></documentation>
       </annotation>
@@ -3878,7 +3878,7 @@
       </enumeration>
     </restriction>
   </simpleType>
-  <simpleType name="_OaLinkTypeType">
+  <simpleType name="_OalinkTypeType">
     <restriction base="string">
       <enumeration value="loc">
         <annotation>
