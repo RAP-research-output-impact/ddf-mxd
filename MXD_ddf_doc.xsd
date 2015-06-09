@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/documents/1.3" targetNamespace="http://mx.forskningsdatabasen.dk/ns/documents/1.3" elementFormDefault="qualified" xml:lang="EN">
-  <!-- 
+  <!--
        2005-11-16  1.0.0.0 initial release
 
        2006-03-01  1.1.0.0 relaxed data definition of vol, pages (in book/article),
@@ -55,7 +55,11 @@
 
        2012-10-30  1.3.0.1 Extracted event id type to a named type  
 
-       2014-04-14  1.3.1.0 Added IHK organisation
+       2014-04-14  1.3.1.pre (unpublished) Added IHK organisation
+
+       2015-06-08  1.3.1.0 Added oa_link element and associated new types. Add
+                   volume/issue/issn to in_book, in_report, book, report w/a.
+                   Vocabulary additions.
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -2219,6 +2223,18 @@
           <documentation xml:lang="da-dk">EU FP7 Bevillingsaftalenummer</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="orcid">
+        <annotation>
+          <documentation xml:lang="en-uk">Open Researcher and Contributor ID</documentation>
+          <documentation xml:lang="da-dk">Open Researcher and Contributor ID</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ringgold">
+        <annotation>
+          <documentation xml:lang="en-uk">Ringgold ID</documentation>
+          <documentation xml:lang="da-dk">Ringgold ID</documentation>
+        </annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   <simpleType name="_OrganisationRoleType">
@@ -2427,10 +2443,22 @@
           <documentation xml:lang="da-dk">Patent</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="dtb">
+        <annotation>
+          <documentation xml:lang="en-uk">Afhandling-Bachelor</documentation>
+          <documentation xml:lang="da-dk">Thesis Bachelor</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="dtd">
         <annotation>
           <documentation xml:lang="en-uk">Thesis Doctoral</documentation>
           <documentation xml:lang="da-dk">Afhandling-Doktor</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dtdb">
+        <annotation>
+          <documentation xml:lang="en-uk">Afhandling-Diploma Bachelor</documentation>
+          <documentation xml:lang="da-dk">Thesis Diploma Bachelor</documentation>
         </annotation>
       </enumeration>
       <enumeration value="dtp">
@@ -2680,6 +2708,12 @@
           <documentation xml:lang="da-dk">Dansk Folkemindesamling</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="diis">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Dansk Institut for Internationale Studier</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="dlh">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
@@ -2885,6 +2919,12 @@
           <documentation xml:lang="da-dk">Danmarks Natur- og Lægevidenskabelige Bibliotek</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="regionh">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Region Hovedstadens Hospitaler</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="ruc">
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
@@ -2907,6 +2947,12 @@
         <annotation>
           <documentation xml:lang="en-uk">n/a</documentation>
           <documentation xml:lang="da-dk">Sekretariat for Børnekultur netværk</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sfi">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">SFI - Det Nationale Forskningscenter for Velfærd</documentation>
         </annotation>
       </enumeration>
       <enumeration value="shu">
@@ -3009,6 +3055,11 @@
       <element name="digital_object" type="tns:_DigitalobjectType" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">Use for digital objects, typically a fulltext.</documentation>
+        </annotation>
+      </element>
+      <element name="oa_link" type="tns:_OalinkType" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">URL to the electronic Open Access version of the document</documentation>
         </annotation>
       </element>
       <element name="other" type="tns:_OtherType">
@@ -3293,6 +3344,16 @@
           <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
         </annotation>
       </element>
+      <element name="vol" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Volume number</documentation>
+        </annotation>
+      </element>
+      <element name="issue" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Issue number</documentation>
+        </annotation>
+      </element>
       <element name="doi" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
@@ -3350,6 +3411,11 @@
       <element name="series" type="string" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">Report series title</documentation>
+        </annotation>
+      </element>
+      <element name="issn" type="tns:_ComplexISSNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISSN no. without dashes</documentation>
         </annotation>
       </element>
       <element name="rep_no" type="string" minOccurs="0" maxOccurs="unbounded">
@@ -3436,6 +3502,16 @@
           <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
         </annotation>
       </element>
+      <element name="vol" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Volume number</documentation>
+        </annotation>
+      </element>
+      <element name="issue" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Issue number</documentation>
+        </annotation>
+      </element>
       <element name="pages" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Total no. of pages</documentation>
@@ -3449,6 +3525,11 @@
       <element name="series" type="string" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">Book series information (like "Progress in Nanotechnology, vol. 14")</documentation>
+        </annotation>
+      </element>
+      <element name="issn" type="tns:_ComplexISSNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISSN no. without dashes</documentation>
         </annotation>
       </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
@@ -3475,6 +3556,11 @@
           <documentation xml:lang="en-uk">Report series title</documentation>
         </annotation>
       </element>
+      <element name="issn" type="tns:_ComplexISSNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISSN no. without dashes</documentation>
+        </annotation>
+      </element>
       <element name="rep_no" type="string" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">Report number</documentation>
@@ -3495,9 +3581,24 @@
           <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
         </annotation>
       </element>
+      <element name="vol" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Volume number</documentation>
+        </annotation>
+      </element>
+      <element name="issue" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Issue number</documentation>
+        </annotation>
+      </element>
       <element name="pages" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Total no. of pages</documentation>
+        </annotation>
+      </element>
+      <element name="doi" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
         </annotation>
       </element>
       <element name="uri" type="tns:_MxdUriType" minOccurs="0">
@@ -3559,6 +3660,43 @@
         </annotation>
       </element>
     </sequence>
+  </complexType>
+  <complexType name="_OalinkType">
+    <attribute name="type" type="tns:_OalinkTypeType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+    <attribute name="version" type="tns:OalinkVersionType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+    <attribute name="public_access" type="tns:_OalinkPublicAccessType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+    <attribute name="license" type="string" use="optional">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+    <attribute name="embargo_start" type="date" use="optional">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+    <attribute name="embargo_end" type="date" use="optional">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation> 
+      </annotation>
+    </attribute>
+    <attribute name="url" type="tns:_MxdUriType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
   </complexType>
   <complexType name="_DigitalobjectType">
     <sequence>
@@ -3736,6 +3874,78 @@
       <enumeration value="med">
         <annotation>
           <documentation xml:lang="en-uk">Medical science</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_OaLinkTypeType">
+    <restriction base="string">
+      <enumeration value="loc">
+        <annotation>
+          <documentation xml:lang="en-uk">Local repository</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="rem">
+        <annotation>
+          <documentation xml:lang="en-uk">Remote repository</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="doi">
+        <annotation>
+          <documentation xml:lang="en-uk">DOI</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_OalinkVersionType">
+    <restriction base="string">
+      <enumeration value="pre">
+        <annotation>
+          <documentation xml:lang="en-uk">Preprint</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="afv">
+        <annotation>
+          <documentation xml:lang="en-uk">Author's final version</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pub">
+        <annotation>
+          <documentation xml:lang="en-uk">Published version</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="oth">
+        <annotation>
+          <documentation xml:lang="en-uk">Other version</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_OalinkPublicAccessType">
+    <restriction base="string">
+      <enumeration value="oa">
+        <annotation>
+          <documentation xml:lang="en-uk">Open Access</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ea">
+        <annotation>
+          <documentation xml:lang="en-uk">Embargoed Access</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ra">
+        <annotation>
+          <documentation xml:lang="en-uk">Restricted Access</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ca">
+        <annotation>
+          <documentation xml:lang="en-uk">Closed Access</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="und">
+        <annotation>
+          <documentation xml:lang="en-uk">Not set</documentation>
         </annotation>
       </enumeration>
     </restriction>
