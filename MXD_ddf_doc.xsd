@@ -60,6 +60,8 @@
        2015-06-08  1.3.1.0 Added oa_link element and associated new types. Add
                    volume/issue/issn to in_book, in_report, book, report w/a.
                    Vocabulary additions.
+                   
+       2015-08-07  1.3.1.1 oa_link/@url is no longer mandatory.
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -3692,7 +3694,7 @@
         <documentation xml:lang="en-uk"></documentation> 
       </annotation>
     </attribute>
-    <attribute name="url" type="anyURI" use="required">
+    <attribute name="url" type="anyURI" use="optional">
       <annotation>
         <documentation xml:lang="en-uk"></documentation>
       </annotation>
