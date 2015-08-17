@@ -132,7 +132,7 @@
           </documentation>
         </annotation>
       </element>
-      <element name="oa_link" type="tns:_OalinkType" maxOccurs="unbounded">
+      <element name="oa_link" type="tns:_OalinkType" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">URL to the electronic Open Access version of the document</documentation>
         </annotation>
