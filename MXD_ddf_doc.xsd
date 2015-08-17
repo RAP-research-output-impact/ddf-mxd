@@ -132,6 +132,11 @@
           </documentation>
         </annotation>
       </element>
+      <element name="oa_link" type="tns:_OalinkType" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">URL to the electronic Open Access version of the document</documentation>
+        </annotation>
+      </element>
     </sequence>
 
     <attribute name="format_version" use="required">
@@ -196,7 +201,8 @@
         <documentation xml:lang="en-uk">Code indicating whether the record is to be considered as "new", "updated" or "deleted". See note for DDF list of record status codes.</documentation>
       </annotation>
     </attribute>
-  </complexType>
+  </complexType>  <!-- DdfDocType -->
+
   <complexType name="_TitleType">
     <sequence>
       <element name="original" type="tns:_TitleOriginalType">
@@ -3057,11 +3063,6 @@
       <element name="digital_object" type="tns:_DigitalobjectType" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">Use for digital objects, typically a fulltext.</documentation>
-        </annotation>
-      </element>
-      <element name="oa_link" type="tns:_OalinkType" maxOccurs="unbounded">
-        <annotation>
-          <documentation xml:lang="en-uk">URL to the electronic Open Access version of the document</documentation>
         </annotation>
       </element>
       <element name="other" type="tns:_OtherType">
