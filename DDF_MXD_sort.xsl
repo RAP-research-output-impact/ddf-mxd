@@ -33,6 +33,7 @@
             <xsl:apply-templates select="mx:event"/>
             <xsl:apply-templates select="mx:local_field"/>
             <xsl:apply-templates select="mx:publication"/>
+            <xsl:apply-templates select="mx:oa_link"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:description">
@@ -175,6 +176,19 @@
             <xsl:apply-templates select="mx:data"/>
         </xsl:copy>
     </xsl:template>
+    <xsl:template match="/mx:ddf_doc/mx:oa_link">
+        <xsl:copy>
+            <xsl:apply-templates select="@type"/>
+            <xsl:apply-templates select="@version"/>
+            <xsl:apply-templates select="@public_access"/>
+            <xsl:apply-templates select="@license"/>
+            <xsl:apply-templates select="@embargo_start"/>
+            <xsl:apply-templates select="@embargo_end"/>
+            <xsl:apply-templates select="@url"/>
+            <xsl:apply-templates select="@xml:lang"/>
+            <xsl:apply-templates select="text()"/>
+        </xsl:copy>
+    </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:organisation">
         <xsl:copy>
             <xsl:apply-templates select="@org_role"/>
@@ -311,13 +325,23 @@
             <xsl:apply-templates select="mx:place"/>
             <xsl:apply-templates select="mx:publisher"/>
             <xsl:apply-templates select="mx:year"/>
+            <xsl:apply-templates select="mx:vol"/>
+            <xsl:apply-templates select="mx:issue"/>
             <xsl:apply-templates select="mx:pages"/>
             <xsl:apply-templates select="mx:doi"/>
             <xsl:apply-templates select="mx:series"/>
+            <xsl:apply-templates select="mx:issn"/>
             <xsl:apply-templates select="mx:uri"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:publication/mx:book/mx:isbn">
+        <xsl:copy>
+            <xsl:apply-templates select="@type"/>
+            <xsl:apply-templates select="@xml:lang"/>
+            <xsl:apply-templates select="text()"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="/mx:ddf_doc/mx:publication/mx:book/mx:issn">
         <xsl:copy>
             <xsl:apply-templates select="@type"/>
             <xsl:apply-templates select="@xml:lang"/>
@@ -378,6 +402,8 @@
             <xsl:apply-templates select="mx:place"/>
             <xsl:apply-templates select="mx:publisher"/>
             <xsl:apply-templates select="mx:year"/>
+            <xsl:apply-templates select="mx:vol"/>
+            <xsl:apply-templates select="mx:issue"/>
             <xsl:apply-templates select="mx:doi"/>
             <xsl:apply-templates select="mx:pages"/>
             <xsl:apply-templates select="mx:series"/>
@@ -447,6 +473,7 @@
             <xsl:apply-templates select="mx:editor"/>
             <xsl:apply-templates select="mx:isbn"/>
             <xsl:apply-templates select="mx:series"/>
+            <xsl:apply-templates select="mx:issn"/>
             <xsl:apply-templates select="mx:rep_no"/>
             <xsl:apply-templates select="mx:place"/>
             <xsl:apply-templates select="mx:publisher"/>
@@ -460,6 +487,13 @@
         </xsl:copy>
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:publication/mx:in_report/mx:isbn">
+        <xsl:copy>
+            <xsl:apply-templates select="@type"/>
+            <xsl:apply-templates select="@xml:lang"/>
+            <xsl:apply-templates select="text()"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="/mx:ddf_doc/mx:publication/mx:in_report/mx:issn">
         <xsl:copy>
             <xsl:apply-templates select="@type"/>
             <xsl:apply-templates select="@xml:lang"/>
@@ -514,15 +548,26 @@
             <xsl:apply-templates select="text()"/>
             <xsl:apply-templates select="mx:isbn"/>
             <xsl:apply-templates select="mx:series"/>
+            <xsl:apply-templates select="mx:issn"/>
             <xsl:apply-templates select="mx:rep_no"/>
             <xsl:apply-templates select="mx:place"/>
             <xsl:apply-templates select="mx:publisher"/>
             <xsl:apply-templates select="mx:year"/>
+            <xsl:apply-templates select="mx:vol"/>
+            <xsl:apply-templates select="mx:issue"/>
             <xsl:apply-templates select="mx:pages"/>
+            <xsl:apply-templates select="mx:doi"/>
             <xsl:apply-templates select="mx:uri"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="/mx:ddf_doc/mx:publication/mx:report/mx:isbn">
+        <xsl:copy>
+            <xsl:apply-templates select="@type"/>
+            <xsl:apply-templates select="@xml:lang"/>
+            <xsl:apply-templates select="text()"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="/mx:ddf_doc/mx:publication/mx:report/mx:issn">
         <xsl:copy>
             <xsl:apply-templates select="@type"/>
             <xsl:apply-templates select="@xml:lang"/>
