@@ -9,5 +9,5 @@ if [ ! -r $schema ]; then
     exit 1
 fi
 
-# TODO: This will still print 'bla.xml fails to validate'
-xmllint --noout --schema $schema $1 2>&1 |grep -v language
+xmllint --noout --schema $schema $1 2>&1
+

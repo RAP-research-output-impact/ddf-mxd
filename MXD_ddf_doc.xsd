@@ -514,7 +514,7 @@
         <documentation xml:lang="en-uk">Role of the person in relation to the document (see note for authorised values)</documentation>
       </annotation>
     </attribute>
-    <attribute name="aff_no" type="tns:_OrganisationAffiliationNumberType" use="required">
+    <attribute name="aff_no" type="tns:_OrganisationAffiliationNumberType" use="optional">
       <annotation>
         <documentation xml:lang="en-uk">Internal reference no. of the organisation (ddf_doc/organisation/@aff_no) to which the person was affiliated while creating/contributing to this document.</documentation>
       </annotation>
@@ -1902,7 +1902,7 @@
           <documentation xml:lang="en-uk">Special national research area, used by DASTI</documentation>
         </annotation>
       </element>
-      <element name="identifier" type="tns:_DescriptionIdentifierType" minOccurs="0">
+      <element name="identifier" type="tns:_DescriptionIdentifierType" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">Any external identifier</documentation>
         </annotation>
@@ -3078,37 +3078,37 @@
     <choice maxOccurs="unbounded">
       <element name="in_journal" type="tns:_InJournalType">
         <annotation>
-          <documentation xml:lang="en-uk">Use for articles, papers, etc. published in a journal (or submitted to a journal for publication) All data is placed in the sub-elements: title, issn, year, vol, issue, pages, paperid, doi, uri.</documentation>
+          <documentation xml:lang="en-uk">Use for articles, papers, etc. published in a journal (or submitted to a journal for publication).</documentation>
         </annotation>
       </element>
       <element name="in_book" type="tns:_InBookType">
         <annotation>
-          <documentation xml:lang="en-uk">Use for chapters, papers, etc. published as a part of a book (incl. proceedings in book form) All data is placed in the sub-elements: title, part, edition, editor, isbn, place, publisher, year, pages, series, uri.</documentation>
+          <documentation xml:lang="en-uk">Use for chapters, papers, etc. published as a part of a book (incl. proceedings in book form).</documentation>
         </annotation>
       </element>
       <element name="in_report" type="tns:_InReportType">
         <annotation>
-          <documentation xml:lang="en-uk">Use for chapters, papers, etc. published as a part of a report. All data is placed in the sub-elements: title, editor, isbn, rep_no, place, publisher, year, pages, uri.</documentation>
+          <documentation xml:lang="en-uk">Use for chapters, papers, etc. published as a part of a report.</documentation>
         </annotation>
       </element>
       <element name="book" type="tns:_BookType">
         <annotation>
-          <documentation xml:lang="en-uk">Use when the document is an entire book All data is placed in the sub-elements: edition, isbn, place, publisher, year, pages, series, uri. Note that in this case, the book title information is placed in ddf_doc/title.</documentation>
+          <documentation xml:lang="en-uk">Use when the document is an entire book.</documentation>
         </annotation>
       </element>
       <element name="report" type="tns:_ReportType">
         <annotation>
-          <documentation xml:lang="en-uk">Use when the document is an entire report All data is placed in the sub-elements: isbn, rep_no, place, publisher, year, pages, uri. Note that in this case, the report title information is placed in ddf_doc/title.</documentation>
+          <documentation xml:lang="en-uk">Use when the document is an entire report.</documentation>
         </annotation>
       </element>
       <element name="patent" type="tns:_PatentType">
         <annotation>
-          <documentation xml:lang="en-uk">Use when the document is a patent (or a patent application) All data is placed in the sub-elements: country, ipc, number, date, uri.</documentation>
+          <documentation xml:lang="en-uk">Use when the document is a patent (or a patent application).</documentation>
         </annotation>
       </element>
       <element name="inetpub" type="tns:_InetpubType">
         <annotation>
-          <documentation xml:lang="en-uk">Use when published electronically on the net (institutional repository, author's homepage, preprint server, etc.) If the document is also published in a journal, book or report, the corresponding publication cases should be used in addition. All data is placed in the sub-elements: text and uri.</documentation>
+          <documentation xml:lang="en-uk">Use when published electronically on the net (institutional repository, author's homepage, preprint server, etc.) If the document is also published in a journal, book or report, the corresponding publication cases should be used in addition.</documentation>
         </annotation>
       </element>
       <element name="digital_object" type="tns:_DigitalobjectType" maxOccurs="unbounded">
