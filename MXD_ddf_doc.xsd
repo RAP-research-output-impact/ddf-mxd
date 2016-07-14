@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/documents/1.3" targetNamespace="http://mx.forskningsdatabasen.dk/ns/documents/1.3" elementFormDefault="qualified" xml:lang="EN">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/documents/1.4" targetNamespace="http://mx.forskningsdatabasen.dk/ns/documents/1.4" elementFormDefault="qualified" xml:lang="EN">
   <!--
        2005-11-16  1.0.0.0 initial release
 
@@ -64,6 +64,12 @@
        2015-08-07  1.3.1.1 oa_link/@url is no longer mandatory.
        
        2016-03-02  1.3.2.0 Added doc_type=dcr. Added rec_source=ucv.
+
+       2016-07-14  1.4.0 2016-1: new person_role 'other'. 2016-2: doctype 'other'
+                   changes from string to structured content. 2016-3: host editor
+                   in in_book, in_report becomes author type rather than element.
+                   2016-4: new identifier element under 'description'.
+                   Switch to 3-digit version numbers.
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -150,6 +156,7 @@
           <enumeration value="1.3.0" />
           <enumeration value="1.3.1" />
           <enumeration value="1.3.2" />
+          <enumeration value="1.4.0" />
         </restriction>
       </simpleType>
     </attribute>
@@ -3083,7 +3090,7 @@
       </element>
       <element name="other" type="tns:_OtherType">
         <annotation>
-          <documentation xml:lang="en-uk"/>
+          <documentation xml:lang="en-uk">Use for any other form of publication if none of the above apply.</documentation>
         </annotation>
       </element>
     </choice>
@@ -3717,6 +3724,20 @@
       </annotation>
     </attribute>
   </complexType>
+  <complexType name="_OtherType">
+    <sequence>
+      <element name="text" type="string">
+        <annotation>
+          <documentation xml:lang="en-uk">Any text</documentation>
+        </annotation>
+      </element>
+      <element name="year" type="gYear" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
   <complexType name="_DigitalobjectType">
     <sequence>
       <element name="description" type="string" minOccurs="0">
@@ -3968,8 +3989,5 @@
         </annotation>
       </enumeration>
     </restriction>
-  </simpleType>
-  <simpleType name="_OtherType">
-    <restriction base="string"/>
   </simpleType>
 </schema>
