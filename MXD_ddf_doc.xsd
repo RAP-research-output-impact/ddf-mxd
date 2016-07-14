@@ -2159,6 +2159,12 @@
           <documentation xml:lang="da-dk">Redaktør</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="pedh">
+        <annotation>
+          <documentation xml:lang="en-uk">Editor of host publication</documentation>
+          <documentation xml:lang="da-dk">Redaktør af værtspublikation</documentation>
+        </annotation>
+      </enumeration>
       <enumeration value="ppu">
         <annotation>
           <documentation xml:lang="en-uk">Publisher</documentation>
@@ -3340,11 +3346,6 @@
           <documentation xml:lang="en-uk">Book edition, like "2nd rev. ed."</documentation>
         </annotation>
       </element>
-      <element name="editor" type="string" minOccurs="0">
-        <annotation>
-          <documentation xml:lang="en-uk">Name of the (first) editor of the book</documentation>
-        </annotation>
-      </element>
       <element name="isbn" type="tns:_ComplexISBNType" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
@@ -3422,11 +3423,6 @@
       <element name="part" type="string" minOccurs="0">
         <annotation>
           <documentation xml:lang="en-uk">Part designation of a multipart work ("Vol. 1", "Bind 4: Middelalderen" etc.)</documentation>
-        </annotation>
-      </element>
-      <element name="editor" type="string" minOccurs="0">
-        <annotation>
-          <documentation xml:lang="en-uk">Name of the (first) editor of the report as a whole</documentation>
         </annotation>
       </element>
       <element name="isbn" type="tns:_ComplexISBNType" minOccurs="0" maxOccurs="unbounded">
