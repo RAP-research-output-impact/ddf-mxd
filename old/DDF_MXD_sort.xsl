@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mx="http://mx.forskningsdatabasen.dk/ns/documents/1.3" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mx="http://mx.forskningsdatabasen.dk/ns/documents/1.4" version="1.0">
 
     <xsl:strip-space elements="*"/>
     <xsl:output method="xml" indent="no" encoding="UTF-8"/>
