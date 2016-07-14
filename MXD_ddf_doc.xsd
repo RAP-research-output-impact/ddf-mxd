@@ -2183,6 +2183,12 @@
           <documentation xml:lang="da-dk">Illustrator</documentation>
         </annotation>
       </enumeration>
+      <enumeration value="oth">
+        <annotation>
+          <documentation xml:lang="en-uk">Other</documentation>
+          <documentation xml:lang="da-dk">Andet</documentation>
+        </annotation>
+      </enumeration>
     </restriction>
   </simpleType>
   <simpleType name="_IDTypeType">
