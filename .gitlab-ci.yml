@@ -1,0 +1,16 @@
+# README: http://docs.gitlab.com/ce/ci/yaml/README.html
+stages:
+  - build
+  
+before_script:
+  - whoami; hostname; pwd; cap -V; ruby -v
+  
+after_script:
+  - echo 'after_script executing'
+  
+build_doc_dir:
+  stage: build
+  script:
+    - ./prepare.sh
+
+
