@@ -15,6 +15,7 @@ after_script:
   
 build_doc_dir:
   stage: build
+  artifacts: t
   script:
     - ./prepare.sh
 
