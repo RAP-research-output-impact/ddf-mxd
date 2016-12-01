@@ -3,10 +3,13 @@ stages:
   - build
   
 before_script:
-  - whoami; hostname; pwd; cap -V; ruby -v
+  - whoami
+  - hostname
+  - pwd
   
 after_script:
   - echo 'after_script executing'
+  - exit 0
   
 build_doc_dir:
   stage: build
