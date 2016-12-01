@@ -1,8 +1,10 @@
 # README: http://docs.gitlab.com/ce/ci/yaml/README.html
 stages:
   - build
+  - deploy
   
 before_script:
+  - uname -a
   - whoami
   - hostname
   - pwd
@@ -16,4 +18,7 @@ build_doc_dir:
   script:
     - ./prepare.sh
 
-
+deploy_to_test:
+  stage: deploy
+  script:
+    - rsync -a t/ roel@mx.forskningsdatabasen.dk:tmp/deploytest/
