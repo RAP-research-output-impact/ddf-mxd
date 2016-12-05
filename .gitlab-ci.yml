@@ -15,6 +15,7 @@ after_script:
   
 build_doc_dir:
   stage: build
+  # artifacts is needed or any build products will be wiped in the next stage
   artifacts:
     paths:
       - t
