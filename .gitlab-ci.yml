@@ -24,5 +24,6 @@ build_doc_dir:
 
 deploy_to_test:
   stage: deploy
+  when: manual
   script:
     - rsync -a t/ roel@mx.forskningsdatabasen.dk:tmp/deploytest/
