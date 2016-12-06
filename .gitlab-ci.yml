@@ -24,6 +24,14 @@ build_doc_dir:
 
 deploy_to_test:
   stage: deploy
+  environment: staging
   when: manual
   script:
-    - rsync -a t/ roel@mx.forskningsdatabasen.dk:tmp/deploytest/
+    - rsync -r t/ roel@mx.forskningsdatabasen.dk:tmp/deploytest/
+
+deploy_to_fake_prod:
+  stage: deploy
+  environment: fakeprod
+  when: manual
+  script:
+    - rsync -r t/ roel@mx.forskningsdatabasen.dk:tmp/prodtest/
