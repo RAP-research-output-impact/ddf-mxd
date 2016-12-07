@@ -35,3 +35,4 @@ deploy_to_fake_prod:
   when: manual
   script:
     - rsync -r t/ roel@mx.forskningsdatabasen.dk:tmp/prodtest/
+
