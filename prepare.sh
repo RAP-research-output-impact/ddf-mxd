@@ -14,7 +14,7 @@ out_base_dir=t    # doesn't need to exist
 fullversion=$MAJOR.$MINOR.$REVISION
 
 target=$out_base_dir/$fullversion
-echo "Installing to $target"
+echo "Preparing distribution in $target"
 
 mkdir -p $target
 rm -f $out_base_dir/$MAJOR.$MINOR

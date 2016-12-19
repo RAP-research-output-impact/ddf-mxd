@@ -153,9 +153,6 @@
       </annotation>
       <simpleType>
         <restriction base="string">
-          <enumeration value="1.3.0" />
-          <enumeration value="1.3.1" />
-          <enumeration value="1.3.2" />
           <enumeration value="1.4.0" />
         </restriction>
       </simpleType>
