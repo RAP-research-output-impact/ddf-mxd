@@ -35,4 +35,6 @@ deploy_to_fake_prod:
   when: manual
   script:
     - rsync -avu --delete t/ capistrano@zagenth.cvt.dk:/tmp/deploytest/
+    - chmod -R g+rw /tmp/deploytest
+    - sudo chgrp -R ds2 /tmp/deploytest
 
