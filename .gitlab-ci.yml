@@ -1,4 +1,7 @@
 # README: http://docs.gitlab.com/ce/ci/yaml/README.html
+variables:
+  - REMOTE 'ssh capistrano@zagenth.cvt.dk'
+
 stages:
   - build
   - deploy
@@ -35,6 +38,6 @@ deploy_to_fake_prod:
   when: manual
   script:
     - rsync -avu --delete t/ capistrano@zagenth.cvt.dk:/tmp/deploytest/
-    - ssh capistrano@zagenth.cvt.dk 'chmod -R g+rw /tmp/deploytest'
-    - ssh capistrano@zagenth.cvt.dk 'sudo chgrp -R ds2 /tmp/deploytest'
+    - $REMOTE 'chmod -R g+rw /tmp/deploytest'
+    - $REMOTE 'sudo chgrp -R ds2 /tmp/deploytest'
 
