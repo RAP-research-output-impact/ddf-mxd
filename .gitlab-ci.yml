@@ -34,5 +34,5 @@ deploy_to_fake_prod:
   environment: fakeprod
   when: manual
   script:
-    - rsync -r t/ roel@mx.forskningsdatabasen.dk:tmp/prodtest/
+    - rsync -avu --delete t/ capistrano@zagenth.cvt.dk:/tmp/deploytest/
 
