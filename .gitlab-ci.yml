@@ -1,6 +1,6 @@
 # README: http://docs.gitlab.com/ce/ci/yaml/README.html
 variables:
-  - REMOTE 'ssh capistrano@zagenth.cvt.dk'
+  - REMOTE: 'ssh capistrano@zagenth.cvt.dk'
 
 stages:
   - build
