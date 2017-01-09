@@ -36,6 +36,7 @@ deploy_to_fake_prod:
   stage: deploy
   variables:
     DEPLOYHOST: zagenth.cvt.dk
+    DEPLOYDIR: /tmp/deploytest
   environment: fakeprod
   when: manual
   script:
