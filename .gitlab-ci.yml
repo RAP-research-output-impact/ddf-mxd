@@ -43,5 +43,5 @@ deploy_to_fake_prod:
     - rsync -avu --delete t/ capistrano@zagenth.cvt.dk:/tmp/deploytest/
     - $REMOTE $DEPLOYHOST 'chmod -R g+rw /tmp/deploytest'
     - $REMOTE $DEPLOYHOST 'sudo chgrp -R ds2 /tmp/deploytest'
-    - $REMOTE $DEPLOYHOST 'echo $DEPLOYDIR'
-    - $REMOTE $DEPLOYHOST 'cd $DEPLOYDIR; pwd; DATASTORE_HOME=. DATASTORE_CONFIG=datastore_config sudo -E -u ds2 -- sh -c "pwd; printenv"'
+    - $REMOTE $DEPLOYHOST "echo $DEPLOYDIR"
+    - $REMOTE $DEPLOYHOST "cd $DEPLOYDIR; pwd; DATASTORE_HOME=. DATASTORE_CONFIG=datastore_config sudo -E -u ds2 -- sh -c 'pwd; printenv'"
