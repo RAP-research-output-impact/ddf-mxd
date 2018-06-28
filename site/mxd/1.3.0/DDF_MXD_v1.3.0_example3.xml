@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ddf_doc xmlns="http://mx.forskningsdatabasen.dk/ns/documents/1.3" format_version="1.3.0" doc_type="dja" doc_lang="eng" doc_year="2003" doc_review="pr" doc_level="sci" rec_source="far" rec_id="23211" rec_created="2003-05-11" rec_upd="2004-02-11" rec_status="c">
+  <title>
+    <original xml:lang="eng">
+      <main>
+        Recent applications of microemulsion electrokinetic chromatography
+      </main>
+    </original>
+  </title>      
+  <description>           
+    <abstract xml:lang="eng">
+      Microemulsions are used in a similar way as micellar solutions are used for separations in capillary electrophoresis. Within the last six years, a number of papers have appeared in the literature in which the separation characteristics of microemulsion electrokinetic chromatography (MEEKC) have been investigated. One of the major fields of application for MEEKC has been the lipophilicity of chemical substances but the technique has also been applied for the analysis of substances within the fields of natural products, pharmaceuticals, vitamins, peptides, proteins, and nucleic acid bases as well as nucleosides. An overview of the applications is given together with the microemulsions used for each application.  
+    </abstract>
+    <subject>       
+      <keyword key_type="fre" xml:lang="eng">
+        Microemulsion electrokinetic chromatography
+      </keyword>
+      <keyword key_type="fre" xml:lang="eng">Review</keyword>
+    </subject>
+    <research_area area_code="sci" xml:lang="en">Science/technology</research_area>
+  </description>
+  <person pers_role="pau" aff_no="001">           
+    <name>
+      <first>Steen Honore</first>
+      <last>Hansen</last>
+    </name>
+    <id id_type="loc_org" id_source="dtu">12345</id>
+    <email>shh@dfuni.dk</email>     
+    <uri>http://www.dfh.dk/index.php?id=1338</uri>  
+  </person>       
+  <organisation org_role="oaf" aff_no="001">              
+    <name xml:lang="eng">   
+      <level1>The Danish University of Pharmaceutical Sciences</level1>
+      <level2>Department of Analytical Chemistry</level2>
+      <acronym>DFU</acronym>
+    </name>
+    <uri>http://www.dfuni.dk/index.php?id=531</uri> 
+  </organisation>
+  <publication bfi_serial_no="A1234">           
+    <in_journal pub_status="p">
+      <title>Electrophoresis</title>
+      <title_alternative>Elektroforese</title_alternative>
+      <title_alternative>Electroforese</title_alternative>
+      <issn type="pri">01730835</issn>
+      <issn type="ele">15222683</issn>
+      <year>2003</year>
+      <vol>24</vol>
+      <issue>22-23</issue>
+      <pages>3900-3907</pages>
+      <doi>10.1002/elps.200305637</doi>
+      <uri>http://www3.interscience.wiley.com/cgi-bin/abstract/106568866/</uri>
+    </in_journal>
+    <digital_object id="ir:dfu:1020" role="pos" access="oa">
+      <description>Full text in Institutional Repository</description>
+      <file size="345675" mime_type="audio/pdf-bla" timestamp="2007-09-03T14:42:58" filename="post-print_article.pdf">
+        <description>Last version before publishing</description>
+      </file>
+      <uri>http://ir.dfu.dk/1020</uri>
+    </digital_object>
+  </publication> 
+</ddf_doc>

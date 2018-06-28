@@ -1,0 +1,3959 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://mx.forskningsdatabasen.dk/ns/documents/1.3" targetNamespace="http://mx.forskningsdatabasen.dk/ns/documents/1.3" elementFormDefault="qualified" xml:lang="EN">
+  <!--
+       2005-11-16  1.0.0.0 initial release
+
+       2006-03-01  1.1.0.0 relaxed data definition of vol, pages (in book/article),
+                   issue, event/number; allow ISBN ending in X; added doc_type dx; 
+                   added record_source hvhosp and kas. Update your namespace.
+
+       2006-03-15  1.1.0.1 fixed forgotten format_version, mental note: remember
+                   next time!
+
+       2006-03-21  1.1.0.2 Changed the pattern in _ISBNType to two patterns
+                   with a union to avoid some problems with some versions
+                   of libxml2
+
+       2006-05-18  1.1.0.3 More elements/attributes marked as mandatory, others
+                   relaxed; added author types sup,inv; minor typos and list
+                   order fixes; Changed _CountryType to be an actual enumeration
+                   of valid codes; In _PatentType, changed coutry to be of type 
+                   _CountryType rather than language.
+
+       2007-11-07  1.1.1.0 (unpublished) New revision under Mikael Elbæks
+                   supervision.  Added digital objects, report-issue
+                   field, access attributes, issn and isbn @type.
+                   Significant change in wording of version
+                   numbering. This version validates all previous
+                   1.1.x format_versions.
+
+       2008-05-29  1.2.0.0 Changes for the FI-project. This version will NOT
+                   validate older records, even if you cheat with its namespace.
+
+       2009-01-30  1.2.0.1 Corrected enumeration of idTypeType to include fi_nfdb.
+
+       2009-02-16  1.2.0.2 Stretched _PagesType to allow 8 positions. Added country
+                   code ME for Montenegro.
+
+       2010-01-06  1.2.1.0 Added publisher_no to report and in_report.
+
+       2011-05-24  1.2.2.0 Added authorities in _PublishingStatusType, _IdTypeType,
+                   and _AccessType. Added series, year under in_report and report.
+
+       2011-09-28  1.2.2.1 Made digital_object repeatable as per the documentation.
+       
+       2012-02-27  1.3.0.0 Added publication/@bfi_serial_no to replace 
+                   publication/*/journal_no. Added publication/@bfi_publisher_no to
+                   replace publication/*/publisher_no. Added sub_event to event.
+                   Added event/@bfi_conference_no to replace dasti_conference_no.
+                   Cleanup of schema eliminating misguided use of sequences for
+                   setting minOccurs and maxOccurs when these could be set on element
+                   instead. Cleanup removing explicit use of default values in 
+                   attributes (e.g. minOccurs="1", maxOccurs="1", use="optional").
+                   Changed namespace to use "documents" instead of "mxd" and to
+                   use new version 1.3
+
+       2012-10-30  1.3.0.1 Extracted event id type to a named type  
+
+       2014-04-14  1.3.1.pre (unpublished) Added IHK organisation
+
+       2015-06-08  1.3.1.0 Added oa_link element and associated new types. Add
+                   volume/issue/issn to in_book, in_report, book, report w/a.
+                   Vocabulary additions.
+                   
+       2015-08-07  1.3.1.1 oa_link/@url is no longer mandatory.
+  -->
+
+  <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
+  <element name="ddf_doc" type="tns:DdfDocType">
+    <unique name="organisationAffiliationKey">
+      <annotation>
+        <documentation xml:lang="en-uk">This construct ensures that all OrganisationAffiliationKeys are unique within the document</documentation>
+      </annotation>
+      <selector xpath="./tns:organisation"/>
+      <field xpath="@aff_no"/>
+    </unique>
+    <keyref name="organisationAffiliationNumberKeyRef" refer="tns:affiliationKey">
+      <annotation>
+        <documentation xml:lang="en-uk">This keyref/key ensures that a person only references existing organisations</documentation>
+      </annotation>
+      <selector xpath="./tns:person"/>
+      <field xpath="@aff_no"/>
+    </keyref>
+    <key name="affiliationKey">
+      <selector xpath="./tns:organisation"/>
+      <field xpath="@aff_no"/>
+    </key>
+  </element>
+  <complexType name="DdfDocType">
+    <annotation>
+      <documentation xml:lang="en-uk">Root element of one document record. Other DDF record types similarly have type-specific root elements, ddf_pro for projects, ddf_org for organisations, ddf_per for persons, etc.</documentation>
+    </annotation>
+    <sequence>
+      <element name="title" type="tns:_TitleType">
+        <annotation>
+          <documentation xml:lang="en-uk">Title of the work in focus. Other titles such as conference titles and titles of host publications (journals, books) are recorded in other elements, ddf_doc/event and ddf_doc/publication respectively. The element is organised in the following 2 sub-elements: title/original (mandatory) title/translated (optional and repeatable)</documentation>
+        </annotation>
+      </element>
+      <element name="description" type="tns:_DescriptionType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">The description element is the common container for a variety of descriptive data types that deal with the content of the document, such as notes, abstracts, subject classifications and keywords etc. The description element is not mandatory but should be used whenever such data is available. The element is organised in the following sub-elements: description/abstract (summary of the content), description/thesis (special structured note for academic thesis), description/note (other descriptive notes), description/subject/keyword (free or controlled keywords), description/subject/class (classification system codes).</documentation>
+        </annotation>
+      </element>
+      <element name="person" type="tns:_PersonType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">This repeatable element is used to record information about any person related to the creation of the document (like authors, editors, composers, publishers, illustrators etc.). Each person and the corresponding role are recorded in a separate instance of the element and the sequence should follow that of the document title page. The correct attribution of persons to documents is essential for any statistical purposes. The element is organised in the following sub-elements of which most are optional: person/name (split in first and last name), person/id (various forms of identification numbers - optional), person/title (personal title - optional), person/birthdate (optional), person/country (of citizenship - recommended), person/address (postal - optional), person/email (optional), person/uri (link to web page - optional)</documentation>
+        </annotation>
+      </element>
+      <element name="organisation" type="tns:_OrganisationType" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">This repeatable element is used to record information about any organisation related to the document, whether it be as the affiliation of an author, as a corporative author or in any other capacity of importance for the document. Each organisation and the corresponding role is recorded in a separate instance of the element. The correct attribution of organisations to documents is essential for any statistical purposes. The element is organised in the following sub-elements: organisation/name (split in up to 4 hierarchical levels and acronym), organisation/id (optional), organisation/country (recommended), organisation/uri (link to web page - optional)</documentation>
+        </annotation>
+      </element>
+      <element name="project" type="tns:_ProjectType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">This repeatable element is used to record information about any project related to the document. Each project and the corresponding role are recorded in a separate instance of the element. The attribution of projects to documents will allow users to jump easily between projects and their documents. The element is organised in the following sub-elements: project/title (split in main and sub and acronym), project/id (optional) project/uri (link to web page - optional)</documentation>
+        </annotation>
+      </element>
+      <element name="event" type="tns:_EventType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">This repeatable element is used to record information about any event (conference, seminar, workshop, meeting, course, etc.) related to the document. Each event and its corresponding role are recorded in a separate instance of the element. The element is organised in the following sub-elements: event/title (split in full, acronym and number), event/dates (split in start and end), event/place (split in start and end), event/uri (link to web page - optional)</documentation>
+        </annotation>
+      </element>
+      <element name="local_field" type="tns:_LocalFieldType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">This repeatable and optional element is used to handle additional information using a locally defined two-level field structure, where a local field may have one or more parallel subfields. The local_field/@tag_type attribute is used to pass instructions on how to index and display the field and its subfields in the receiving system. The element is organised in the following sub-elements: local_field/code (field code), local_field/data (field data), local_field/subfield (subfield likewise split in code and data)</documentation>
+        </annotation>
+      </element>
+      <element name="publication" type="tns:PublicationType">
+        <annotation>
+          <documentation xml:lang="en-uk">
+            The mandatory publication element carries all the information about how the document was published in the widest sense of the word, including electronic availability via personal homepages, institutional repositories and similar web sites. The publication element is structured in 9 publication cases, each with its own repertoire of subelements: In a journal (as an article or similar); In a book (as a chapter or similar); In a report (as a chapter or similar); As a book (the book as a whole); As a report (the report as a whole); As a patent (or patent application); As an Internet publication (institutional repository, preprint archive, home page etc.); As a digital object (in a managed institutional repository, preprint archive etc.); Any other form of publication. These cases correspond to the sub-elements: in_journal, in_book, in_report, book, report, patent, inetpub and other. At least one of these cases must be applied, but often two or more cases may be applied concurrently. For example, a journal article may be published "In a journal" and at the same be available at the author's institutional repository as an "Internet publication" or "Digital object".
+          </documentation>
+        </annotation>
+      </element>
+      <element name="oa_link" type="tns:_OalinkType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">URL to the electronic Open Access version of the document</documentation>
+        </annotation>
+      </element>
+    </sequence>
+
+    <attribute name="format_version" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">The particular version of the exchange format used.</documentation>
+      </annotation>
+      <simpleType>
+        <restriction base="string">
+          <enumeration value="1.3.0" />
+          <enumeration value="1.3.1" />
+        </restriction>
+      </simpleType>
+    </attribute>
+
+    <attribute name="doc_type" type="tns:_DocTypeType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Code for type of document (like "dja" for "journal article") according to the DDF list of types and their codes (see note). Code is used for various retrieval and sorting purposes, see Annex 1.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="doc_lang" type="language" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Code for language of the document itself. Codes must follow the W3C rules for xml:lang, complying with IETF RFC 3066 and ISO 639-1 2-letter codes, or ISO639-2 for 3-letter codes.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="doc_year" type="gYear" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Annual report year of the document (may differ from publication year) in the format yyyy. This is used for various sorting and searching purposes as well as for data management.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="doc_review" type="tns:_DocReviewType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Code indicating the type of review the document has been subject to like "peer-review" or "no review". See note for DDF list of review types and their codes. Code is used for various retrieval and sorting purposes, see Annex 1.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="doc_level" type="tns:_DocLevelType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Code indicating literary scope or level of the document, like "scientific", "educational", "popular". See note for DDF list of levels and their codes. Code is used for various retrieval and sorting purposes, see Annex 1.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="rec_source" type="tns:_InstituteCodeType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Code of exporting database/institution. Each organisation/database acting as a source and exporting records to DDF is registered with a unique code. See note for DDF list of source database codes.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="rec_id" type="string" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">The data supplier's local/original ID of the record – must be unique per data supplier. In case supplier is exporting from more than one local database, which may use the same IDs, these must be prefixed (with database name or similar) to become unique within the supplier's data.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="rec_created" type="date" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Date when the record was first created in the local database, in yyyy-mm-dd</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="rec_upd" type="date" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Last update date of the exporting database in the format yyyy-mm-dd</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="rec_status" type="tns:_RecStatusType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Code indicating whether the record is to be considered as "new", "updated" or "deleted". See note for DDF list of record status codes.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>  <!-- DdfDocType -->
+
+  <complexType name="_TitleType">
+    <sequence>
+      <element name="original" type="tns:_TitleOriginalType">
+        <annotation>
+          <documentation xml:lang="en-uk">The title in the original language – use sub-elements below</documentation>
+        </annotation>
+      </element>
+      <element name="translated" type="tns:_TitleTranslatedType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">The title translated to another language – use sub-elements below</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="_LocalFieldType">
+    <sequence>
+      <!-- RdC: replaced NCName by the less restrictive LocalFieldCodeType -->
+      <element name="code" type="tns:_LocalFieldCodeType">
+        <annotation>
+          <documentation xml:lang="en-uk">Field code (tag) using a-z and 0-9 only</documentation>
+        </annotation>
+      </element>
+      <element name="data" type="string">
+        <annotation>
+          <documentation xml:lang="en-uk">Field data</documentation>
+        </annotation>
+      </element>
+      <element name="subfield" type="tns:_LocalFieldCodeDataType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Repeatable subfield likewise split in code and data</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="tag_type" type="tns:_LocalFieldTagType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Defining if/how field and should be indexed and displayed, see note</documentation>
+      </annotation>
+    </attribute>
+    <attribute ref="xml:lang">
+      <annotation>
+        <documentation xml:lang="en-uk">Language of field</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_LocalFieldCodeDataType">
+    <sequence>
+      <!-- RdC: replaced NCName by the less restrictive LocalFieldCodeType -->
+      <element name="code" type="tns:_LocalFieldCodeType">
+        <annotation>
+          <documentation xml:lang="en-uk">Field code (tag) using a-z and 0-9 only</documentation>
+        </annotation>
+      </element>
+      <element name="data" type="string">
+        <annotation>
+          <documentation xml:lang="en-uk">Field data</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="_EventType">
+    <sequence>
+      <element name="title" type="tns:_EventTitleType" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Title - only repeatable in case of language variants – use sub-elements below</documentation>
+        </annotation>
+      </element>
+      <element name="dates" minOccurs="0" type="tns:_EventDatesType">
+        <annotation>
+          <documentation xml:lang="en-uk">Start and end dates of event – use sub-elements below:</documentation>
+        </annotation>
+      </element>
+      <element name="place" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Place (city, country) of the event/conference</documentation>
+        </annotation>
+      </element>
+      <element name="sub_event" minOccurs="0" maxOccurs="unbounded" type="tns:_SubEventType">
+        <annotation>
+          <documentation xml:lang="en-uk">Sub event (like track or lecture) related to the main event and the document</documentation>
+        </annotation>
+      </element>
+      <element name="id" type="tns:_EventIdType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ID of the main event</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="event_role" type="tns:_EventRoleType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Role of the event in relation to the document (see note for authorised values)</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="bfi_conference_no" type="string">
+      <annotation>
+        <documentation xml:lang="en-uk">BFI conference no from the BFI conference database</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_EventIdType">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="id_type" type="tns:_IDTypeType" use="required">
+          <annotation>
+            <documentation xml:lang="en-uk">Type of ID, registered with DDF - like local event identifier</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_EventTitleType">
+    <sequence>
+      <element name="full" type="string">
+        <annotation>
+          <documentation xml:lang="en-uk">Full event title, like "European Conference on Digital Libraries"</documentation>
+        </annotation>
+      </element>
+      <element name="acronym" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Acronym event title, like "ECDL"</documentation>
+        </annotation>
+      </element>
+      <element name="number" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Number in series of recurrent events, like "8"</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute ref="xml:lang">
+      <annotation>
+        <documentation xml:lang="en-uk">Language of the event title (mandatory if title is repeated)</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_EventDatesType">
+    <sequence>
+      <element name="start" type="tns:_EventDateType">
+        <annotation>
+          <documentation xml:lang="en-uk">First day of the event in format yyyy-mm-dd, or yyyy-mm, or yyyy</documentation>
+        </annotation>
+      </element>
+      <element name="end" type="tns:_EventDateType">
+        <annotation>
+          <documentation xml:lang="en-uk">Last day of the event in format yyyy-mm-dd, or yyyy-mm, or yyyy</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="_EventDateType">
+    <union memberTypes="gYear date gYearMonth"/>
+  </simpleType>
+  <complexType name="_SubEventType">
+    <sequence>
+      <element name="title" maxOccurs="unbounded" type="tns:_StringWithLanguageType">
+        <annotation>
+          <documentation xml:lang="en-uk">Title of the sub event</documentation>
+        </annotation>
+      </element>
+      <element name="acronym" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Acronym of the sub event tile</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="event_type" use="required">
+      <simpleType>
+        <restriction base="string">
+          <enumeration value="lec">
+            <annotation>
+              <documentation xml:lang="en-uk">Lecture</documentation>
+              <documentation xml:lang="da-dk">Forelæsning</documentation>
+            </annotation>
+          </enumeration>
+          <enumeration value="cla">
+            <annotation>
+              <documentation xml:lang="en-uk">Class</documentation>
+              <documentation xml:lang="da-dk">Undervisningstime</documentation>
+            </annotation>
+          </enumeration>
+          <enumeration value="ses">
+            <annotation>
+              <documentation xml:lang="en-uk">Session</documentation>
+              <documentation xml:lang="da-dk">Session</documentation>
+            </annotation>
+          </enumeration>
+          <enumeration value="tra">
+            <annotation>
+              <documentation xml:lang="en-uk">Conference track</documentation>
+              <documentation xml:lang="da-dk">Konferencespor</documentation>
+            </annotation>
+          </enumeration>
+          <enumeration value="wor">
+            <annotation>
+              <documentation xml:lang="en-uk">Workshop</documentation>
+              <documentation xml:lang="da-dk">Workshop</documentation>
+            </annotation>
+          </enumeration>
+        </restriction>
+      </simpleType>
+    </attribute>
+  </complexType>
+  <complexType name="_ProjectType">
+    <sequence>
+      <element name="title" type="tns:_ProjectTitleType" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Title - only repeatable in case of language variants – use sub-elements below</documentation>
+        </annotation>
+      </element>
+      <element name="id" type="tns:_ProjectIDType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Identification number or code</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="proj_role" type="tns:_ProjectRoleType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Role of the project in relation to the document (see note for authorised values)</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_ProjectTitleType">
+    <sequence minOccurs="0" maxOccurs="unbounded">
+      <element name="main" type="string">
+        <annotation>
+          <documentation xml:lang="en-uk">Main title</documentation>
+        </annotation>
+      </element>
+      <element name="sub" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Sub title</documentation>
+        </annotation>
+      </element>
+      <element name="acronym" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Acronym</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute ref="xml:lang">
+      <annotation>
+        <documentation xml:lang="en-uk">Language of project title (mandatory if title is repeated)</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_PersonType">
+    <sequence>
+      <element name="name" type="tns:_PersonNameType">
+        <annotation>
+          <documentation xml:lang="en-uk">Pesonal name – use sub-elements below</documentation>
+        </annotation>
+      </element>
+      <element name="id" type="tns:_PersonIDType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Identification number or code</documentation>
+        </annotation>
+      </element>
+      <element name="title" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Personal title related to academic degree and/or job function.</documentation>
+        </annotation>
+      </element>
+      <element name="birthdate" type="date" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">In format yyyy-mm-dd</documentation>
+        </annotation>
+      </element>
+      <element name="country" type="tns:_CountryType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Country of citizenship using ISO country codes</documentation>
+        </annotation>
+      </element>
+      <element name="address" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Postal address</documentation>
+        </annotation>
+      </element>
+      <element name="email" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Email address</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="pers_role" type="tns:_PersonRoleType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Role of the person in relation to the document (see note for authorised values)</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="aff_no" type="tns:_OrganisationAffiliationNumberType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Internal reference no. of the organisation (ddf_doc/organisation/@aff_no) to which the person was affiliated while creating/contributing to this document.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_PersonNameType">
+    <sequence>
+      <element name="first" type="string">
+        <annotation>
+          <documentation xml:lang="en-uk">First name (personal name) or initials</documentation>
+        </annotation>
+      </element>
+      <element name="last" type="string">
+        <annotation>
+          <documentation xml:lang="en-uk">Last name (family name)</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="_PersonIDType">
+    <simpleContent>
+      <extension base="string">
+        <attribute use="required" name="id_type" type="tns:_IDTypeType">
+          <annotation>
+            <documentation xml:lang="en-uk">Type of ID, registered with DDF - like Danish CPR no.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="id_source" type="tns:_InstituteCodeType">
+          <annotation>
+            <documentation xml:lang="en-uk">Code of database/institution this personID originates from. See note for DDF list of source database codes.</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_ProjectIDType">
+    <simpleContent>
+      <extension base="string">
+        <attribute use="required" name="id_type" type="tns:_IDTypeType">
+          <annotation>
+            <documentation xml:lang="en-uk">Type of ID, registered with DDF - like local project number</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_OrganisationType">
+    <sequence>
+      <element name="name" type="tns:_OrganisationNameType" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Name - only repeatable in case of language variants - use sub-elements below</documentation>
+        </annotation>
+      </element>
+      <element name="id" type="tns:_OrganisationIDType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Identification number or code</documentation>
+        </annotation>
+      </element>
+      <element name="country" type="tns:_CountryType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Country of legal residence using ISO country codes</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web page</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="org_role" type="tns:_OrganisationRoleType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Role of the organisation in relation to the document (see note for authorised values)</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="aff_no" type="tns:_OrganisationAffiliationNumberType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Internal reference no. of the organisation. Is used to link persons with the right affiliation.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_OrganisationNameType">
+    <sequence>
+      <element name="level1" type="string">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of highest organisational level (example: university) In cases where the name cannot be split in several hierarchical levels, this sub-element contains the entire name.</documentation>
+        </annotation>
+      </element>
+      <element name="level2" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of second organisational level (example: faculty)</documentation>
+        </annotation>
+      </element>
+      <element name="level3" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of third organisational level (example: institute, department)</documentation>
+        </annotation>
+      </element>
+      <element name="level4" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of fourth organisational level (example: section, division, group)</documentation>
+        </annotation>
+      </element>
+      <element name="acronym" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Acronym. Whenever possible, the acronym should reflect the same organisational hierarchy as the levels of the full name, for example UNIV.FACU.INST.GRP</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute ref="xml:lang">
+      <annotation>
+        <documentation xml:lang="en-uk">Language of organisation name (mandatory if name is repeated)</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_OrganisationIDType">
+    <simpleContent>
+      <extension base="string">
+        <attribute use="required" name="id_type" type="tns:_IDTypeType">
+          <annotation>
+            <documentation xml:lang="en-uk">Type of ID, registered with DDF - like Danish CVR no.</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <simpleType name="_CountryType">
+    <restriction base="string">
+      <enumeration value="af">
+        <annotation>
+          <documentation xml:lang="en-uk">Afghanistan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ax">
+        <annotation>
+          <documentation xml:lang="en-uk">Åland Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="al">
+        <annotation>
+          <documentation xml:lang="en-uk">Albania</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dz">
+        <annotation>
+          <documentation xml:lang="en-uk">Algeria</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="as">
+        <annotation>
+          <documentation xml:lang="en-uk">American Samoa</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ad">
+        <annotation>
+          <documentation xml:lang="en-uk">Andorra</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ao">
+        <annotation>
+          <documentation xml:lang="en-uk">Angola</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ai">
+        <annotation>
+          <documentation xml:lang="en-uk">Anguilla</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="aq">
+        <annotation>
+          <documentation xml:lang="en-uk">Antarctica</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ag">
+        <annotation>
+          <documentation xml:lang="en-uk">Antigua and Barbuda</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ar">
+        <annotation>
+          <documentation xml:lang="en-uk">Argentina</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="am">
+        <annotation>
+          <documentation xml:lang="en-uk">Armenia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="aw">
+        <annotation>
+          <documentation xml:lang="en-uk">Aruba</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="au">
+        <annotation>
+          <documentation xml:lang="en-uk">Australia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="at">
+        <annotation>
+          <documentation xml:lang="en-uk">Austria</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="az">
+        <annotation>
+          <documentation xml:lang="en-uk">Azerbaijan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bs">
+        <annotation>
+          <documentation xml:lang="en-uk">Bahamas</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bh">
+        <annotation>
+          <documentation xml:lang="en-uk">Bahrain</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bd">
+        <annotation>
+          <documentation xml:lang="en-uk">Bangladesh</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bb">
+        <annotation>
+          <documentation xml:lang="en-uk">Barbados</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="by">
+        <annotation>
+          <documentation xml:lang="en-uk">Belarus</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="be">
+        <annotation>
+          <documentation xml:lang="en-uk">Belgium</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bz">
+        <annotation>
+          <documentation xml:lang="en-uk">Belize</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bj">
+        <annotation>
+          <documentation xml:lang="en-uk">Benin</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bm">
+        <annotation>
+          <documentation xml:lang="en-uk">Bermuda</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bt">
+        <annotation>
+          <documentation xml:lang="en-uk">Bhutan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bo">
+        <annotation>
+          <documentation xml:lang="en-uk">Bolivia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ba">
+        <annotation>
+          <documentation xml:lang="en-uk">Bosnia and Herzegovina</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bw">
+        <annotation>
+          <documentation xml:lang="en-uk">Botswana</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bv">
+        <annotation>
+          <documentation xml:lang="en-uk">Bouvet Island</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="br">
+        <annotation>
+          <documentation xml:lang="en-uk">Brazil</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="io">
+        <annotation>
+          <documentation xml:lang="en-uk">British Indian Ocean Territory</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bn">
+        <annotation>
+          <documentation xml:lang="en-uk">Brunei Darussalam</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bg">
+        <annotation>
+          <documentation xml:lang="en-uk">Bulgaria</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bf">
+        <annotation>
+          <documentation xml:lang="en-uk">Burkina Faso</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bi">
+        <annotation>
+          <documentation xml:lang="en-uk">Burundi</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kh">
+        <annotation>
+          <documentation xml:lang="en-uk">Cambodia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cm">
+        <annotation>
+          <documentation xml:lang="en-uk">Cameroon</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ca">
+        <annotation>
+          <documentation xml:lang="en-uk">Canada</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cv">
+        <annotation>
+          <documentation xml:lang="en-uk">Cape Verde</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ky">
+        <annotation>
+          <documentation xml:lang="en-uk">Cayman Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cf">
+        <annotation>
+          <documentation xml:lang="en-uk">Central African Republic</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="td">
+        <annotation>
+          <documentation xml:lang="en-uk">Chad</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cl">
+        <annotation>
+          <documentation xml:lang="en-uk">Chile</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cn">
+        <annotation>
+          <documentation xml:lang="en-uk">China</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cx">
+        <annotation>
+          <documentation xml:lang="en-uk">Christmas Island</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cc">
+        <annotation>
+          <documentation xml:lang="en-uk">Cocos (Keeling) Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="co">
+        <annotation>
+          <documentation xml:lang="en-uk">Colombia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="km">
+        <annotation>
+          <documentation xml:lang="en-uk">Comoros</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cg">
+        <annotation>
+          <documentation xml:lang="en-uk">Congo</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cd">
+        <annotation>
+          <documentation xml:lang="en-uk">Congo, the Democratic Republic of the</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ck">
+        <annotation>
+          <documentation xml:lang="en-uk">Cook Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cr">
+        <annotation>
+          <documentation xml:lang="en-uk">Costa Rica</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ci">
+        <annotation>
+          <documentation xml:lang="en-uk">Cote d'Ivoire</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hr">
+        <annotation>
+          <documentation xml:lang="en-uk">Croatia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cu">
+        <annotation>
+          <documentation xml:lang="en-uk">Cuba</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cy">
+        <annotation>
+          <documentation xml:lang="en-uk">Cyprus</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cz">
+        <annotation>
+          <documentation xml:lang="en-uk">Czech Republic</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dk">
+        <annotation>
+          <documentation xml:lang="en-uk">Denmark</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dj">
+        <annotation>
+          <documentation xml:lang="en-uk">Djibouti</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dm">
+        <annotation>
+          <documentation xml:lang="en-uk">Dominica</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="do">
+        <annotation>
+          <documentation xml:lang="en-uk">Dominican Republic</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ec">
+        <annotation>
+          <documentation xml:lang="en-uk">Ecuador</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="eg">
+        <annotation>
+          <documentation xml:lang="en-uk">Egypt</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sv">
+        <annotation>
+          <documentation xml:lang="en-uk">El Salvador</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gq">
+        <annotation>
+          <documentation xml:lang="en-uk">Equatorial Guinea</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="er">
+        <annotation>
+          <documentation xml:lang="en-uk">Eritrea</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ee">
+        <annotation>
+          <documentation xml:lang="en-uk">Estonia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="et">
+        <annotation>
+          <documentation xml:lang="en-uk">Ethiopia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fk">
+        <annotation>
+          <documentation xml:lang="en-uk">Falkland Islands (Malvinas)</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fo">
+        <annotation>
+          <documentation xml:lang="en-uk">Faroe Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fj">
+        <annotation>
+          <documentation xml:lang="en-uk">Fiji</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fi">
+        <annotation>
+          <documentation xml:lang="en-uk">Finland</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fr">
+        <annotation>
+          <documentation xml:lang="en-uk">France</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gf">
+        <annotation>
+          <documentation xml:lang="en-uk">French Guiana</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pf">
+        <annotation>
+          <documentation xml:lang="en-uk">French Polynesia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tf">
+        <annotation>
+          <documentation xml:lang="en-uk">French Southern Territories</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ga">
+        <annotation>
+          <documentation xml:lang="en-uk">Gabon</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gm">
+        <annotation>
+          <documentation xml:lang="en-uk">Gambia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ge">
+        <annotation>
+          <documentation xml:lang="en-uk">Georgia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="de">
+        <annotation>
+          <documentation xml:lang="en-uk">Germany</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gh">
+        <annotation>
+          <documentation xml:lang="en-uk">Ghana</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gi">
+        <annotation>
+          <documentation xml:lang="en-uk">Gibraltar</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gr">
+        <annotation>
+          <documentation xml:lang="en-uk">Greece</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gl">
+        <annotation>
+          <documentation xml:lang="en-uk">Greenland</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gd">
+        <annotation>
+          <documentation xml:lang="en-uk">Grenada</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gp">
+        <annotation>
+          <documentation xml:lang="en-uk">Guadeloupe</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gu">
+        <annotation>
+          <documentation xml:lang="en-uk">Guam</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gt">
+        <annotation>
+          <documentation xml:lang="en-uk">Guatemala</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gg">
+        <annotation>
+          <documentation xml:lang="en-uk">Guernsey</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gn">
+        <annotation>
+          <documentation xml:lang="en-uk">Guinea</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gw">
+        <annotation>
+          <documentation xml:lang="en-uk">Guinea-bissau</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gy">
+        <annotation>
+          <documentation xml:lang="en-uk">Guyana</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ht">
+        <annotation>
+          <documentation xml:lang="en-uk">Haiti</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hm">
+        <annotation>
+          <documentation xml:lang="en-uk">Heard Island and McDonald Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="va">
+        <annotation>
+          <documentation xml:lang="en-uk">Holy See (Vatican City State)</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hn">
+        <annotation>
+          <documentation xml:lang="en-uk">Honduras</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hk">
+        <annotation>
+          <documentation xml:lang="en-uk">Hong Kong</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hu">
+        <annotation>
+          <documentation xml:lang="en-uk">Hungary</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="is">
+        <annotation>
+          <documentation xml:lang="en-uk">Iceland</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="in">
+        <annotation>
+          <documentation xml:lang="en-uk">India</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="id">
+        <annotation>
+          <documentation xml:lang="en-uk">Indonesia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ir">
+        <annotation>
+          <documentation xml:lang="en-uk">Iran, Islamic Republic of</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="iq">
+        <annotation>
+          <documentation xml:lang="en-uk">Iraq</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ie">
+        <annotation>
+          <documentation xml:lang="en-uk">Ireland</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="im">
+        <annotation>
+          <documentation xml:lang="en-uk">Isle of Man</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="il">
+        <annotation>
+          <documentation xml:lang="en-uk">Israel</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="it">
+        <annotation>
+          <documentation xml:lang="en-uk">Italy</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="jm">
+        <annotation>
+          <documentation xml:lang="en-uk">Jamaica</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="jp">
+        <annotation>
+          <documentation xml:lang="en-uk">Japan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="je">
+        <annotation>
+          <documentation xml:lang="en-uk">Jersey</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="jo">
+        <annotation>
+          <documentation xml:lang="en-uk">Jordan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kz">
+        <annotation>
+          <documentation xml:lang="en-uk">Kazakhstan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ke">
+        <annotation>
+          <documentation xml:lang="en-uk">Kenya</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ki">
+        <annotation>
+          <documentation xml:lang="en-uk">Kiribati</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kp">
+        <annotation>
+          <documentation xml:lang="en-uk">Korea, Democratic People's Republic of</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kr">
+        <annotation>
+          <documentation xml:lang="en-uk">Korea, Republic of</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kw">
+        <annotation>
+          <documentation xml:lang="en-uk">Kuwait</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kg">
+        <annotation>
+          <documentation xml:lang="en-uk">Kyrgyzstan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="la">
+        <annotation>
+          <documentation xml:lang="en-uk">Lao People's Democratic Republic</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lv">
+        <annotation>
+          <documentation xml:lang="en-uk">Latvia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lb">
+        <annotation>
+          <documentation xml:lang="en-uk">Lebanon</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ls">
+        <annotation>
+          <documentation xml:lang="en-uk">Lesotho</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lr">
+        <annotation>
+          <documentation xml:lang="en-uk">Liberia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ly">
+        <annotation>
+          <documentation xml:lang="en-uk">Libyan Arab Jamahiriya</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="li">
+        <annotation>
+          <documentation xml:lang="en-uk">Liechtenstein</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lt">
+        <annotation>
+          <documentation xml:lang="en-uk">Lithuania</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lu">
+        <annotation>
+          <documentation xml:lang="en-uk">Luxembourg</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="me">
+        <annotation>
+          <documentation xml:lang="en-uk">Montenegro</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mo">
+        <annotation>
+          <documentation xml:lang="en-uk">Macao</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mk">
+        <annotation>
+          <documentation xml:lang="en-uk">Macedonia, the Former Yugoslav Republic of</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mg">
+        <annotation>
+          <documentation xml:lang="en-uk">Madagascar</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mw">
+        <annotation>
+          <documentation xml:lang="en-uk">Malawi</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="my">
+        <annotation>
+          <documentation xml:lang="en-uk">Malaysia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mv">
+        <annotation>
+          <documentation xml:lang="en-uk">Maldives</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ml">
+        <annotation>
+          <documentation xml:lang="en-uk">Mali</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mt">
+        <annotation>
+          <documentation xml:lang="en-uk">Malta</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mh">
+        <annotation>
+          <documentation xml:lang="en-uk">Marshall Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mq">
+        <annotation>
+          <documentation xml:lang="en-uk">Martinique</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mr">
+        <annotation>
+          <documentation xml:lang="en-uk">Mauritania</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mu">
+        <annotation>
+          <documentation xml:lang="en-uk">Mauritius</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="yt">
+        <annotation>
+          <documentation xml:lang="en-uk">Mayotte</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mx">
+        <annotation>
+          <documentation xml:lang="en-uk">Mexico</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fm">
+        <annotation>
+          <documentation xml:lang="en-uk">Micronesia, Federated States of</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="md">
+        <annotation>
+          <documentation xml:lang="en-uk">Moldova, Republic of</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mc">
+        <annotation>
+          <documentation xml:lang="en-uk">Monaco</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mn">
+        <annotation>
+          <documentation xml:lang="en-uk">Mongolia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ms">
+        <annotation>
+          <documentation xml:lang="en-uk">Montserrat</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ma">
+        <annotation>
+          <documentation xml:lang="en-uk">Morocco</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mz">
+        <annotation>
+          <documentation xml:lang="en-uk">Mozambique</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mm">
+        <annotation>
+          <documentation xml:lang="en-uk">Myanmar</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="na">
+        <annotation>
+          <documentation xml:lang="en-uk">Namibia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="nr">
+        <annotation>
+          <documentation xml:lang="en-uk">Nauru</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="np">
+        <annotation>
+          <documentation xml:lang="en-uk">Nepal</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="nl">
+        <annotation>
+          <documentation xml:lang="en-uk">Netherlands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="an">
+        <annotation>
+          <documentation xml:lang="en-uk">Netherlands Antilles</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="nc">
+        <annotation>
+          <documentation xml:lang="en-uk">New Caledonia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="nz">
+        <annotation>
+          <documentation xml:lang="en-uk">New Zealand</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ni">
+        <annotation>
+          <documentation xml:lang="en-uk">Nicaragua</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ne">
+        <annotation>
+          <documentation xml:lang="en-uk">Niger</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ng">
+        <annotation>
+          <documentation xml:lang="en-uk">Nigeria</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="nu">
+        <annotation>
+          <documentation xml:lang="en-uk">Niue</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="nf">
+        <annotation>
+          <documentation xml:lang="en-uk">Norfolk Island</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mp">
+        <annotation>
+          <documentation xml:lang="en-uk">Northern Mariana Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="no">
+        <annotation>
+          <documentation xml:lang="en-uk">Norway</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="om">
+        <annotation>
+          <documentation xml:lang="en-uk">Oman</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pk">
+        <annotation>
+          <documentation xml:lang="en-uk">Pakistan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pw">
+        <annotation>
+          <documentation xml:lang="en-uk">Palau</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ps">
+        <annotation>
+          <documentation xml:lang="en-uk">Palestinian Territory, Occupied</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pa">
+        <annotation>
+          <documentation xml:lang="en-uk">Panama</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pg">
+        <annotation>
+          <documentation xml:lang="en-uk">Papua New Guinea</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="py">
+        <annotation>
+          <documentation xml:lang="en-uk">Paraguay</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pe">
+        <annotation>
+          <documentation xml:lang="en-uk">Peru</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ph">
+        <annotation>
+          <documentation xml:lang="en-uk">Philippines</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pn">
+        <annotation>
+          <documentation xml:lang="en-uk">Pitcairn</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pl">
+        <annotation>
+          <documentation xml:lang="en-uk">Poland</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pt">
+        <annotation>
+          <documentation xml:lang="en-uk">Portugal</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pr">
+        <annotation>
+          <documentation xml:lang="en-uk">Puerto Rico</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="qa">
+        <annotation>
+          <documentation xml:lang="en-uk">Qatar</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="re">
+        <annotation>
+          <documentation xml:lang="en-uk">Reunion</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ro">
+        <annotation>
+          <documentation xml:lang="en-uk">Romania</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ru">
+        <annotation>
+          <documentation xml:lang="en-uk">Russian Federation</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="rw">
+        <annotation>
+          <documentation xml:lang="en-uk">Rwanda</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sh">
+        <annotation>
+          <documentation xml:lang="en-uk">Saint Helena</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kn">
+        <annotation>
+          <documentation xml:lang="en-uk">Saint Kitts and Nevis</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lc">
+        <annotation>
+          <documentation xml:lang="en-uk">Saint Lucia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pm">
+        <annotation>
+          <documentation xml:lang="en-uk">Saint Pierre and Miquelon</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="vc">
+        <annotation>
+          <documentation xml:lang="en-uk">Saint Vincent and the Grenadines</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ws">
+        <annotation>
+          <documentation xml:lang="en-uk">Samoa</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sm">
+        <annotation>
+          <documentation xml:lang="en-uk">San Marino</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="st">
+        <annotation>
+          <documentation xml:lang="en-uk">Sao Tome and Principe</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sa">
+        <annotation>
+          <documentation xml:lang="en-uk">Saudi Arabia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sn">
+        <annotation>
+          <documentation xml:lang="en-uk">Senegal</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cs">
+        <annotation>
+          <documentation xml:lang="en-uk">Serbia and Montenegro</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="rs">
+        <annotation>
+          <documentation xml:lang="en-uk">Republic of Serbia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sc">
+        <annotation>
+          <documentation xml:lang="en-uk">Seychelles</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sl">
+        <annotation>
+          <documentation xml:lang="en-uk">Sierra Leone</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sg">
+        <annotation>
+          <documentation xml:lang="en-uk">Singapore</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sk">
+        <annotation>
+          <documentation xml:lang="en-uk">Slovakia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="si">
+        <annotation>
+          <documentation xml:lang="en-uk">Slovenia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sb">
+        <annotation>
+          <documentation xml:lang="en-uk">Solomon Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="so">
+        <annotation>
+          <documentation xml:lang="en-uk">Somalia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="za">
+        <annotation>
+          <documentation xml:lang="en-uk">South Africa</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gs">
+        <annotation>
+          <documentation xml:lang="en-uk">South Georgia and the South Sandwich Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="es">
+        <annotation>
+          <documentation xml:lang="en-uk">Spain</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="lk">
+        <annotation>
+          <documentation xml:lang="en-uk">Sri Lanka</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sd">
+        <annotation>
+          <documentation xml:lang="en-uk">Sudan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sr">
+        <annotation>
+          <documentation xml:lang="en-uk">Suriname</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sj">
+        <annotation>
+          <documentation xml:lang="en-uk">Svalbard and Jan Mayen</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sz">
+        <annotation>
+          <documentation xml:lang="en-uk">Swaziland</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="se">
+        <annotation>
+          <documentation xml:lang="en-uk">Sweden</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ch">
+        <annotation>
+          <documentation xml:lang="en-uk">Switzerland</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sy">
+        <annotation>
+          <documentation xml:lang="en-uk">Syrian Arab Republic</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tw">
+        <annotation>
+          <documentation xml:lang="en-uk">Taiwan, Province of China</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tj">
+        <annotation>
+          <documentation xml:lang="en-uk">Tajikistan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tz">
+        <annotation>
+          <documentation xml:lang="en-uk">Tanzania, United Republic of</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="th">
+        <annotation>
+          <documentation xml:lang="en-uk">Thailand</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tl">
+        <annotation>
+          <documentation xml:lang="en-uk">Timor-leste</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tg">
+        <annotation>
+          <documentation xml:lang="en-uk">Togo</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tk">
+        <annotation>
+          <documentation xml:lang="en-uk">Tokelau</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="to">
+        <annotation>
+          <documentation xml:lang="en-uk">Tonga</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tt">
+        <annotation>
+          <documentation xml:lang="en-uk">Trinidad and Tobago</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tn">
+        <annotation>
+          <documentation xml:lang="en-uk">Tunisia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tr">
+        <annotation>
+          <documentation xml:lang="en-uk">Turkey</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tm">
+        <annotation>
+          <documentation xml:lang="en-uk">Turkmenistan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tc">
+        <annotation>
+          <documentation xml:lang="en-uk">Turks and Caicos Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="tv">
+        <annotation>
+          <documentation xml:lang="en-uk">Tuvalu</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ug">
+        <annotation>
+          <documentation xml:lang="en-uk">Uganda</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ua">
+        <annotation>
+          <documentation xml:lang="en-uk">Ukraine</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ae">
+        <annotation>
+          <documentation xml:lang="en-uk">United Arab Emirates</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="gb">
+        <annotation>
+          <documentation xml:lang="en-uk">United Kingdom</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="us">
+        <annotation>
+          <documentation xml:lang="en-uk">United States</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="um">
+        <annotation>
+          <documentation xml:lang="en-uk">United States Minor Outlying Islands</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="uy">
+        <annotation>
+          <documentation xml:lang="en-uk">Uruguay</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="uz">
+        <annotation>
+          <documentation xml:lang="en-uk">Uzbekistan</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="vu">
+        <annotation>
+          <documentation xml:lang="en-uk">Vanuatu</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ve">
+        <annotation>
+          <documentation xml:lang="en-uk">Venezuela</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="vn">
+        <annotation>
+          <documentation xml:lang="en-uk">Viet Nam</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="vg">
+        <annotation>
+          <documentation xml:lang="en-uk">Virgin Islands, British</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="vi">
+        <annotation>
+          <documentation xml:lang="en-uk">Virgin Islands, U.S.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="wf">
+        <annotation>
+          <documentation xml:lang="en-uk">Wallis and Futuna</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="eh">
+        <annotation>
+          <documentation xml:lang="en-uk">Western Sahara</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ye">
+        <annotation>
+          <documentation xml:lang="en-uk">Yemen</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="zm">
+        <annotation>
+          <documentation xml:lang="en-uk">Zambia</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="zw">
+        <annotation>
+          <documentation xml:lang="en-uk">Zimbabwe</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_OrganisationAffiliationNumberType">
+    <restriction base="integer">
+      <minInclusive value="0"/>
+      <maxInclusive value="999"/>
+    </restriction>
+  </simpleType>
+  <complexType name="_DescriptionType">
+    <sequence>
+      <element name="abstract" type="tns:_StringWithLanguageType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Summary of content</documentation>
+        </annotation>
+      </element>
+      <element name="note" type="tns:_StringWithLanguageType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Any descriptive note</documentation>
+        </annotation>
+      </element>
+      <element name="thesis" type="tns:_ThesisType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Special thesis note – use sub-elements below. The attribute ddf_doc/@doc_type is used to differentiate between different types/levels of thesis</documentation>
+        </annotation>
+      </element>
+      <element name="subject" type="tns:_SubjectType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Subject description – use sub-elements below.</documentation>
+        </annotation>
+      </element>
+      <element name="research_area" type="tns:_ResearchAreaType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Special national research area, used by DASTI</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="_ResearchAreaType">
+    <simpleContent>
+      <extension base="string">
+        <attribute ref="xml:lang" />
+        <attribute name="area_code" type="tns:_ResearchAreaCodeType">
+          <annotation>
+            <documentation xml:lang="en-uk">One of the national research areas</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_SubjectType">
+    <sequence>
+      <element name="keyword" type="tns:_KeywordType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Keywords – whether free or controlled.</documentation>
+        </annotation>
+      </element>
+      <element name="class" type="tns:_ClassType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Classification codes according to the system declared in the attribute below.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="_StringWithLanguageType">
+    <simpleContent>
+      <extension base="string">
+        <attribute ref="xml:lang" />
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_ClassType">
+    <simpleContent>
+      <extension base="string">
+        <attribute use="required" name="class_type" type="tns:_ClassTypeType">
+          <annotation>
+            <documentation xml:lang="en-uk">Classification system used, like "DDC", "UDC", "DEF", "DK5"</documentation>
+          </annotation>
+        </attribute>
+        <attribute ref="xml:lang">
+          <annotation>
+            <documentation xml:lang="en-uk">Language of classification</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_KeywordType">
+    <simpleContent>
+      <extension base="string">
+        <attribute use="required" name="key_type" type="tns:_KeyTypeType">
+          <annotation>
+            <documentation xml:lang="en-uk">Vocabulary/theasurus used, like "EUDISED", "INSPEC" or "free".</documentation>
+          </annotation>
+        </attribute>
+        <attribute ref="xml:lang">
+          <annotation>
+            <documentation xml:lang="en-uk">Language of keyword</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_ThesisType">
+    <sequence>
+      <element name="institution" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of he academic institution awarding the degree</documentation>
+        </annotation>
+      </element>
+      <element name="advisor" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of the academic advisor/supervisor</documentation>
+        </annotation>
+      </element>
+      <element name="aw_date" type="date" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Date of awarded degree in format yyyy-mm-dd</documentation>
+        </annotation>
+      </element>
+      <element name="other" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Any other information</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="_TitleOriginalType">
+    <annotation>
+      <documentation xml:lang="en-uk">
+        The title in the original language
+      </documentation>
+    </annotation>
+    <sequence>
+      <element name="main">
+        <annotation>
+          <documentation xml:lang="en-uk">Main title</documentation>
+        </annotation>
+      </element>
+      <element name="sub" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Sub title</documentation>
+        </annotation>
+      </element>
+      <element name="part" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Part designation of a multipart work ("Vol. 1", "Bind 1" etc)</documentation>
+        </annotation>
+      </element>
+      <element name="other" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Any other title information</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute ref="xml:lang">
+      <annotation>
+        <documentation xml:lang="en-uk">Language of title</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_TitleTranslatedType">
+    <annotation>
+      <documentation xml:lang="en-uk">
+        The title translated to another language
+      </documentation>
+    </annotation>
+    <sequence>
+      <element name="main">
+        <annotation>
+          <documentation xml:lang="en-uk">Main title</documentation>
+        </annotation>
+      </element>
+      <element name="sub" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Sub title</documentation>
+        </annotation>
+      </element>
+      <element name="part" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Part designation of a multipart work ("Vol. 1", "Bind 1" etc)</documentation>
+        </annotation>
+      </element>
+      <element name="other" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Any other title information</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute ref="xml:lang" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Language of title</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <simpleType name="_LocalFieldTagType">
+    <restriction base="positiveInteger">
+      <enumeration value="1">
+        <annotation>
+          <documentation xml:lang="en-uk">Field is neither indexed nor displayed in search module</documentation>
+          <documentation xml:lang="da-dk"/>
+        </annotation>
+      </enumeration>
+      <enumeration value="2">
+        <annotation>
+          <documentation xml:lang="en-uk">Field may be displayed in search module</documentation>
+          <documentation xml:lang="da-dk"/>
+        </annotation>
+      </enumeration>
+      <enumeration value="3">
+        <annotation>
+          <documentation xml:lang="en-uk">Field may be indexed in search module</documentation>
+          <documentation xml:lang="da-dk"/>
+        </annotation>
+      </enumeration>
+      <enumeration value="4">
+        <annotation>
+          <documentation xml:lang="en-uk">Field may be indexed and displayed in search module</documentation>
+          <documentation xml:lang="da-dk"/>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_EventRoleType">
+    <restriction base="string">
+      <enumeration value="ep">
+        <annotation>
+          <documentation xml:lang="en-uk">Presented at</documentation>
+          <documentation xml:lang="da-dk">Præsenteret ved</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="er">
+        <annotation>
+          <documentation xml:lang="en-uk">Related to</documentation>
+          <documentation xml:lang="da-dk">Relateret til</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_ProjectRoleType">
+    <restriction base="string">
+      <enumeration value="pd">
+        <annotation>
+          <documentation xml:lang="en-uk">Deliverable of</documentation>
+          <documentation xml:lang="da-dk">Leverance fra</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pr">
+        <annotation>
+          <documentation xml:lang="en-uk">Related to</documentation>
+          <documentation xml:lang="da-dk">Relateret til</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_PersonRoleType">
+    <restriction base="string">
+      <enumeration value="inv">
+        <annotation>
+          <documentation xml:lang="en-uk">Inventor</documentation>
+          <documentation xml:lang="da-dk">Opfinder</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sup">
+        <annotation>
+          <documentation xml:lang="en-uk">Supervisor</documentation>
+          <documentation xml:lang="da-dk">Vejleder</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pau">
+        <annotation>
+          <documentation xml:lang="en-uk">Author</documentation>
+          <documentation xml:lang="da-dk">Forfatter</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pa1">
+        <annotation>
+          <documentation xml:lang="en-uk">Primary author Optional – if needed to differentiate</documentation>
+          <documentation xml:lang="da-dk">Primær forfatter</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pa2">
+        <annotation>
+          <documentation xml:lang="en-uk">Secondary author Optional – if needed to differentiate</documentation>
+          <documentation xml:lang="da-dk">Sekundær forfatter</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ped">
+        <annotation>
+          <documentation xml:lang="en-uk">Editor</documentation>
+          <documentation xml:lang="da-dk">Redaktør</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ppu">
+        <annotation>
+          <documentation xml:lang="en-uk">Publisher</documentation>
+          <documentation xml:lang="da-dk">Udgiver</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ptr">
+        <annotation>
+          <documentation xml:lang="en-uk">Translator</documentation>
+          <documentation xml:lang="da-dk">Oversætter</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pil">
+        <annotation>
+          <documentation xml:lang="en-uk">Illustrator</documentation>
+          <documentation xml:lang="da-dk">Illustrator</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_IDTypeType">
+    <restriction base="string">
+      <enumeration value="cpr">
+        <annotation>
+          <documentation xml:lang="en-uk">CPR no. (Danish national person identification)</documentation>
+          <documentation xml:lang="da-dk">CPR nr.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cvr">
+        <annotation>
+          <documentation xml:lang="en-uk">CVR no. (Danish national enterprise identification)</documentation>
+          <documentation xml:lang="da-dk">CVR nr.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ddf_rec">
+        <annotation>
+          <documentation xml:lang="en-uk">DDF record ID (Danish Research Database record ID)</documentation>
+          <documentation xml:lang="da-dk">DDF post-id</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="loc_rec">
+        <annotation>
+          <documentation xml:lang="en-uk">Local record ID (Local (data supplier) record ID)</documentation>
+          <documentation xml:lang="da-dk">Lokal post-ID</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="loc_per">
+        <annotation>
+          <documentation xml:lang="en-uk">Local person ID (Local (data supplier) person ID)</documentation>
+          <documentation xml:lang="da-dk">Lokal person-id</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="loc_pro">
+        <annotation>
+          <documentation xml:lang="en-uk">Local project ID (Local (data supplier) project ID)</documentation>
+          <documentation xml:lang="da-dk">Lokal project-id</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="loc_org">
+        <annotation>
+          <documentation xml:lang="en-uk">Local organisation ID (Local (data supplier) organisation ID)</documentation>
+          <documentation xml:lang="da-dk">Lokal organisations-id</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="loc_eve">
+        <annotation>
+          <documentation xml:lang="en-uk">Local event ID (Local (data supplier) organisation ID)</documentation>
+          <documentation xml:lang="da-dk">Lokal event-id</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fi_nfdb">
+        <annotation>
+          <documentation xml:lang="en-uk">FI national Danish researcher database</documentation>
+          <documentation xml:lang="da-dk">FI national dansk forskerdatabase</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ec_ga_fp7">
+        <annotation>
+          <documentation xml:lang="en-uk">EC FP7 Grant Agreement Number</documentation>
+          <documentation xml:lang="da-dk">EU FP7 Bevillingsaftalenummer</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="orcid">
+        <annotation>
+          <documentation xml:lang="en-uk">Open Researcher and Contributor ID</documentation>
+          <documentation xml:lang="da-dk">Open Researcher and Contributor ID</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ringgold">
+        <annotation>
+          <documentation xml:lang="en-uk">Ringgold ID</documentation>
+          <documentation xml:lang="da-dk">Ringgold ID</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_OrganisationRoleType">
+    <restriction base="string">
+      <enumeration value="oau">
+        <annotation>
+          <documentation xml:lang="en-uk">Corporate author</documentation>
+          <documentation xml:lang="da-dk">Korporativ forfatter</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="oaf">
+        <annotation>
+          <documentation xml:lang="en-uk">Affiliation</documentation>
+          <documentation xml:lang="da-dk">Institutionstilknytning</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="opu">
+        <annotation>
+          <documentation xml:lang="en-uk">Publisher</documentation>
+          <documentation xml:lang="da-dk">Udgiver</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_ClassTypeType">
+    <restriction base="string">
+      <enumeration value="ddc">
+        <annotation>
+          <documentation xml:lang="en-uk">Dewey</documentation>
+          <documentation xml:lang="da-dk">Dewey</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="udc">
+        <annotation>
+          <documentation xml:lang="en-uk">UDC</documentation>
+          <documentation xml:lang="da-dk">UDK</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dk5">
+        <annotation>
+          <documentation xml:lang="en-uk">DK5</documentation>
+          <documentation xml:lang="da-dk">DK5</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="def">
+        <annotation>
+          <documentation xml:lang="en-uk">DEF</documentation>
+          <documentation xml:lang="da-dk">DEF</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="loc">
+        <annotation>
+          <documentation xml:lang="en-uk">LOCAL</documentation>
+          <documentation xml:lang="da-dk">LOCAL</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_KeyTypeType">
+    <restriction base="string">
+      <enumeration value="fre">
+        <annotation>
+          <documentation xml:lang="en-uk">Free/uncontrolled</documentation>
+          <documentation xml:lang="da-dk">Fri/ukontrolleret</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ini">
+        <annotation>
+          <documentation xml:lang="en-uk">INIS</documentation>
+          <documentation xml:lang="da-dk">INIS</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="eud">
+        <annotation>
+          <documentation xml:lang="en-uk">EUDISED</documentation>
+          <documentation xml:lang="da-dk">EUDISED</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ins">
+        <annotation>
+          <documentation xml:lang="en-uk">INSPEC</documentation>
+          <documentation xml:lang="da-dk">INSPEC</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="loc">
+        <annotation>
+          <documentation xml:lang="en-uk">LOCAL</documentation>
+          <documentation xml:lang="da-dk">LOCAL</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_DocTypeType">
+    <restriction base="string">
+      <enumeration value="dja">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal article</documentation>
+          <documentation xml:lang="da-dk">Tidsskrift-artikel</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="djl">
+        <annotation>
+          <documentation xml:lang="en-uk">Letter to the editor</documentation>
+          <documentation xml:lang="da-dk">Tidsskrifts-letter</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="djc">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal comment</documentation>
+          <documentation xml:lang="da-dk">Tidsskrifts-kommentar</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="djr">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal review article</documentation>
+          <documentation xml:lang="da-dk">Tidsskrifts-review artikel</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="djb">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal book review</documentation>
+          <documentation xml:lang="da-dk">Tidsskrifts-anmeldelse</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dna">
+        <annotation>
+          <documentation xml:lang="en-uk">Newspaper article</documentation>
+          <documentation xml:lang="da-dk">Avis-artikel</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="db">
+        <annotation>
+          <documentation xml:lang="en-uk">Book (an entire book)</documentation>
+          <documentation xml:lang="da-dk">Bog</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dba">
+        <annotation>
+          <documentation xml:lang="en-uk">Book chapter (A chapter or article in a book)</documentation>
+          <documentation xml:lang="da-dk">Bog-kapitel</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dbp">
+        <annotation>
+          <documentation xml:lang="en-uk">Book preface, encycl. entry (Entry in encyclopedia, preface to book)</documentation>
+          <documentation xml:lang="da-dk">Bog forord, leksikonartikel</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dr">
+        <annotation>
+          <documentation xml:lang="en-uk">Report</documentation>
+          <documentation xml:lang="da-dk">Rapport</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dra">
+        <annotation>
+          <documentation xml:lang="en-uk">Report chapter</documentation>
+          <documentation xml:lang="da-dk">Rapport-kapitel</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dcp">
+        <annotation>
+          <documentation xml:lang="en-uk">Conference paper (Full paper)</documentation>
+          <documentation xml:lang="da-dk">Konference-paper</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dca">
+        <annotation>
+          <documentation xml:lang="en-uk">Conference abstract (Abstract only)</documentation>
+          <documentation xml:lang="da-dk">Konference-abstract</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dco">
+        <annotation>
+          <documentation xml:lang="en-uk">Conference poster</documentation>
+          <documentation xml:lang="da-dk">Konference-plakat</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dct">
+        <annotation>
+          <documentation xml:lang="en-uk">Conference talk (Slides, video, audio of talk)</documentation>
+          <documentation xml:lang="da-dk">Konference-foredrag</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dw">
+        <annotation>
+          <documentation xml:lang="en-uk">Working paper, (pr)eprint (Informal print or Internet publication)</documentation>
+          <documentation xml:lang="da-dk">Arbejdspapir, (pr)eprint</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dln">
+        <annotation>
+          <documentation xml:lang="en-uk">Lecture notes</documentation>
+          <documentation xml:lang="da-dk">Undervisning-noter</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dl">
+        <annotation>
+          <documentation xml:lang="en-uk">Lecture (Slides, video, audio of lecture)</documentation>
+          <documentation xml:lang="da-dk">Undervisning-forelæsning</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dp">
+        <annotation>
+          <documentation xml:lang="en-uk">Patent</documentation>
+          <documentation xml:lang="da-dk">Patent</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dtb">
+        <annotation>
+          <documentation xml:lang="en-uk">Afhandling-Bachelor</documentation>
+          <documentation xml:lang="da-dk">Thesis Bachelor</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dtd">
+        <annotation>
+          <documentation xml:lang="en-uk">Thesis Doctoral</documentation>
+          <documentation xml:lang="da-dk">Afhandling-Doktor</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dtdb">
+        <annotation>
+          <documentation xml:lang="en-uk">Afhandling-Diploma Bachelor</documentation>
+          <documentation xml:lang="da-dk">Thesis Diploma Bachelor</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dtp">
+        <annotation>
+          <documentation xml:lang="en-uk">Thesis PhD</documentation>
+          <documentation xml:lang="da-dk">Afhandling-Ph.D.</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dtm">
+        <annotation>
+          <documentation xml:lang="en-uk">Thesis Master</documentation>
+          <documentation xml:lang="da-dk">Afhandling-Kandidat</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dts">
+        <annotation>
+          <documentation xml:lang="en-uk">Student report</documentation>
+          <documentation xml:lang="da-dk">Studenterrapport</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dso">
+        <annotation>
+          <documentation xml:lang="en-uk">Software</documentation>
+          <documentation xml:lang="da-dk">Software</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dd">
+        <annotation>
+          <documentation xml:lang="en-uk">Data set</documentation>
+          <documentation xml:lang="da-dk">Datasæt</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="drt">
+        <annotation>
+          <documentation xml:lang="en-uk">Radio/TV broadcast (Public broadcast)</documentation>
+          <documentation xml:lang="da-dk">Radio/TV-udsendelse</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dx">
+        <annotation>
+          <documentation xml:lang="en-uk">Exhibition catalogue</documentation>
+          <documentation xml:lang="da-dk">Udstillingskatalog</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="do">
+        <annotation>
+          <documentation xml:lang="en-uk">Other</documentation>
+          <documentation xml:lang="da-dk">Andet</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_DocReviewType">
+    <restriction base="string">
+      <enumeration value="pr">
+        <annotation>
+          <documentation xml:lang="en-uk">Peer review</documentation>
+          <documentation xml:lang="da-dk">Peer review</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="or">
+        <annotation>
+          <documentation xml:lang="en-uk">Other review (Editorial, institutional review etc.)</documentation>
+          <documentation xml:lang="da-dk">Andet review</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="nr">
+        <annotation>
+          <documentation xml:lang="en-uk">No review (The nature of the review process (if any) could not be determined)</documentation>
+          <documentation xml:lang="da-dk">Intet review</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="und">
+        <annotation>
+          <documentation xml:lang="en-uk">Undetermined</documentation>
+          <documentation xml:lang="da-dk">Ubestemt</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_DocLevelType">
+    <restriction base="string">
+      <enumeration value="sci">
+        <annotation>
+          <documentation xml:lang="en-uk">Scientific</documentation>
+          <documentation xml:lang="da-dk">Videnskabelig</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="edu">
+        <annotation>
+          <documentation xml:lang="en-uk">Educational</documentation>
+          <documentation xml:lang="da-dk">Undervisningsrettet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pop">
+        <annotation>
+          <documentation xml:lang="en-uk">Popular</documentation>
+          <documentation xml:lang="da-dk">Populærvidenskabelig</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="adm">
+        <annotation>
+          <documentation xml:lang="en-uk">Administrative</documentation>
+          <documentation xml:lang="da-dk">Administrativ</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="und">
+        <annotation>
+          <documentation xml:lang="en-uk">Undetermined</documentation>
+          <documentation xml:lang="da-dk">Ubestemt</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_InstituteCodeType">
+    <restriction base="string">
+      <enumeration value="aaa">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Arkitektskolen i Aarhus</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="aardas">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Århus Dag- og Aftenseminarium</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="aas">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Aalborg Sygehus</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="afg">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Dansk Institut for Klinisk Epidemiologi</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="agri">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks JordbrugsForskning</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ai">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">ArbejdsmiljøInformation</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="akf">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Amternes og kommunernes forskningsinstitut</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ami">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Arbejdsmiljøinstituttet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="amr">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Arbejdsmiljørådets Service Center</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ark">
+        <annotation>
+          <documentation xml:lang="en-uk">Research in Architecture and Design</documentation>
+          <documentation xml:lang="da-dk">Research in Architecture and Design</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="au">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Aarhus Universitet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="aau">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Aalborg Universitet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bio">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Det Bioteknologiske Forsknings- og Udviklingsprogram</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="bioteknik">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Teknologisk Institut. Bioteknik</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="can">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Kræftens Bekæmpelse</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cemtv">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Center for Evaluering af Medicinsk Teknologivurering</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cbs">
+        <!-- replaces hhk as of 1.2 -->
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Copenhagen Business School</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cfb">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Center for Børnelitteratur</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="cuf">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Dansk Center for Internationale Studier og Menneskerettigheder</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dbi">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks Biblioteksskole</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dds">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks Designskole</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dfs">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Dansk Folkemindesamling</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="diis">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Dansk Institut for Internationale Studier</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dlh">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks Lærerhøjskole</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dmf">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Dansk Matematisk Forening</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dmu">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks Miljøundersøgelser</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dpi">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks Pædagogiske Institut</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dpu">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks Pædagogiske Universitet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dss">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Dansk Institut for Sundheds- og Sygeplejeforskning</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dtf">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks TransportForskning</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="dtu">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks Tekniske Universitet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ens">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Energistyrelsen</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fak">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Forsvarsakademiet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="far">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks Farmaceutiske Universitet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="for">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Forskningsstyrelsen</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fou">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">FOU Forsknings- og udviklingscentret for Hjælpemidler og Rehabilitering</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fri">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Forskningscenter Risø</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="fsl">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Forskningscenter for Skov og Landskab</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ftu">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">FTU-programmet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="geus">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks og Grønlands Geologiske Undersøgelse</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hha">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Handelshøjskolen i Århus</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hhk">
+        <!-- deprecated as of 1.2; see cbs -->
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Copenhagen Business School</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hhs">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Handelshøjskole Syd</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hvhosp">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Hvidovre Hospital</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ifg">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Institut for grænseregionsforskning</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ifo">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Institut for Forskning i Idræt og Folkelig Oplysning</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ihk">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Ingeniørhøjskolen i København</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="itu">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">IT-universitetet i København</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="jpsem">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Jydsk Pædagogseminarium</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ka">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Kunstakademiets Arkitektskole</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kab">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks Kunstbibliotek</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kas">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Københavns Amts Sygehusvæsen</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kib">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Kunstindustrimuseets Bibliotek</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ku">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Københavns Universitet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="kvl">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Københavns Universitet/Det Biovidenskabelige Fakultet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="mup">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Det Materialeteknologiske Udviklingsprogram</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="nlb">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Danmarks Natur- og Lægevidenskabelige Bibliotek</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="regionh">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Region Hovedstadens Hospitaler</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ruc">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Roskilde Universitet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sbi">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">By og Byg. Statens Byggeforskningsinstitut</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sdu">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Syddansk Universitet</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="seb">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Sekretariat for Børnekultur netværk</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sfi">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">SFI - Det Nationale Forskningscenter for Velfærd</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="shu">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Statens Husdyrbrugsforsøg</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sji">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Statens Jordbrugs- og Fiskeriøkonomiske Institut</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="sp">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Statens Planteavlsforsøg</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ssl">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Statens Skadedyrslaboratorium</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="suc">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Sydjysk Universitetscenter</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="svs">
+        <annotation>
+          <documentation xml:lang="en-uk">n/a</documentation>
+          <documentation xml:lang="da-dk">Statens Veterinære Serumlab. og Statens Veterinære. Inst. for Virusforskning</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_RecStatusType">
+    <restriction base="string">
+      <enumeration value="n">
+        <annotation>
+          <documentation xml:lang="en-uk">The record is considered as new</documentation>
+          <documentation xml:lang="da-dk">n/a</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="c">
+        <annotation>
+          <documentation xml:lang="en-uk">The record is considered as updated</documentation>
+          <documentation xml:lang="da-dk">n/a</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="d">
+        <annotation>
+          <documentation xml:lang="en-uk">The record is considered as deleted</documentation>
+          <documentation xml:lang="da-dk">n/a</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <complexType name="PublicationType">
+    <choice maxOccurs="unbounded">
+      <element name="in_journal" type="tns:_InJournalType">
+        <annotation>
+          <documentation xml:lang="en-uk">Use for articles, papers, etc. published in a journal (or submitted to a journal for publication) All data is placed in the sub-elements: title, issn, year, vol, issue, pages, paperid, doi, uri.</documentation>
+        </annotation>
+      </element>
+      <element name="in_book" type="tns:_InBookType">
+        <annotation>
+          <documentation xml:lang="en-uk">Use for chapters, papers, etc. published as a part of a book (incl. proceedings in book form) All data is placed in the sub-elements: title, part, edition, editor, isbn, place, publisher, year, pages, series, uri.</documentation>
+        </annotation>
+      </element>
+      <element name="in_report" type="tns:_InReportType">
+        <annotation>
+          <documentation xml:lang="en-uk">Use for chapters, papers, etc. published as a part of a report. All data is placed in the sub-elements: title, editor, isbn, rep_no, place, publisher, year, pages, uri.</documentation>
+        </annotation>
+      </element>
+      <element name="book" type="tns:_BookType">
+        <annotation>
+          <documentation xml:lang="en-uk">Use when the document is an entire book All data is placed in the sub-elements: edition, isbn, place, publisher, year, pages, series, uri. Note that in this case, the book title information is placed in ddf_doc/title.</documentation>
+        </annotation>
+      </element>
+      <element name="report" type="tns:_ReportType">
+        <annotation>
+          <documentation xml:lang="en-uk">Use when the document is an entire report All data is placed in the sub-elements: isbn, rep_no, place, publisher, year, pages, uri. Note that in this case, the report title information is placed in ddf_doc/title.</documentation>
+        </annotation>
+      </element>
+      <element name="patent" type="tns:_PatentType">
+        <annotation>
+          <documentation xml:lang="en-uk">Use when the document is a patent (or a patent application) All data is placed in the sub-elements: country, ipc, number, date, uri.</documentation>
+        </annotation>
+      </element>
+      <element name="inetpub" type="tns:_InetpubType">
+        <annotation>
+          <documentation xml:lang="en-uk">Use when published electronically on the net (institutional repository, author's homepage, preprint server, etc.) If the document is also published in a journal, book or report, the corresponding publication cases should be used in addition. All data is placed in the sub-elements: text and uri.</documentation>
+        </annotation>
+      </element>
+      <element name="digital_object" type="tns:_DigitalobjectType" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Use for digital objects, typically a fulltext.</documentation>
+        </annotation>
+      </element>
+      <element name="other" type="tns:_OtherType">
+        <annotation>
+          <documentation xml:lang="en-uk"/>
+        </annotation>
+      </element>
+    </choice>
+    <attribute name="bfi_serial_no" type="string">
+      <annotation>
+        <documentation xml:lang="en-uk">BFI serials database identifier</documentation>
+        <documentation xml:lang="da-dk">BFI serie-id</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="bfi_publisher_no" type="string">
+      <annotation>
+        <documentation xml:lang="en-uk">BFI publisher database identifier</documentation>
+        <documentation xml:lang="da-dk">BFI udgiver-id</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <simpleType name="_PublishingStatusType">
+    <restriction base="string">
+      <enumeration value="s">
+        <annotation>
+          <documentation xml:lang="en-uk">Submitted</documentation>
+          <documentation xml:lang="da-dk">Indsendt</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="a">
+        <annotation>
+          <documentation xml:lang="en-uk">Accepted</documentation>
+          <documentation xml:lang="da-dk">Accepteret</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="i">
+        <annotation>
+          <documentation xml:lang="en-uk">In press</documentation>
+          <documentation xml:lang="da-dk">I trykken</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="p">
+        <annotation>
+          <documentation xml:lang="en-uk">Published</documentation>
+          <documentation xml:lang="da-dk">Publiceret</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="e">
+        <annotation>
+          <documentation xml:lang="en-uk">E-published (ahead of print)</documentation>
+          <documentation xml:lang="da-dk">E-publiceret (før tryk)</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="u">
+        <annotation>
+          <documentation xml:lang="en-uk">Unpublished</documentation>
+          <documentation xml:lang="da-dk">Ikke publiceret</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_DigitalobjectRoleType">
+    <restriction base="string">
+      <enumeration value="pre">
+        <annotation>
+          <documentation xml:lang="en-UK">Preprint</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pos">
+        <annotation>
+          <documentation xml:lang="en-UK">Postprint</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pub">
+        <annotation>
+          <documentation xml:lang="en-UK">Publisher version</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="rev">
+        <annotation>
+          <documentation xml:lang="en-UK">Revised version</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="oth">
+        <annotation>
+          <documentation xml:lang="en-UK">Other or undefined</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_AccessType">
+    <restriction base="string">
+      <enumeration value="oa">
+        <annotation>
+          <documentation xml:lang="en-uk">Open access</documentation>
+          <documentation xml:lang="da-dk">Open access</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ca">
+        <annotation>
+          <documentation xml:lang="en-uk">Campus access</documentation>
+          <documentation xml:lang="da-dk">Campusadgang</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ea">
+        <annotation>
+          <documentation xml:lang="en-uk">Embargoed access</documentation>
+          <documentation xml:lang="da-dk">Foreløbig lukket adgang</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="na">
+        <annotation>
+          <documentation xml:lang="en-uk">No public access</documentation>
+          <documentation xml:lang="da-dk">Ingen offentlig adgang</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_LocalFieldCodeType">
+    <restriction base="string">
+      <pattern value="[0-9a-zA-Z]+"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="_ISSNType">
+    <!-- Do not use by itself; use _ComplexISSNType if you need a @type -->
+    <restriction base="string">
+      <pattern value="\d{7}[0-9Xx]"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="_ISBNType">
+    <!-- RdC: as of jan 2005, ISBN can be 10 or 13 digits, the last of which can be x -->
+    <union>
+      <simpleType>
+        <restriction base="string">
+          <pattern value="\d{9}[\dxX]"/>
+        </restriction>
+      </simpleType>
+      <simpleType>
+        <restriction base="string">
+          <pattern value="\d{12}[\dxX]"/>
+        </restriction>
+      </simpleType>
+    </union>
+  </simpleType>
+
+  <simpleType name="_PagesType">
+    <union>
+      <simpleType>
+        <restriction base="string">
+          <pattern value="[A-Za-z]?\d{1,8}-[A-Za-z]?\d{1,8}"/>
+        </restriction>
+      </simpleType>
+      <simpleType>
+        <restriction base="string">
+          <pattern value="[A-Za-z]?\d{1,8}"/>
+        </restriction>
+      </simpleType>
+    </union>
+  </simpleType>
+
+  <simpleType name="original_PagesType">
+    <!-- 1.2 replaced by above because some validators choke on parenthesized subexp -->
+    <restriction base="string">
+      <pattern value="\w?\d{1,6}(-\w?\d{1,6})?"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="_MimetypeType">
+    <restriction base="string">
+      <pattern value="(application|audio|example|image|message|model|multipart|text|video)/[a-z0-9\-.]+"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="_InJournalType">
+    <sequence>
+      <element name="title">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal title</documentation>
+        </annotation>
+      </element>
+      <element name="title_alternative" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal title</documentation>
+        </annotation>
+      </element>
+      <element name="issn" type="tns:_ComplexISSNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Journal ISSN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="year" type="gYear" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
+        </annotation>
+      </element>
+      <element name="vol" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Volume number</documentation>
+        </annotation>
+      </element>
+      <element name="issue" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Issue number</documentation>
+        </annotation>
+      </element>
+      <element name="pages" type="tns:_PagesType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">In the format Firstpage-Lastpage (or in case of Paper ID, the number of pages)</documentation>
+        </annotation>
+      </element>
+      <element name="paperid" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Paper ID, an alternative to page numbers, typically used by e-journals</documentation>
+        </annotation>
+      </element>
+      <element name="doi" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to article on the journal's web site Information about availability at preprint servers, web sites belonging to author or author's institution or similar should be recorded using the publication case "As an Internet publication"</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="pub_status" type="tns:_PublishingStatusType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published" – see note. Is mandatory for in-journal publications because the time from "submitted" to "published" is often long and may cross year boundaries.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_InBookType">
+    <sequence>
+      <element name="title">
+        <annotation>
+          <documentation xml:lang="en-uk">Book title</documentation>
+        </annotation>
+      </element>
+      <element name="sub_title" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Subtitle</documentation>
+        </annotation>
+      </element>
+      <element name="part" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Part designation of a multipart work ("Vol. 1", "Bind 4: Middelalderen" etc.)</documentation>
+        </annotation>
+      </element>
+      <element name="edition" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Book edition, like "2nd rev. ed."</documentation>
+        </annotation>
+      </element>
+      <element name="editor" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of the (first) editor of the book</documentation>
+        </annotation>
+      </element>
+      <element name="isbn" type="tns:_ComplexISBNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="issn" type="tns:_ComplexISSNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISSN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="place" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Place of publication</documentation>
+        </annotation>
+      </element>
+      <element name="publisher" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of publisher</documentation>
+        </annotation>
+      </element>
+      <element name="year" type="gYear" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
+        </annotation>
+      </element>
+      <element name="vol" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Volume number</documentation>
+        </annotation>
+      </element>
+      <element name="issue" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Issue number</documentation>
+        </annotation>
+      </element>
+      <element name="doi" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
+        </annotation>
+      </element>
+      <element name="pages" type="tns:_PagesType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">In the format Firstpage-Lastpage</documentation>
+        </annotation>
+      </element>
+      <element name="series" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Book series information (like "Progress in Nanotechnology, vol. 14")</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web site of book</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="pub_status" type="tns:_PublishingStatusType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published" Is mandatory for in-book publications because the time from "submitted" to "published" is often long and may cross year boundaries.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_InReportType">
+    <sequence>
+      <element name="title">
+        <annotation>
+          <documentation xml:lang="en-uk">Report title</documentation>
+        </annotation>
+      </element>
+      <element name="sub_title" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Subtitle</documentation>
+        </annotation>
+      </element>
+      <element name="part" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Part designation of a multipart work ("Vol. 1", "Bind 4: Middelalderen" etc.)</documentation>
+        </annotation>
+      </element>
+      <element name="editor" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of the (first) editor of the report as a whole</documentation>
+        </annotation>
+      </element>
+      <element name="isbn" type="tns:_ComplexISBNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="series" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Report series title</documentation>
+        </annotation>
+      </element>
+      <element name="issn" type="tns:_ComplexISSNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISSN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="rep_no" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Report number</documentation>
+        </annotation>
+      </element>
+      <element name="place" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Place of publication</documentation>
+        </annotation>
+      </element>
+      <element name="publisher" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of publisher</documentation>
+        </annotation>
+      </element>
+      <element name="year" type="gYear" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
+        </annotation>
+      </element>
+      <element name="vol" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Volume number</documentation>
+        </annotation>
+      </element>
+      <element name="issue" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Issue number</documentation>
+        </annotation>
+      </element>
+      <element name="pages" type="tns:_PagesType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">In the format Firstpage-Lastpage (or in case of Paper ID, the number of pages)</documentation>
+        </annotation>
+      </element>
+      <element name="paperid" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Paper ID, an alternative to page numbers, typically used by e-journals</documentation>
+        </annotation>
+      </element>
+      <element name="doi" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web site of report</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="pub_status" type="tns:_PublishingStatusType">
+      <annotation>
+        <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published"</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_BookType">
+    <sequence>
+      <element name="edition" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Book edition, like "2nd rev. ed."</documentation>
+        </annotation>
+      </element>
+      <element name="isbn" type="tns:_ComplexISBNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="place" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Place of publication</documentation>
+        </annotation>
+      </element>
+      <element name="publisher" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of publisher</documentation>
+        </annotation>
+      </element>
+      <element name="year" type="gYear" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
+        </annotation>
+      </element>
+      <element name="vol" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Volume number</documentation>
+        </annotation>
+      </element>
+      <element name="issue" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Issue number</documentation>
+        </annotation>
+      </element>
+      <element name="pages" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Total no. of pages</documentation>
+        </annotation>
+      </element>
+      <element name="doi" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
+        </annotation>
+      </element>
+      <element name="series" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Book series information (like "Progress in Nanotechnology, vol. 14")</documentation>
+        </annotation>
+      </element>
+      <element name="issn" type="tns:_ComplexISSNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISSN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web site of book</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="pub_status" type="tns:_PublishingStatusType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published"</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_ReportType">
+    <sequence>
+      <element name="isbn" type="tns:_ComplexISBNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISBN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="series" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Report series title</documentation>
+        </annotation>
+      </element>
+      <element name="issn" type="tns:_ComplexISSNType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">ISSN no. without dashes</documentation>
+        </annotation>
+      </element>
+      <element name="rep_no" type="string" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Report number</documentation>
+        </annotation>
+      </element>
+      <element name="place" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Place of publication</documentation>
+        </annotation>
+      </element>
+      <element name="publisher" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Name of publisher</documentation>
+        </annotation>
+      </element>
+      <element name="year" type="gYear" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Year of publication in format yyyy</documentation>
+        </annotation>
+      </element>
+      <element name="vol" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Volume number</documentation>
+        </annotation>
+      </element>
+      <element name="issue" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Issue number</documentation>
+        </annotation>
+      </element>
+      <element name="pages" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Total no. of pages</documentation>
+        </annotation>
+      </element>
+      <element name="doi" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Digital Object Identifier</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web site of report</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="pub_status" type="tns:_PublishingStatusType">
+      <annotation>
+        <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published"</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_PatentType">
+    <sequence>
+      <element name="country" type="tns:_CountryType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Country of patent issue using ISO country codes</documentation>
+        </annotation>
+      </element>
+      <element name="ipc" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">International Patent Classification</documentation>
+        </annotation>
+      </element>
+      <element name="number" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Patent no.</documentation>
+        </annotation>
+      </element>
+      <element name="date" type="date" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Date of status above in format yyyy-mm-dd</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">URI (URL) link to web site of patent</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="pub_status" type="tns:_PublishingStatusType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Status of publication, like "submitted", "accepted", "published" Is mandatory for patent publications because the time from "submitted" to "published" is often long and may cross year boundaries.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_InetpubType">
+    <sequence>
+      <element name="text" type="string">
+        <annotation>
+          <documentation xml:lang="en-uk">Text describing the service/file behind the URI like "PDF on personal home page", "PDF in institutional repository", "LaTex at arXiv preprint server"</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">The URI (URL)</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="_OalinkType">
+    <attribute name="type" type="tns:_OalinkTypeType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+    <attribute name="version" type="tns:_OalinkVersionType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+    <attribute name="public_access" type="tns:_OalinkPublicAccessType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+    <attribute name="license" type="string" use="optional">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+    <attribute name="embargo_start" type="date" use="optional">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+    <attribute name="embargo_end" type="date" use="optional">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation> 
+      </annotation>
+    </attribute>
+    <attribute name="url" type="anyURI" use="optional">
+      <annotation>
+        <documentation xml:lang="en-uk"></documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_DigitalobjectType">
+    <sequence>
+      <element name="description" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Description of the object</documentation>
+        </annotation>
+      </element>
+      <element name="embargo_end" type="date" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Embargo enddate in yyyy-mm-dd</documentation>
+        </annotation>
+      </element>
+      <element name="file" type="tns:_ObjectFileType">
+        <annotation>
+          <documentation xml:lang="en-uk">System-generated description of the object</documentation>
+        </annotation>
+      </element>
+      <element name="uri" type="tns:_MxdUriType" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">The URI (URL)</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="id" type="string" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Unique ID for the parent record</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="role" type="tns:_DigitalobjectRoleType">
+      <annotation>
+        <documentation xml:lang="en-uk">Use to state the role of the object in relation to the parent record, e.g. "preprint"</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="access" type="tns:_AccessType" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Use for stating access rights to the object, e.g. "public"</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_ObjectFileType">
+    <sequence>
+      <element name="description" type="string" minOccurs="0">
+        <annotation>
+          <documentation xml:lang="en-uk">Description of this specific file</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="lang" type="language">
+      <annotation>
+        <documentation xml:lang="en-uk">Language the file is in</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="size" type="positiveInteger" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">File size in bytes</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="mime_type" type="tns:_MimetypeType">
+      <annotation>
+        <documentation xml:lang="en-uk">Mime type string of the file, like "application/pdf". Must conform to http://www.iana.org/assignments/media-types/</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="timestamp" type="dateTime" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">File date/timestamp in ISO-8601 dateTime format</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="filename" type="string" use="required">
+      <annotation>
+        <documentation xml:lang="en-uk">Original name of the file</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  <complexType name="_MxdUriType">
+    <simpleContent>
+      <extension base="anyURI">
+        <attribute name="access" type="tns:_AccessType">
+          <annotation>
+            <documentation xml:lang="en-uk">Used to state the accessibility of the linked resource, e.g. "public"</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_ComplexISSNType">
+    <simpleContent>
+      <extension base="tns:_ISSNType">
+        <attribute name="type">
+          <annotation>
+            <documentation xml:lang="en-uk">Electronic or print</documentation>
+          </annotation>
+          <simpleType>
+            <restriction base="string">
+              <enumeration value="pri">
+                <annotation>
+                  <documentation xml:lang="en-uk">Printed version</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="ele">
+                <annotation>
+                  <documentation xml:lang="en-uk">Electronic version</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="alt">
+                <annotation>
+                  <documentation xml:lang="en-uk">Alternative ISSN</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="und">
+                <!-- FIXME this seems bogus as ISSN/ISBN are not mandatory -->
+                <annotation>
+                  <documentation xml:lang="en-uk">Undefined or unknown ISSN type</documentation>
+                </annotation>
+              </enumeration>
+            </restriction>
+          </simpleType>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="_ComplexISBNType">
+    <simpleContent>
+      <extension base="tns:_ISBNType">
+        <attribute name="type">
+          <annotation>
+            <documentation xml:lang="en-uk">Electronic or print.</documentation>
+          </annotation>
+          <simpleType>
+            <restriction base="string">
+              <enumeration value="pri">
+                <annotation>
+                  <documentation xml:lang="en-uk">Printed version</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="ele">
+                <annotation>
+                  <documentation xml:lang="en-uk">Electronic version</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="alt">
+                <annotation>
+                  <documentation xml:lang="en-uk">Alternative ISBN</documentation>
+                </annotation>
+              </enumeration>
+              <enumeration value="und">
+                <!-- FIXME this seems bogus as ISSN/ISBN are not mandatory -->
+                <annotation>
+                  <documentation xml:lang="en-uk">Undefined or unknown ISBN type</documentation>
+                </annotation>
+              </enumeration>
+            </restriction>
+          </simpleType>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <simpleType name="_ResearchAreaCodeType">
+    <restriction base="string">
+      <enumeration value="sci">
+        <annotation>
+          <documentation xml:lang="en-uk">Science/technology</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="soc">
+        <annotation>
+          <documentation xml:lang="en-uk">Social science</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="hum">
+        <annotation>
+          <documentation xml:lang="en-uk">Humanities</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="med">
+        <annotation>
+          <documentation xml:lang="en-uk">Medical science</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_OalinkTypeType">
+    <restriction base="string">
+      <enumeration value="loc">
+        <annotation>
+          <documentation xml:lang="en-uk">Local repository</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="rem">
+        <annotation>
+          <documentation xml:lang="en-uk">Remote repository</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="doi">
+        <annotation>
+          <documentation xml:lang="en-uk">DOI</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_OalinkVersionType">
+    <restriction base="string">
+      <enumeration value="pre">
+        <annotation>
+          <documentation xml:lang="en-uk">Preprint</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="afv">
+        <annotation>
+          <documentation xml:lang="en-uk">Author's final version</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="pub">
+        <annotation>
+          <documentation xml:lang="en-uk">Published version</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="oth">
+        <annotation>
+          <documentation xml:lang="en-uk">Other version</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_OalinkPublicAccessType">
+    <restriction base="string">
+      <enumeration value="oa">
+        <annotation>
+          <documentation xml:lang="en-uk">Open Access</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ea">
+        <annotation>
+          <documentation xml:lang="en-uk">Embargoed Access</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ra">
+        <annotation>
+          <documentation xml:lang="en-uk">Restricted Access</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="ca">
+        <annotation>
+          <documentation xml:lang="en-uk">Closed Access</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="und">
+        <annotation>
+          <documentation xml:lang="en-uk">Not set</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_OtherType">
+    <restriction base="string"/>
+  </simpleType>
+</schema>

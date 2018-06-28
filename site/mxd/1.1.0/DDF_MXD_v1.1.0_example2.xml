@@ -1,0 +1,97 @@
+<ddf_doc xmlns="http://mx.forskningsdatabasen.dk/ns/mxd/1.0"
+    format_version="1.1.0" doc_type="dcp" doc_lang="eng" doc_year="2004"
+    doc_review="pr" doc_level="sci" rec_source="aaa" rec_id="8954"
+    rec_upd="2005-05-02" rec_status="n">
+    <title>
+        <original>
+            <main>Quality Control in Visualization Processes</main>
+        </original>
+    </title>
+    <description>
+        <abstract xml:lang="eng">
+            Computer visualizations of planned built environment and
+            infrastructures are increasingly used as a basis for democratic
+            decisions when the impact of the projects is of wide-ranging
+            interests and influence. It is of great importance for the
+            democratic process that all aspects of the material in a project can
+            be trusted as a basis for discussion and decisions among politicians
+            and citizens. This paper describes the objective aspects of the
+            quality of data in the information basis for 3D visualizations and
+            it calculates the precision that can be achieved by the known
+            methods of 3D-CAD visualization. Furthermore, the paper suggests a
+            model that can secure sufficient quality in future visualization
+            work processes by accumulating documentation for both the factual
+            basic data and information that carry the aim and meaning of the
+            message and make this information accessible through the
+            visualization.
+        </abstract>
+        <subject>
+            <keyword key_type="fre" xml:lang="eng">3Dvisualization</keyword>
+            <keyword key_type="fre" xml:lang="eng">Process Model</keyword>
+            <keyword key_type="fre" xml:lang="eng">Quality Control</keyword>
+        </subject>
+    </description>
+    <person pers_role="pau" aff_no="001">
+        <name>
+            <first>Uffe</first>
+            <last>Lentz</last>
+        </name>
+        <title>Professor, arkitekt</title>
+        <email>uffe.lentz@aarch.dk</email>
+        <uri>
+            http://aarch.dk/arkitektskolen_aarhus/personale/persondata/uffe-lent
+            z/
+        </uri>
+    </person>
+    <person pers_role="pau" aff_no="001">
+        <name>
+            <first>Andreas</first>
+            <last>Lykke-Olsen</last>
+        </name>
+        <title>Ph.d.-studerende, arkitekt</title>
+        <email>andreas.lykke-olesen@aarch.dk</email>
+        <uri>
+            http://aarch.dk/arkitektskolen_aarhus/personale/persondata/andreas-l
+            ykke-olesen/
+        </uri>
+    </person>
+    <organisation org_role="oaf" aff_no="001">
+        <name xml:lang="dan">
+            <level1>Arkitektskolen i Aarhus</level1>
+            <level2>Institut for Design</level2>
+        </name>
+        <country>dk</country>
+        <uri>http://aarch.dk/institutter/institut_for_design/</uri>
+    </organisation>
+    <event event_role="ep">
+        <title xml:lang="eng">
+            <full>
+                Architecture in the Network Society. Association for Education
+                in CAAD in Europe Conference
+            </full>
+            <acronym>eCAADe</acronym>
+            <number>22</number>
+        </title>
+        <dates>
+            <start>2004-09-15</start>
+            <end>2004-09-18</end>
+        </dates>
+        <place>Copenhagen</place>
+        <uri>http://www.ecaade2004.dk/</uri>
+    </event>
+    <publication>
+        <in_book pub_status="p">
+            <title>
+                Architecture in the Network Society, 22nd eCAADe Conference
+                Proceedings
+            </title>
+            <isbn>0954118324</isbn>
+            <publisher>
+                CumInCAD Cumulative index of Computer Aided Architectural Design
+            </publisher>
+            <year>2004</year>
+            <pages>380-386</pages>
+            <uri>http://cumincad.scix.net/cgi-bin/works/Show?2004_380</uri>
+        </in_book>
+    </publication>
+</ddf_doc>
