@@ -6,23 +6,31 @@
 # which maps to
 # http://mx.forskningsdatabasen.dk/mxd/$MAJOR.$MINOR.$REVISION/
 
-. VERSION.sh      # MAJOR, MINOR, REVISION
-out_base_dir=t    # doesn't need to exist
+. VERSION.sh      # MAJOR, MINOR, REVISION, FINAL
+prepdir=t         # doesn't need to exist
+webdir=site/mxd
 
 ###############################################
 
+set -e
+
 fullversion=$MAJOR.$MINOR.$REVISION
 
-target=$out_base_dir/$fullversion
+target=$prepdir/$fullversion
 echo "Preparing distribution in $target"
 
+rm -rf $prepdir/*
 mkdir -p $target
-rm -f $out_base_dir/$MAJOR.$MINOR
-ln -s "$fullversion" $out_base_dir/$MAJOR.$MINOR        # 1.2 -> 1.2.3
-rm -f $out_base_dir/current  # symlink to latest
-#ln -s "$fullversion" $out_base_dir/current             # current -> 1.2.3
-ln -s "$MAJOR.$MINOR" $out_base_dir/current             # current -> 1.2
 
+# While in testing, we don't touch existing symlinks
+if [ "$FINAL" = "true" ]; then
+    #ln -s "$fullversion" $prepdir/current             # current -> 1.2.3
+    ln -s "$fullversion" $prepdir/$MAJOR.$MINOR        # 1.2 -> 1.2.3
+    # ln -sf on linux doesn't seem to replace
+    # directory symlinks, so:
+    rm -f $prepdir/current
+    ln -s "$MAJOR.$MINOR" $prepdir/current             # current -> 1.2
+fi
 
 cp MXD_ddf_doc.xsd $target/DDF_MXD_Schema_v$fullversion.xsd
 ln -sf "DDF_MXD_Schema_v$fullversion.xsd" $target/ddf-mxd.xsd
@@ -35,6 +43,7 @@ cp doc/DDF_MXD_v$fullversion.pdf $target/
 ln -sf "DDF_MXD_v$fullversion.pdf" $target/ddf-mxd.pdf
 cp doc/DDF_MXD_change_log_v$fullversion.pdf $target/
 
-echo "You may want to do something like:"
-echo "rsync -a t/$MAJOR.$MINOR.$REVISION puppet-applications/modules/ddf/files/mxd/"
-echo "and update the symlinks there."
+echo "Moving prepared distribution to $webdir"
+rm -rf $webdir/$fullversion
+mv $prepdir/* $webdir/
+

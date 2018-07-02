@@ -3,7 +3,6 @@ variables:
   REMOTE: 'ssh -l capistrano'
 
 stages:
-  - build
   - deploy
   
 before_script:
@@ -16,32 +15,17 @@ after_script:
   - echo 'after_script executing'
   - exit 0
   
-build_doc_dir:
-  stage: build
-  # artifacts is needed or any build products will be wiped in the next stage
-  artifacts:
-    paths:
-      - t
-  script:
-    - ./prepare.sh
-
-deploy_to_test:
-  stage: deploy
-  environment: staging
-  when: manual
-  script:
-    - rsync -r t/ roel@mx.forskningsdatabasen.dk:tmp/deploytest/
-
-deploy_to_fake_prod:
+deploy_to_prod:
   stage: deploy
   variables:
-    DEPLOYHOST: zagenth.cvt.dk
-    DEPLOYDIR: /tmp/deploytest
-  environment: fakeprod
+    DEPLOYHOST: mx.forskningsdatabasen.dk
+    DEPLOYDIR: /var/www/mxd
+    TMPDIR: /tmp/mxd.tmp
   when: manual
   script:
-    - rsync -avu --delete t/ capistrano@zagenth.cvt.dk:/tmp/deploytest/
-    - $REMOTE $DEPLOYHOST 'chmod -R g+rw /tmp/deploytest'
-    - $REMOTE $DEPLOYHOST 'sudo chgrp -R ds2 /tmp/deploytest'
-    - $REMOTE $DEPLOYHOST "echo $DEPLOYDIR"
-    - $REMOTE $DEPLOYHOST "cd $DEPLOYDIR; pwd; DATASTORE_HOME=. DATASTORE_CONFIG=datastore_config sudo -E -u ds2 -- sh -c 'pwd; printenv'"
+    - $REMOTE "rm -rf $TMPDIR"
+    - rsync -avu --delete site/mxd/ capistrano@$DEPLOYHOST:$TMPDIR
+    - $REMOTE $DEPLOYHOST "chmod -R g+rx $TMPDIR"
+    - $REMOTE $DEPLOYHOST "chgrp -R www-data $TMPDIR"
+    - $REMOTE "sudo rm -rf $DEPLOYDIR.old"
+    - $REMOTE "sudo mv $TMPDIR $DEPLOYDIR"
