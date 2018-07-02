@@ -1,4 +1,3 @@
-# README: http://docs.gitlab.com/ce/ci/yaml/README.html
 variables:
   REMOTE: 'ssh -l capistrano'
 
@@ -23,9 +22,10 @@ deploy_to_prod:
     TMPDIR: /tmp/mxd.tmp
   when: manual
   script:
-    - $REMOTE "rm -rf $TMPDIR"
-    - rsync -avu --delete site/mxd/ capistrano@$DEPLOYHOST:$TMPDIR
-    - $REMOTE $DEPLOYHOST "chmod -R g+rx $TMPDIR"
+    - $REMOTE $DEPLOYHOST "rm -rf $TMPDIR"
+    - rsync -avu --delete site/mxd/ capistrano@$DEPLOYHOST:$TMPDIR/
+    - $REMOTE $DEPLOYHOST "chmod -R g+rX $TMPDIR"
     - $REMOTE $DEPLOYHOST "chgrp -R www-data $TMPDIR"
-    - $REMOTE "sudo rm -rf $DEPLOYDIR.old"
-    - $REMOTE "sudo mv $TMPDIR $DEPLOYDIR"
+    - $REMOTE $DEPLOYHOST "sudo rm -rf $DEPLOYDIR.old"
+    - $REMOTE $DEPLOYHOST "sudo mv $DEPLOYDIR $DEPLOYDIR.old"
+    - $REMOTE $DEPLOYHOST "sudo mv $TMPDIR $DEPLOYDIR"

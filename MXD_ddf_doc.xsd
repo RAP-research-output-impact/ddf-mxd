@@ -70,6 +70,9 @@
                    in in_book, in_report becomes author type rather than element.
                    2016-4: new identifier element under 'description'.
                    Switch to 3-digit version numbers.
+
+       2018-06-28  1.4.1 2018-1: New toplevel element 'related_object'. 2018-2: New
+                   attribute ddf_doc/@total_authors.
   -->
 
   <import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
@@ -145,6 +148,11 @@
           <documentation xml:lang="en-uk">URL to the electronic Open Access version of the document</documentation>
         </annotation>
       </element>
+      <element name="related_object" type="tns:_RelatedObjectType" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en-uk">Identifier, identifying an object related to the document</documentation>
+        </annotation>
+      </element>
     </sequence>
 
     <attribute name="format_version" use="required">
@@ -153,7 +161,7 @@
       </annotation>
       <simpleType>
         <restriction base="string">
-          <enumeration value="1.4.0" />
+          <enumeration value="1.4.1" />
         </restriction>
       </simpleType>
     </attribute>
@@ -206,6 +214,11 @@
     <attribute name="rec_status" type="tns:_RecStatusType" use="required">
       <annotation>
         <documentation xml:lang="en-uk">Code indicating whether the record is to be considered as "new", "updated" or "deleted". See note for DDF list of record status codes.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="total_authors" type="integer" use="optional">
+      <annotation>
+        <documentation xml:lang="en-uk">The total number of authors; may differ from the number registered in the document</documentation>
       </annotation>
     </attribute>
   </complexType>  <!-- DdfDocType -->
@@ -3739,6 +3752,27 @@
       </annotation>
     </attribute>
   </complexType>
+  <complexType name="_RelatedObjectType">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="managed" type="tns:_RelatedManagedType" use="required">
+          <annotation>
+            <documentation xml:lang="en-uk">Indicates whether the related object is managed (true) in the same information system as the document or elsewhere in a different system (false)</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="rel_type" type="tns:_RelatedReltypeType" use="required">
+          <annotation>
+            <documentation xml:lang="en-uk">The type of the relation identifier (id, uri etc.)</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="obj_type" type="tns:_RelatedObjtypeType" use="required">
+          <annotation>
+            <documentation xml:lang="en-uk">The type of the related object, e.g. dataset, activity, project etc.</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
   <complexType name="_OtherType">
     <sequence>
       <element name="text" type="string">
@@ -4027,6 +4061,58 @@
           <documentation xml:lang="en-uk">Not set</documentation>
         </annotation>
       </enumeration>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="_RelatedManagedType">
+    <restriction base="string">
+      <enumeration value="true">
+        <annotation>
+          <documentation xml:lang="en-uk">Managed in the same system as the document</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="false">
+        <annotation>
+          <documentation xml:lang="en-uk">Not managed in the same system as the document</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_RelatedReltypeType">
+    <restriction base="string">
+      <enumeration value="uri">
+        <annotation>
+          <documentation xml:lang="en-uk">Relation is an URI</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="id">
+        <annotation>
+          <documentation xml:lang="en-uk">Relation is a document ID</documentation>
+        </annotation>
+      </enumeration>
+      <enumeration value="doi">
+        <annotation>
+          <documentation xml:lang="en-uk">Relation is a DOI</documentation>
+        </annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  <simpleType name="_RelatedObjtypeType">
+    <restriction base="string">
+      <enumeration value="dataset"/>
+      <enumeration value="publication"/>
+      <enumeration value="activity"/>
+      <enumeration value="prize"/>
+      <enumeration value="media"/>
+      <enumeration value="project"/>
+      <enumeration value="event"/>
+      <enumeration value="person"/>
+      <enumeration value="organisation"/>
+      <enumeration value="publisher"/>
+      <enumeration value="award"/>
+      <enumeration value="course"/>
+      <enumeration value="application"/>
+      <enumeration value="other"/>
     </restriction>
   </simpleType>
 </schema>
