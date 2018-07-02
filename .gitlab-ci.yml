@@ -25,7 +25,7 @@ deploy_to_prod:
     - $REMOTE $DEPLOYHOST "rm -rf $TMPDIR"
     - rsync -avu --delete site/mxd/ capistrano@$DEPLOYHOST:$TMPDIR/
     - $REMOTE $DEPLOYHOST "chmod -R g+rX $TMPDIR"
-    - $REMOTE $DEPLOYHOST "chgrp -R www-data $TMPDIR"
+    - $REMOTE $DEPLOYHOST "sudo chgrp -R www-data $TMPDIR"
     - $REMOTE $DEPLOYHOST "sudo rm -rf $DEPLOYDIR.old"
     - $REMOTE $DEPLOYHOST "sudo mv $DEPLOYDIR $DEPLOYDIR.old"
     - $REMOTE $DEPLOYHOST "sudo mv $TMPDIR $DEPLOYDIR"
